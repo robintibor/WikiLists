@@ -1,5 +1,4 @@
 // Load Javascript files
-alert('test1');
 
 var wikiLists = new function() {
     this.USER = 'robintibor';
