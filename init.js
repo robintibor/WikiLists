@@ -1,6 +1,7 @@
 // Load Javascript files
 alert('test1');
 var wikiLists = new function() {
+    this.USER = 'ikset';
     var addJavaScriptFiles = function(fileURLS) {
         for (var i = 0; i < fileURLS.length; i++) {
             var javaScriptSource = fileURLS[i];
@@ -12,11 +13,12 @@ var wikiLists = new function() {
         }
     };
     this.init = function() {
-        var javaScriptSources = [ 'http://c9.io/robintibor/wikilists/workspace/alertTest.js' , 
-                                  'http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js' ];
+        var javaScriptSources = [ 'http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js',
+                                  'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js',
+                                  'http://c9.io/' + wikiLists.USER + '/wikilists/workspace/alertTest.js',
+                                  'http://c9.io/' + wikiLists.USER + '/wikilists/workspace/UIMenu.js'];
         addJavaScriptFiles(javaScriptSources);
     };
 };
 wikiLists.init();
-
 // Start Main Parsing Routine
