@@ -1,6 +1,6 @@
 var wl = wikiLists ||  {};
 wl.UIMenu = new function() {
-    var loadjscssfile = function(filename, filetype){ 
+    this.loadjscssfile = function(filename, filetype){ 
         if (filetype=="js"){ //if filename is a external JavaScript file
             var fileref=document.createElement('script');
             fileref.setAttribute("type","text/javascript");
@@ -18,15 +18,13 @@ wl.UIMenu = new function() {
  
     this.toggle_sidebar = function()
     {
-        alert('testUIMENU3');
-        loadjscssfile('http://c9.io/' +  wl.USER + '/wikilists/workspace/UIMenu.css', "css");    
-        $('#sidebar').toggle('slide', { direction: 'left' }, 500);
-        alert('testUIMENU4');
+        $('#sidebar').toggle('slide', { direction: 'left' }, 5000);
     }
 };
-alert('testUIMENU2');
 $( function(){
-    $('body').prependpend('<div id="sidebar">My sidebar</div>');
-    wl.UIMenu.toggle_sidebar();
+    wl.UIMenu.loadjscssfile('http://c9.io/' +  wl.USER + '/wikilists/workspace/UIMenu.css', "css");    
+    $('body').prepend('<div id="sidebar">My sidebar</div>');
+    //wl.UIMenu.toggle_sidebar();
+    setTimeout(wl.UIMenu.toggle_sidebar,3000);
     setTimeout(wl.UIMenu.toggle_sidebar,3000);
 } );
