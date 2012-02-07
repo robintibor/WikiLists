@@ -1,1 +1,1 @@
-javascript:(function(){document.body.appendChild(document.createElement('script')).src='<URLVOMJAVASCRIPTINITFILE!>';})();
+javascript:(function(){document.body.appendChild(document.createElement('script')).src='http://c9.io/ikset/wikilists/workspace/init.js';})();
