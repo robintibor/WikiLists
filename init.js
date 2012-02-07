@@ -1,5 +1,6 @@
 // Load Javascript files
 alert('test1');
+
 var wikiLists = new function() {
     var addJavaScriptFiles = function(fileURLS) {
         for (var i = 0; i < fileURLS.length; i++) {
@@ -18,5 +19,6 @@ var wikiLists = new function() {
     };
 };
 wikiLists.init();
+
 
 // Start Main Parsing Routine
