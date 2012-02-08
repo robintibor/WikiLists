@@ -34,14 +34,9 @@ $(document).ready(function(){
     if ($('#UIMenu').html() == null){    
         wl.UIMenu.loadjscssfile('http://c9.io/' +  wl.USER + '/wikilists/workspace/UIMenu.css', "css");    
         $('body').prepend('<div style="border-radius:0px; z-index:3; left:20%;"class="WLMenuButton shadow"; onclick=wl.UIMenu.toggle_sidebar(); id="sidebar1">Broccoli</div>');
-        //$('#sidebar1').toggle('slide', { direction: 'up' }, 1000);
-        //$('#sidebar1').prepend('<br id="br1"></br>');
         $('body').prepend('<div class="WLMenu shadow" id="UIMenu"></div>');
         $('#UIMenu').append('<div style="position:absolute; top:60%; left:10px;" class="WLMenuButton shadow"; id="WLMenuDialog1">dialog1</div>');
         $('#UIMenu').append('<div style="position:absolute; top:80%; left:10px;" class="WLMenuButton shadow"; id="WLMenuDialog1">dialog2</div>');
-        $('#UIMenu').append('<div class="WLMenuEditor shadow"; id="WLMenuEditor">Editor</div>');
+        $('#UIMenu').append('<div class="WLMenuEditor shadow"; id="WLMenuEditor">Editor</div>'); 
     }
-    //wl.UIMenu.toggle_sidebar();
-    //setTimeout(wl.UIMenu.toggle_sidebar,300);
-    //setTimeout(wl.UIMenu.toggle_sidebar,2000);
 } );
