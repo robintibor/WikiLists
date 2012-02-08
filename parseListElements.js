@@ -7,4 +7,8 @@ wl.parser = new function() {
         }
     };
 };
-// BEISPIEL :) : $(wl.parser.dummyFindListElements()[15]).css('background-color', 'yellow');
+wl.parser.dummyFindListElements().css('background-color', 'yellow');
+
+// For http://en.wikipedia.org/wiki/List_of_Christian_denominations :
+// TODO(Robin): remove those 
+//$('.mw-content-ltr > table ul li a[href^="\\/wiki\\/"]').css('background-color', 'yellow')
