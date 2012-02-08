@@ -1,9 +1,35 @@
-#sidebar {
+.WLMenu {
     float:left;
-    height:50%;
-    position:fixed;
+    height:150px;
+    left:20%;
     background-color:#CCC;
-    z-index:100;
-    width:200px;
+    position:fixed;
+    opacity: 0.9;
+    z-index:2;
+    width:50%;
     display:none;
+}
+.WLMenuButton {
+    float:left; 
+    height:20px;
+    position:fixed;
+    background-color:#708090; 
+    opacity: 1; 
+    z-index:2; 
+    width:100px;
+    border-radius:10px;
+}
+.WLMenuEditor {
+    position:absolute;
+    top:10px;
+    right:10px;
+    float:left; 
+    height:130px;
+    background-color:#9FB6CD; 
+    z-index:2; 
+    width:70%;
+}
+.shadow {
+-moz-box-shadow: 0 0 10px 1px #999;
+-webkit-box-shadow: 0 0 10px 1px #999;
 }

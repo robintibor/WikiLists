@@ -1,6 +1,7 @@
 var wl = wikiLists ||  {};
 wl.UIMenu = new function() {
-    var loadjscssfile = function(filename, filetype){ 
+    this.status='close';
+    this.loadjscssfile = function(filename, filetype){ 
         if (filetype=="js"){ //if filename is a external JavaScript file
             var fileref=document.createElement('script');
             fileref.setAttribute("type","text/javascript");
@@ -9,7 +10,7 @@ wl.UIMenu = new function() {
         else if (filetype=="css"){ //if filename is an external CSS file
             var fileref=document.createElement("link");
             fileref.setAttribute("rel", "stylesheet");
-            fileref.setAttribute("type", "text/css");
+            fileref.setAttribute("type", 'text/css');
             fileref.setAttribute("href", filename);
         }
         if (typeof fileref!="undefined")
@@ -18,15 +19,29 @@ wl.UIMenu = new function() {
  
     this.toggle_sidebar = function()
     {
-        alert('testUIMENU3');
-        loadjscssfile('http://c9.io/' +  wl.USER + '/wikilists/workspace/UIMenu.css', "css");    
-        $('#sidebar').toggle('slide', { direction: 'left' }, 500);
-        alert('testUIMENU4');
+        //if (status == 'open' && wl.UIMenu.status =='close') 
+        //{
+            //wl.UIMenu.status ='open';
+            $('#UIMenu').toggle('slow');
+        //} else if (status == 'close' && wl.UIMenu.status =='open') 
+        //{
+        //    wl.UIMenu.status ='close';
+        //    $('#UIMenu').toggle('slow');
+        //}
     }
 };
-alert('testUIMENU2');
-$( function(){
-    $('body').prependpend('<div id="sidebar">My sidebar</div>');
-    wl.UIMenu.toggle_sidebar();
-    setTimeout(wl.UIMenu.toggle_sidebar,3000);
+$(document).ready(function(){
+    if ($('#UIMenu').html() == null){    
+        wl.UIMenu.loadjscssfile('http://c9.io/' +  wl.USER + '/wikilists/workspace/UIMenu.css', "css");    
+        $('body').prepend('<div style="border-radius:0px; z-index:3; left:20%;"class="WLMenuButton shadow"; onclick=wl.UIMenu.toggle_sidebar(); id="sidebar1">Broccoli</div>');
+        //$('#sidebar1').toggle('slide', { direction: 'up' }, 1000);
+        //$('#sidebar1').prepend('<br id="br1"></br>');
+        $('body').prepend('<div class="WLMenu shadow" id="UIMenu"></div>');
+        $('#UIMenu').append('<div style="position:absolute; top:60%; left:10px;" class="WLMenuButton shadow"; id="WLMenuDialog1">dialog1</div>');
+        $('#UIMenu').append('<div style="position:absolute; top:80%; left:10px;" class="WLMenuButton shadow"; id="WLMenuDialog1">dialog2</div>');
+        $('#UIMenu').append('<div class="WLMenuEditor shadow"; id="WLMenuEditor">Editor</div>');
+    }
+    //wl.UIMenu.toggle_sidebar();
+    //setTimeout(wl.UIMenu.toggle_sidebar,300);
+    //setTimeout(wl.UIMenu.toggle_sidebar,2000);
 } );
