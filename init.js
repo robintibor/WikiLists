@@ -1,6 +1,10 @@
 // Load Javascript files
+<<<<<<< HEAD
+=======
+
+>>>>>>> 6cebed01e19f832da649ccf9e814ed2081e23bb5
 var wikiLists = new function() {
-    this.USER = 'ikset';
+    this.USER = 'robintibor';
     var addJavaScriptFiles = function(fileURLS) {
         for (var i = 0; i < fileURLS.length; i++) {
             var javaScriptSource = fileURLS[i];
@@ -14,7 +18,12 @@ var wikiLists = new function() {
     this.init = function() {
         var javaScriptSources = [ 'http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js',
                                   'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js',
+<<<<<<< HEAD
                                   'http://c9.io/' + wikiLists.USER + '/wikilists/workspace/UIMenu.js'];
+=======
+                                  'http://c9.io/' + wikiLists.USER + '/wikilists/workspace/UIMenu.js',
+                                  'http://c9.io/' + wikiLists.USER + '/wikilists/workspace/parseListElements.js'];
+>>>>>>> 6cebed01e19f832da649ccf9e814ed2081e23bb5
         addJavaScriptFiles(javaScriptSources);
     };
 };
