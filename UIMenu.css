@@ -1,12 +1,12 @@
 .WLMenu {
     float:left;
     height:150px;
-    left:20%;
-    background-color:#CCC;
+    left:160px;
+    background-color:#FFFFFF;
     position:fixed;
-    opacity: 0.9;
+    opacity: 0.8;
     z-index:2;
-    width:50%;
+    width:85%;
     display:none;
 }
 .WLMenuButton {
@@ -25,7 +25,7 @@
     right:10px;
     float:left; 
     height:130px;
-    background-color:#9FB6CD; 
+    background-color:#87CEFA; 
     z-index:2; 
     width:70%;
 }
