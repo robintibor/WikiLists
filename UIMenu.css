@@ -4,10 +4,11 @@
     left:160px;
     background-color:#FFFFFF;
     position:fixed;
-    opacity: 0.8;
+    opacity: 0.9;
     z-index:2;
     width:85%;
     display:none;
+    border-radius:4px;
 }
 .WLMenuButton {
     float:left; 
@@ -25,9 +26,10 @@
     right:10px;
     float:left; 
     height:130px;
-    background-color:#87CEFA; 
+    background-color:#6495ED; 
     z-index:2; 
     width:70%;
+    border-radius:4px;
 }
 .shadow {
 -moz-box-shadow: 0 0 10px 1px #999;

@@ -1,11 +1,31 @@
 var wl = wikiLists ||  {};
 wl.UIMenu = new function() {
-    this.statusMenu='close';
-    this.statusDialog1='close';
-    this.statusDialog2='close';
+    this.statusMenu = 'close';
+    this.statusDialog1 = 'close';
+    this.statusDialog2 = 'close';
+    //__________________________________________________________________________
+    this.loadWikiDialog = function()
+    {
+        var htmlStr = '';
+        var divClass = 'class="shadow"; ';
+        var divStyle = 'style="border-radius:4px;font-size:18px; font-family:solid; background-color:#9C9C9C; margin-bottom:10px;"';
+        $(wl.parser.dummyFindListElements()).each(function (){
+            htmlStr+= '<div ' + divClass + divStyle + '>' + $(this).html() + '</div>';
+        });
+        //for (var i = 0; i < wl.parser.dummyFindListElements().length; i++) {
+        //    alert($(wl.parser.dummyFindListElements()[i]).html());
+        //}
+       // $(wl.parser.dummyFindListElements()[10]).css('background-color', 'yellow');
+        $('#UIMenuWikiDialog').append(htmlStr);
+    }
+    //__________________________________________________________________________
+    this.postQuery = function()
+    {
+        wl.UIMenu.loadWikiDialog();
+    }
+    //__________________________________________________________________________
     this.loadDialogs = function(){ 
-        
-        wl.UIMenu.WikiDialog = $('<div style="font-family: arial;"> </div>')
+        wl.UIMenu.WikiDialog = $('<div style="font-family: arial;" id="UIMenuWikiDialog"> </div>')
         .html('')
 		.dialog({
 			autoOpen: false,
@@ -19,7 +39,7 @@ wl.UIMenu = new function() {
 		});
         wl.UIMenu.WikiDialog.parent().addClass('shadow');
         wl.UIMenu.WikiDialog.parent().css({ position: "fixed" });
-        wl.UIMenu.WikiDialog.parent().css({ opacity: 0.8});
+        wl.UIMenu.WikiDialog.parent().css({ opacity: 0.9});
         wl.UIMenu.BroccoliDialog = $('<div style="font-family: arial;"> </div>')
         .html('')
 		.dialog({
@@ -34,8 +54,9 @@ wl.UIMenu = new function() {
 		});
         wl.UIMenu.BroccoliDialog.parent().addClass('shadow');
         wl.UIMenu.BroccoliDialog.parent().css({ position: "fixed" });
-        wl.UIMenu.BroccoliDialog.parent().css({ opacity: 0.8});
+        wl.UIMenu.BroccoliDialog.parent().css({ opacity: 0.9});
     }
+    //__________________________________________________________________________
     this.loadjscssfile = function(filename, filetype){ 
         if (filetype=="js"){ //if filename is a external JavaScript file
             var fileref=document.createElement('script');
@@ -51,7 +72,7 @@ wl.UIMenu = new function() {
         if (typeof fileref!="undefined")
         document.getElementsByTagName("head")[0].appendChild(fileref)    
     }
- 
+    //__________________________________________________________________________
     this.toggle_sidebar = function()
     {
         if (wl.UIMenu.statusMenu =='close') 
@@ -85,8 +106,9 @@ $(document).ready(function(){
         wl.UIMenu.loadjscssfile('http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css', "css"); 
         $('body').prepend('<div style="border-radius:0px; z-index:3; left:160px;"class="WLMenuButton shadow"; onclick=wl.UIMenu.toggle_sidebar(); id="sidebar1">Broccoli</div>');
         $('body').prepend('<div class="WLMenu shadow" id="UIMenu"></div>');
-        $('#UIMenu').append('<div style="position:absolute; top:60%; left:10px;" class="WLMenuButton shadow"; id="WLMenuDialog1">dialog1</div>');
-        $('#UIMenu').append('<div style="position:absolute; top:80%; left:10px;" class="WLMenuButton shadow"; id="WLMenuDialog2">dialog2</div>');
+        $('#UIMenu').append('<div style="position:absolute; top:40%; left:10px;" class="WLMenuButton shadow"; id="WLMenuQueryExe"> execQuery</div>');
+        $('#UIMenu').append('<div style="position:absolute; top:60%; left:10px;" class="WLMenuButton shadow"; id="WLMenuDialog1"> dialog1</div>');
+        $('#UIMenu').append('<div style="position:absolute; top:80%; left:10px;" class="WLMenuButton shadow"; id="WLMenuDialog2"> dialog2</div>');
         $('#UIMenu').append('<div class="WLMenuEditor shadow"; id="WLMenuEditor">Editor</div>'); 
         wl.UIMenu.loadDialogs();
         $('#WLMenuDialog1').click(function() 
@@ -113,6 +135,11 @@ $(document).ready(function(){
                 wl.UIMenu.statusDialog2 = 'close';    
             }
             return false;
+        }); 
+        
+        $('#WLMenuQueryExe').click(function() 
+        { 
+            wl.UIMenu.postQuery();
         }); 
     }
 } );
