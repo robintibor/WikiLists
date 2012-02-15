@@ -10,8 +10,8 @@ wl.parser = new function() {
     this.dummyTest = function() {
         return true;
     };
-    this.parseListElements = function(htmlDOM) {
-        return true;
+    this.parseListElements = function(htmlString) {        
+        return $(htmlString).find('.mw-content-ltr > ul li a[href!="http://www.uhcan.org/"]');
     };
 };
 wl.parser.dummyFindListElements().css('background-color', 'yellow');
