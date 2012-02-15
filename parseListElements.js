@@ -4,7 +4,7 @@ wl.parser = new function() {
     this.dummyFindListElements = function() {
         if (document.URL == 'http://en.wikipedia.org/wiki/' + 
                             'List_of_healthcare_reform_advocacy_groups_in_the_United_States') {
-            return $('.mw-content-ltr > ul li a[href!="http://www.uhcan.org/"]');           
+            return $('.mw-content-ltr > ul li a[href!="http://www.uhcan.org/"]').not('#toc a').not('h2:has(span#See_also) ~ * * a');           
         }
     };
     this.dummyTest = function() {
