@@ -45,8 +45,4 @@ wl.parser = new function() {
         return contentDOM.find('ul li a[href!="http://www.uhcan.org/"]').not('#toc a').not('h2:has(span#See_also) ~ * * a');
     }
 };
-wl.parser.dummyFindListElements().css('background-color', 'yellow');
-// http://en.wikipedia.org/wiki/List_of_healthcare_reform_advocacy_groups_in_the_United_States
-// For http://en.wikipedia.org/wiki/List_of_Christian_denominations :
-// TODO(Robin): remove those 
-//$('.mw-content-ltr > table ul li a[href^="\\/wiki\\/"]').css('background-color', 'yellow')
+//wl.parser.dummyFindListElements().css('background-color', 'yellow');
