@@ -4,19 +4,44 @@ wl.UIMenu = new function() {
     this.statusDialog1 = 'close';
     this.statusDialog2 = 'close';
     //__________________________________________________________________________
+    // Add str string to obj object as tooltip
+    // str cann be formated HTML
+    var addToolTip = function(obj, str)
+    {
+         $(obj).qtip({
+            content: str,
+            position: {
+                corner: {
+                    target: 'topMiddle',
+                    tooltip: 'bottomMiddle'
+                }
+            },
+            style: { 
+                name: 'red',
+                tip: 'bottomMiddle' // Notice the corner value is identical to the previously mentioned positioning corners
+            },
+            show: 'mouseover',
+            hide: 'mouseout'
+        });
+    }
+    //__________________________________________________________________________
     this.loadWikiDialog = function()
     {
         var htmlStr = '';
-        var divClass = 'class="shadow"; ';
+        var divClass = 'class="shadow wikiDialogEntrys"; ';
         var divStyle = 'style="border-radius:4px;font-size:18px; font-family:solid; background-color:#9C9C9C; margin-bottom:10px;"';
-        $(wl.parser.dummyFindListElements()).each(function (){
-            htmlStr+= '<div ' + divClass + divStyle + '>' + $(this).html() + '</div>';
+        $(wl.parser.dummyFindListElements()).each(function (i){
+            i++;
+            var divID = 'id="wikiDialogEntry_' + i + '" ';
+            htmlStr+= '<div ' + divID + divClass + divStyle + ' >' + $(this).html() + '</div>';
+            // add Tooltip to the keyElements at source (Wiki) Site
+            addToolTip(this, '<div style="color:#0000FF">'+$(this).html())+'</div>';
+            //htmlStr+= '<div ' + divID + divClass + divStyle + ' title= "' + $(this).html() + '" >' + $(this).html() + '</div>';
         });
-        //for (var i = 0; i < wl.parser.dummyFindListElements().length; i++) {
-        //    alert($(wl.parser.dummyFindListElements()[i]).html());
-        //}
-       // $(wl.parser.dummyFindListElements()[10]).css('background-color', 'yellow');
         $('#UIMenuWikiDialog').append(htmlStr);
+        $(".wikiDialogEntrys").each(function(){
+            addToolTip(this, '<div>'+$(this).html())+'</div>';
+        });
     }
     //__________________________________________________________________________
     this.postQuery = function()
@@ -29,8 +54,8 @@ wl.UIMenu = new function() {
         .html('')
 		.dialog({
 			autoOpen: false,
-            show: 'slow',
-			position: ['left',200],
+            //show: 'slow',
+			position: ['left','bottom'],
             beforeClose: function(event, ui) {wl.UIMenu.statusDialog1='close';},
             resize: function(event, ui) { wl.UIMenu.WikiDialog.parent().css({ position: "fixed" }); },
 			height: 300,
@@ -38,15 +63,15 @@ wl.UIMenu = new function() {
             zIndex: 3999,
 			title: 'Wiki-Einträge'
 		});
-        wl.UIMenu.WikiDialog.parent().addClass('shadow');
+        //wl.UIMenu.WikiDialog.parent().addClass('shadow');
         wl.UIMenu.WikiDialog.parent().css({ position: "fixed" });
         wl.UIMenu.WikiDialog.parent().css({ opacity: 0.9});
         wl.UIMenu.BroccoliDialog = $('<div style="font-family: arial;"> </div>')
         .html('')
 		.dialog({
 			autoOpen: false,
-            show: 'slow',            
-			position: ['right',200],
+            //show: 'slow',            
+			position: ['right','bottom'],
             beforeClose: function(event, ui) {wl.UIMenu.statusDialog2='close';},
             resize: function(event, ui) { wl.UIMenu.BroccoliDialog.parent().css({ position: "fixed" }); },
 			height: 300,
@@ -54,7 +79,7 @@ wl.UIMenu = new function() {
 			width: 400,
 			title: 'Brocolli-Einträge'
 		});
-        wl.UIMenu.BroccoliDialog.parent().addClass('shadow');
+        //wl.UIMenu.BroccoliDialog.parent().addClass('shadow');
         wl.UIMenu.BroccoliDialog.parent().css({ position: "fixed" });
         wl.UIMenu.BroccoliDialog.parent().css({ opacity: 0.9});
     }
