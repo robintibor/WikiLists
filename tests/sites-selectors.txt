@@ -3,7 +3,6 @@ http://en.wikipedia.org/wiki/List_of_healthcare_reform_advocacy_groups_in_the_Un
 
 http://en.wikipedia.org/wiki/List_of_Christian_denominations
 .mw-content-ltr > table ul li a[href^="\\/wiki\\/"]
-
 for detaching everything after see also:
 $('.mw-content-ltr h2:has(span#See_also) ~ *').detach()
 for detaching everything after references:

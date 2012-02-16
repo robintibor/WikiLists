@@ -27,6 +27,9 @@ wl.parserTests = new function() {
     var testSites = [ { site: 'test-sites/List_of_healthcare_reform_advocacy_groups_in_the_United_States.html',
                         selector: '.mw-content-ltr > ul li a[href!="http://www.uhcan.org/"]',
                         filters: ['#toc a', 'h2:has(span#See_also) ~ * * a']}];
+                        // next site:
+                        // http://en.wikipedia.org/wiki/List_of_Christian_denominations with
+                        //$('.mw-content-ltr > table ul li a[href^="\\/wiki\\/"]').not('h2:has(span#See_also) ~ * * a').css('background-color', 'yellow')
 };
         
 
