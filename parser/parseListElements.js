@@ -12,15 +12,8 @@ wl.parser = new function() {
         return true;
     };
     this.parseListElements = function(htmlDOM) {
-        var clonedDOM = htmlDOM.clone();
-        var listElementsInClone = parseListElementsFromClonedDom(clonedDOM);
-        var listElementsInOriginal = $();
-        for (var i = 0; i < listElementsInClone.size(); i++) {            
-            var selector = wl.parser.createTagIdAndTextSelector(listElementsInClone[i]);
-            var newElements = $(htmlDOM).find(selector);
-            listElementsInOriginal = listElementsInOriginal.add(newElements);
-        }
-        return listElementsInOriginal;
+        var contentDOM = htmlDOM.find('.mw-content-ltr');
+        return parseListElementsFromContent(contentDOM);
     };
 
     this.createTagIdAndTextSelector = function(element) {
@@ -42,10 +35,6 @@ wl.parser = new function() {
                 return false;
         }
         return true;
-    };
-    var parseListElementsFromClonedDom = function (clonedDOM) {
-        var contentDOM = clonedDOM.find('.mw-content-ltr');
-        return parseListElementsFromContent(contentDOM);
     };
     var parseListElementsFromContent = function (contentDOM) {
         var wikiLinks = contentDOM.find('a').not('h2:has(span#See_also) ~ * * a').not('#toc a');        
