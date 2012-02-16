@@ -34,16 +34,28 @@ wl.parser = new function() {
         if (text.length > 0)
             selector += ':contains("' + text + '")';
         return selector;
-    }
-    
+    };
+    var comparePathByTags = function(nodeList, otherNodeList) {
+        if (nodeList.length != otherNodeList.length) return false;
+        for (var i = 0; i < nodeList.length; i++) {
+            if (nodeList[i].tag != otherNodeList[i].tag)
+                return false;
+        }
+        return true;
+    };
     var parseListElementsFromClonedDom = function (clonedDOM) {
         var contentDOM = clonedDOM.find('.mw-content-ltr');
-        contentDOM.remove('#toc');
         return parseListElementsFromContent(contentDOM);
-    }
+    };
     var parseListElementsFromContent = function (contentDOM) {
-        return contentDOM.find('ul li a[href!="http://www.uhcan.org/"]').not('#toc a').not('h2:has(span#See_also) ~ * * a');
-    }
+        var wikiLinks = contentDOM.find('a').not('h2:has(span#See_also) ~ * * a').not('#toc a');        
+        var pathPool = new wl.parser.elementPathPool(comparePathByTags);
+        console.log("wikilinkslength = " + wikiLinks.length);
+        for (var i = 0; i < wikiLinks.length; i++) {
+            pathPool.addElement(wikiLinks[i]);
+        }
+        return pathPool.frequentElements();
+    };
 };
 wl.addJavaScriptFiles(['http://c9.io/' + wl.USER + '/wikilists/workspace/parser/element-path.js']);
 //wl.parser.dummyFindListElements().css('background-color', 'yellow');
