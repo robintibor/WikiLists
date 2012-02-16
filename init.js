@@ -1,6 +1,6 @@
 // Load Javascript files
 var wikiLists = new function() {
-    this.USER = 'robintibor';
+    this.USER = 'ikset';
     this.addJavaScriptFiles = function(fileURLS) {
         for (var i = 0; i < fileURLS.length; i++) {
             var javaScriptSource = fileURLS[i];

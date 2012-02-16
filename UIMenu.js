@@ -4,6 +4,29 @@ wl.UIMenu = new function() {
     this.statusDialog1 = 'close';
     this.statusDialog2 = 'close';
     //__________________________________________________________________________
+    var addCloseImages = function(obj, imgID)
+    {
+        var closeImgSource = 'http://c9.io/' + wl.USER + '/wikilists/workspace/closeEntry.png';
+        
+        $(obj).after('<img id="' + imgID 
+                        + '" src="' + closeImgSource 
+                        + '" style="visibility:hidden"/>');
+        var imjObj = document.getElementById(imgID);
+        $(imjObj).mouseover(function(){
+                document.getElementById(imgID).style.visibility = "visible";
+        });
+        $(imjObj).mouseout(function(){
+                document.getElementById(imgID).style.visibility = "hidden";
+        });
+        // Hack 
+        $(imjObj).click(function(){
+                $(imjObj).remove();
+                obj.style.background = "#FFFFFF";
+                $(obj).die();
+        });
+        
+    }
+    //__________________________________________________________________________
     // Add str string to obj object as tooltip
     // str cann be formated HTML
     var addToolTip = function(obj, str)
@@ -35,8 +58,24 @@ wl.UIMenu = new function() {
             var divID = 'id="wikiDialogEntry_' + i + '" ';
             htmlStr+= '<div ' + divID + divClass + divStyle + ' >' + $(this).html() + '</div>';
             // add Tooltip to the keyElements at source (Wiki) Site
-            addToolTip(this, '<div style="color:#0000FF">'+$(this).html())+'</div>';
-            //htmlStr+= '<div ' + divID + divClass + divStyle + ' title= "' + $(this).html() + '" >' + $(this).html() + '</div>';
+            var imgID = 'EntryCloseImg_' + i;
+            addToolTip(this, '<div style="color:#0000FF" >'+$(this).html())+'</div>';
+            //alert("str" + $(this).mouseover);
+            
+            //HACK FOR SELECTING ELEMENTS BEGIN 
+            this.style.background = "#00FF7F";
+            var oldMouseOverEvent=$(this).mouseover;
+            var oldMouseOutEvent=$(this).mouseout;        
+            $(this).mouseover(function(){
+                oldMouseOverEvent;
+                document.getElementById(imgID).style.visibility = "visible";
+            });
+            $(this).mouseout(function(){
+                oldMouseOutEvent;
+                document.getElementById(imgID).style.visibility = "hidden";
+            });
+            //HACK FOR SELECTING ELEMENTS END
+            addCloseImages(this, imgID);
         });
         $('#UIMenuWikiDialog').append(htmlStr);
         $(".wikiDialogEntrys").each(function(){
@@ -131,7 +170,7 @@ $(document).ready(function(){
     if ($('#UIMenu').html() == null){    
         wl.UIMenu.loadjscssfile('http://c9.io/' +  wl.USER + '/wikilists/workspace/UIMenu.css', "css"); 
         wl.UIMenu.loadjscssfile('http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css', "css"); 
-        $('body').prepend('<div style="border-radius:0px; z-index:3; left:160px;"class="WLMenuButton shadow"; onclick=wl.UIMenu.toggle_sidebar(); id="sidebar1">Broccoli</div>');
+        $('body').prepend('<div style="border-radius:0px; z-index:3; left:161px;"class="WLMenuButton shadow"; onclick=wl.UIMenu.toggle_sidebar(); id="sidebar1"><img src="http://c9.io/' + wl.USER + '/wikilists/workspace/broccoliLogoLittle.png"></div>');
         $('body').prepend('<div class="WLMenu shadow" id="UIMenu"></div>');
         $('#UIMenu').append('<div style="position:absolute; top:40%; left:10px;" class="WLMenuButton shadow"; id="WLMenuQueryExe"> execQuery</div>');
         $('#UIMenu').append('<div style="position:absolute; top:60%; left:10px;" class="WLMenuButton shadow"; id="WLMenuDialog1"> dialog1</div>');
