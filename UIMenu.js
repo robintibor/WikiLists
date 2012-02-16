@@ -22,7 +22,7 @@ wl.UIMenu = new function() {
         $(imjObj).click(function(){
                 $(imjObj).remove();
                 obj.style.background = "#FFFFFF";
-                $(obj).die();
+                $(obj).off();
         });
         
     }
@@ -53,7 +53,7 @@ wl.UIMenu = new function() {
         var htmlStr = '';
         var divClass = 'class="shadow wikiDialogEntrys"; ';
         var divStyle = 'style="border-radius:4px;font-size:18px; font-family:solid; background-color:#9C9C9C; margin-bottom:10px;"';
-        $(wl.parser.dummyFindListElements()).each(function (i){
+        $(wl.parser.parseListElements($(document))).each(function (i){
             i++;
             var divID = 'id="wikiDialogEntry_' + i + '" ';
             htmlStr+= '<div ' + divID + divClass + divStyle + ' >' + $(this).html() + '</div>';
