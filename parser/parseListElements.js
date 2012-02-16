@@ -29,22 +29,35 @@ wl.parser = new function() {
         return selector;
     };
     var comparePathByTags = function(nodeList, otherNodeList) {
-        if (nodeList.length != otherNodeList.length) return false;
-        for (var i = 0; i < nodeList.length; i++) {
+//        if (nodeList.length != otherNodeList.length) return false;
+        for (var i = 0; i < Math.min(nodeList.length, 8); i++) {
             if (nodeList[i].tag != otherNodeList[i].tag)
                 return false;
         }
         return true;
     };
     var parseListElementsFromContent = function (contentDOM) {
-        var wikiLinks = contentDOM.find('a').not('h2:has(span#See_also) ~ * * a').not('#toc a');        
+        var wikiLinks = contentDOM.find('a');
+        wikiLinks = wikiLinks.not('#toc a');
+        wikiLinks = wikiLinks.not('h2:has(span#See_also) ~ * * a');
+        wikiLinks = wikiLinks.not(':header:has(span.editsection) a');
+        wikiLinks = wikiLinks.not(contentDOM.find('h2:has(span#References) ~ *').find('a'));
+        wikiLinks.css('background-color', 'green');
         var pathPool = new wl.parser.elementPathPool(comparePathByTags);
-        console.log("wikilinkslength = " + wikiLinks.length);
-        for (var i = 0; i < wikiLinks.length; i++) {
-            pathPool.addElement(wikiLinks[i]);
-        }
-        return pathPool.frequentElements();
+        pathPool.addElements(wikiLinks);
+        // The more links, the more list items => you can expect that a site
+        // with a lot of wikilinks will have relatively few other links
+        // compared to the wikilinks
+        var minFrequencyOfElementPath;
+        if (wikiLinks.length > 100)
+            minFrequencyOfElementPath = 0.2;
+         else
+            minFrequencyOfElementPath = 0.4;
+        return pathPool.frequentElements(minFrequencyOfElementPath);
     };
 };
 wl.addJavaScriptFiles(['http://c9.io/' + wl.USER + '/wikilists/workspace/parser/element-path.js']);
+setTimeout(function() {
+    wl.parser.parseListElements($(document)).css('background-color', 'yellow');
+}, 1000);
 //wl.parser.dummyFindListElements().css('background-color', 'yellow');

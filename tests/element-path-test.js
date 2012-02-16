@@ -45,14 +45,17 @@ test("adding elements to the path pool, retrieving most used path", function() {
     var elementInDOM = jqueryDOM.find("a")[0];   
     var similarElementInDOM = jqueryDOM.find("a")[1];
     pathPool.addElement(elementInDOM);
-    equal(pathPool.frequentElements().length, 1,
+    equal(pathPool.frequentElements(1).length, 1,
       "most frequent elements should contain one element after adding");
     pathPool.addElement(similarElementInDOM);
-    equal(pathPool.frequentElements().length, 2,
+    equal(pathPool.frequentElements(1).length, 2,
       "similar elements should be grouped together");
     var differentElementInDOM = jqueryDOM.find("test")[0];
-    equal(pathPool.frequentElements().length, 2,
+    pathPool.addElement(differentElementInDOM);
+    equal(pathPool.frequentElements(0.5).length, 2,
       "different elements should not be grouped together");
+    equal(pathPool.frequentElements(0.2).length, 3,
+      "different element should be present with frequency of its path at 0.33!");
 });
 
 test("understanding jquery elements and context", function() {

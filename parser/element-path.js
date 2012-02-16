@@ -28,12 +28,14 @@ wl.parser.elementPathPool = function(pathComparator) {
         this.path = path;
         this.elements = [];
     };
+    var numberOfElements = 0;
     var createElementPath = function(element) {
         var elementPath = new wl.parser.path();
-        elementPath.addNode(element.tagName, -1);
+        var elementIsChildNr = $(element).parent().contents().index(element);
+        elementPath.addNode(element.tagName, elementIsChildNr);
         var parents = $(element).parents();
         for (var i = 0; i < parents.length; i++) {
-            var isChildNr = -1;
+            var isChildNr = -1;            
             elementPath.addNode(parents[i].tagName, isChildNr);
         }
         return elementPath;
@@ -48,6 +50,12 @@ wl.parser.elementPathPool = function(pathComparator) {
         return -1;
     };
     var _pathsAndElements = [];
+    // for convenience
+    this.addElements = function(elements) {
+        for (var i = 0; i < elements.length; i++) {
+            this.addElement(elements[i]);
+        }
+    };
     this.addElement = function(element) {
         var elementPath = createElementPath(element);
         // TODO: function getMatchingPathIndex
@@ -59,20 +67,23 @@ wl.parser.elementPathPool = function(pathComparator) {
             newPathAndElements.elements.push(element);
             _pathsAndElements.push(newPathAndElements);
         }
+        numberOfElements++;
     };
-    this.frequentElements = function() {
+    this.frequentElements = function(minFrequencyOfPath) {
         if (_pathsAndElements.length === 0)
             return $();
-        var maxNrElements = -1;
-        var maxIndex;
+        var frequentElements = [];
         for (var i = 0; i < _pathsAndElements.length; i++) {
-            var numElements = _pathsAndElements[i].elements.length;
-            if (numElements > maxNrElements) {
-                maxIndex = i;
-                maxNrElements = numElements;
+            var numElementsOfPath = _pathsAndElements[i].elements.length;
+            var frequencyOfPath = numElementsOfPath / numberOfElements;
+            console.log("firstElement: " + _pathsAndElements[i].elements[0]);
+            console.log("num elements: " + numElementsOfPath);
+            console.log("freq: " + frequencyOfPath);
+            if (frequencyOfPath >= minFrequencyOfPath) {
+                frequentElements = frequentElements.concat(_pathsAndElements[i].elements);
             }
         }
-        var frequentElements = _pathsAndElements[maxIndex].elements;
+        console.log("minFreq: " +  minFrequencyOfPath);
         return $(frequentElements);
     };
 };
