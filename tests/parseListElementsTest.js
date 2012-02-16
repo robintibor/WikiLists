@@ -3,16 +3,16 @@ wl.parserTests = new function() {
         for (var i = 0; i < testSites.length; i++) {
             var testSite = testSites[i].site;
             var testSelector = testSites[i].selector;
-            var filters = testSites[i].filters;
-            parseOneSite(testSite, testSelector, filters);
+            var notFilters = testSites[i].notFilters;
+            parseOneSite(testSite, testSelector, notFilters);
         }
     };
-    var parseOneSite = function(testSite, testSelector, filters) {
+    var parseOneSite = function(testSite, testSelector, notFilters) {
         $.get(testSite, function(htmlString) {
             var htmlDOM = $(htmlString);
             var expectedListElements = htmlDOM.find(testSelector);
-            for (var i = 0; i < filters.length; i++) {
-                var filter = filters[i];
+            for (var i = 0; i < notFilters.length; i++) {
+                var filter = notFilters[i];
                 expectedListElements = expectedListElements.not(filter);
             }
             var parserListElements = wl.parser.parseListElements(htmlDOM);
@@ -21,15 +21,15 @@ wl.parserTests = new function() {
             for (var i = 0; i < parserListElements.size(); i++) {
                 equal($(parserListElements[i]).html(), $(expectedListElements[i]).html());
             }
-        });
-        
+        });        
     };
     var testSites = [ { site: 'test-sites/List_of_healthcare_reform_advocacy_groups_in_the_United_States.html',
                         selector: '.mw-content-ltr > ul li a[href!="http://www.uhcan.org/"]',
-                        filters: ['#toc a', 'h2:has(span#See_also) ~ * * a']}];
-                        // next site:
-                        // http://en.wikipedia.org/wiki/List_of_Christian_denominations with
-                        //$('.mw-content-ltr > table ul li a[href^="\\/wiki\\/"]').not('h2:has(span#See_also) ~ * * a').css('background-color', 'yellow')
+                        notFilters: ['#toc a', 'h2:has(span#See_also) ~ * * a']}];
+                        /* TODO:
+                        { site: 'test-sites/List_of_Christian_denominations.html',
+                        selector: '.mw-content-ltr > table ul li a[href^="\\/wiki\\/"]',
+                        notFilters: ['#toc a', 'h2:has(span#See_also) ~ * * a'] }];*/
 };
         
 
