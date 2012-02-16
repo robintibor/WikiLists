@@ -30,7 +30,9 @@ wl.parser = new function() {
     };
     var comparePathByTags = function(nodeList, otherNodeList) {
 //        if (nodeList.length != otherNodeList.length) return false;
-        for (var i = 0; i < Math.min(nodeList.length, 8); i++) {
+        for (var i = 0; i < Math.min(nodeList.length, 2); i++) {
+            if (i === 0 && nodeList[i].isChildNr != otherNodeList[i].isChildNr)
+                return false;
             if (nodeList[i].tag != otherNodeList[i].tag)
                 return false;
         }
@@ -42,7 +44,7 @@ wl.parser = new function() {
         wikiLinks = wikiLinks.not('h2:has(span#See_also) ~ * * a');
         wikiLinks = wikiLinks.not(':header:has(span.editsection) a');
         wikiLinks = wikiLinks.not(contentDOM.find('h2:has(span#References) ~ *').find('a'));
-        wikiLinks.css('background-color', 'green');
+        wikiLinks.css('background-color', 'yellow');
         var pathPool = new wl.parser.elementPathPool(comparePathByTags);
         pathPool.addElements(wikiLinks);
         // The more links, the more list items => you can expect that a site
@@ -58,6 +60,6 @@ wl.parser = new function() {
 };
 wl.addJavaScriptFiles(['http://c9.io/' + wl.USER + '/wikilists/workspace/parser/element-path.js']);
 setTimeout(function() {
-    wl.parser.parseListElements($(document)).css('background-color', 'yellow');
+    wl.parser.parseListElements($(document)).css('background-color', 'green');
 }, 1000);
 //wl.parser.dummyFindListElements().css('background-color', 'yellow');
