@@ -17,7 +17,6 @@ wl.parser = new function() {
         var listElementsInOriginal = $();
         for (var i = 0; i < listElementsInClone.size(); i++) {            
             var selector = wl.parser.createTagIdAndTextSelector(listElementsInClone[i]);
-            console.log(selector);
             var newElements = $(htmlDOM).find(selector);
             listElementsInOriginal = listElementsInOriginal.add(newElements);
         }
