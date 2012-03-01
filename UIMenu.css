@@ -1,18 +1,18 @@
 .WLMenu {
     float:left;
-    height:150px;
-    left:161px;
-    background-color:#FFFFFF;
+    height:35px;
+    left:0px;
     position:fixed;
-    opacity: 0.9;
     z-index:2;
-    width:87%;
+    width:100%;
     display:none;
     border-radius:4px;
 }
 .WLMenuButton {
-    float:left; 
+    float:left;
     height:20px;
+    top:5px;
+    font-size:5px;
     position:fixed;
     background-color:#708090; 
     opacity: 0.9; 
@@ -34,4 +34,13 @@
 .shadow {
 -moz-box-shadow: 0 0 10px 1px #999;
 -webkit-box-shadow: 0 0 10px 1px #999;
+}
+.gradient{
+    background: -moz-linear-gradient(top, rgba(63,106,163,0.65) 0%, rgba(63,106,163,0.65) 10%, rgba(63,106,163,0) 65%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(63,106,163,0.65)), color-stop(10%,rgba(63,106,163,0.65)), color-stop(65%,rgba(63,106,163,0))); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, rgba(63,106,163,0.65) 0%,rgba(63,106,163,0.65) 10%,rgba(63,106,163,0) 65%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, rgba(63,106,163,0.65) 0%,rgba(63,106,163,0.65) 10%,rgba(63,106,163,0) 65%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top, rgba(63,106,163,0.65) 0%,rgba(63,106,163,0.65) 10%,rgba(63,106,163,0) 65%); /* IE10+ */
+    background: linear-gradient(top, rgba(63,106,163,0.65) 0%,rgba(63,106,163,0.65) 10%,rgba(63,106,163,0) 65%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a63f6aa3', endColorstr='#003f6aa3',GradientType=0 ); /* IE6-9 */
 }
