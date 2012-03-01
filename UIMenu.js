@@ -3,10 +3,14 @@ wl.UIMenu = new function() {
     this.statusMenu = 'close';
     this.statusDialog1 = 'close';
     this.statusDialog2 = 'close';
+    this.statusBroccoliDialog = 'close';
     //__________________________________________________________________________
+    // Add close functionality for geven object
     var addCloseImages = function(obj, imgID)
     {
-        var closeImgSource = 'http://c9.io/' + wl.USER + '/wikilists/workspace/closeEntry.png';
+        var closeImgSource = 'http://c9.io/' 
+                           + wl.USER 
+                           + '/wikilists/workspace/closeEntry.png';
         
         $(obj).after('<img id="' + imgID 
                         + '" src="' + closeImgSource 
@@ -45,6 +49,14 @@ wl.UIMenu = new function() {
             },
             show: 'mouseover',
             hide: 'mouseout'
+        });
+    }
+    //__________________________________________________________________________
+    // Set source for Broccoli-Farme
+    this.loadBroccoliFrame  = function(source)
+    {
+        $('#UIMenuBroccoliFrame').attr({
+                 src: source
         });
     }
     //__________________________________________________________________________
@@ -121,6 +133,28 @@ wl.UIMenu = new function() {
         //wl.UIMenu.BroccoliDialog.parent().addClass('shadow');
         wl.UIMenu.BroccoliDialog.parent().css({ position: "fixed" });
         wl.UIMenu.BroccoliDialog.parent().css({ opacity: 0.9});
+        
+        //----
+        // Broccoli frame dialog
+        wl.UIMenu.BroccoliFrameDialog = $('<div style="font-family: arial;" id="UIMenuFrameDialog"> </div>')
+        .html('')
+    	.dialog({
+			autoOpen: false,
+            //show: 'slow',            
+			position: [700,35],
+            beforeClose: function(event, ui) { wl.UIMenu.BroccoliFrameDialog.parent().css({ position: "fixed" });  wl.UIMenu.statusBroccoliDialog='close';},
+            dragStop:function(event, ui) { wl.UIMenu.BroccoliFrameDialog.parent().css({ position: "fixed" }); },
+            beforeOpen: function(event, ui) {wl.UIMenu.BroccoliFrameDialog.parent().css({ position: "fixed" }); },
+            resizeStop: function(event, ui) { wl.UIMenu.BroccoliFrameDialog.parent().css({ position: "fixed" }); },
+			height: 300,
+            zIndex: 4000,
+			width: '50%',
+			title: 'Brocolli-Instance'
+		});
+        //wl.UIMenu.BroccoliDialog.parent().addClass('shadow');
+        wl.UIMenu.BroccoliFrameDialog.parent().css({ position: "fixed" });
+        wl.UIMenu.BroccoliFrameDialog.parent().css({ opacity: 0.9});
+        
     }
     //__________________________________________________________________________
     this.loadjscssfile = function(filename, filetype){ 
@@ -150,6 +184,9 @@ wl.UIMenu = new function() {
             if (wl.UIMenu.statusDialog2 == 'open') {
                 wl.UIMenu.BroccoliDialog.dialog("open");
             }
+            if (wl.UIMenu.statusBroccoliDialog == 'open') {
+                wl.UIMenu.BroccoliFrameDialog.dialog("open");
+            }
             
         }
         else if (wl.UIMenu.statusMenu =='open') {
@@ -162,21 +199,41 @@ wl.UIMenu = new function() {
                 wl.UIMenu.BroccoliDialog.dialog("close");
                 wl.UIMenu.statusDialog2 = 'open'
             }            
+            if (wl.UIMenu.statusBroccoliDialog == 'open') {
+                wl.UIMenu.BroccoliFrameDialog.dialog("close");
+                wl.UIMenu.statusBroccoliDialog = 'open'
+            }  
         }
-        $('#UIMenu').toggle('slow');
+        $('#UIMenu').slideToggle('slow');
     }
 };
-$(document).ready(function(){
+$(document).ready(function()
+{    
+    // Check if menu is allready loaded
     if ($('#UIMenu').html() == null){    
+        
+        // Load additional files
         wl.UIMenu.loadjscssfile('http://c9.io/' +  wl.USER + '/wikilists/workspace/UIMenu.css', "css"); 
         wl.UIMenu.loadjscssfile('http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css', "css"); 
-        $('body').prepend('<div style="border-radius:0px; z-index:3; left:161px;"class="WLMenuButton shadow"; onclick=wl.UIMenu.toggle_sidebar(); id="sidebar1"><img src="http://c9.io/' + wl.USER + '/wikilists/workspace/broccoliLogoLittle.png"></div>');
-        $('body').prepend('<div class="WLMenu shadow" id="UIMenu"></div>');
-        $('#UIMenu').append('<div style="position:absolute; top:40%; left:10px;" class="WLMenuButton shadow"; id="WLMenuQueryExe"> execQuery</div>');
-        $('#UIMenu').append('<div style="position:absolute; top:60%; left:10px;" class="WLMenuButton shadow"; id="WLMenuDialog1"> dialog1</div>');
-        $('#UIMenu').append('<div style="position:absolute; top:80%; left:10px;" class="WLMenuButton shadow"; id="WLMenuDialog2"> dialog2</div>');
-        $('#UIMenu').append('<div class="WLMenuEditor shadow"; id="WLMenuEditor">Editor</div>'); 
+        
+        // Add UIMenu-Button
+        $('body').prepend('<div style=" position:fixed; z-index:3; top:0px; left:0px;" id="sidebar1"; onclick=wl.UIMenu.toggle_sidebar();> <a href="#"> <img src="http://c9.io/' + wl.USER + '/wikilists/workspace/broccoliLogoLittle.png"></a> </div>');
+        // Add Menu
+        $('body').prepend('<div class="WLMenu gradient" style="padding-left:110px" id="UIMenu"></div>');
+        
+        // Add necessary buttons
+        $('#UIMenu').append('<div style="top:3px; position:relative; margin-left:0px;" class="WLMenuButton shadow"; id="WLMenuQueryExe"><div style="color:#FF474A; font-size:10px;"><b>execQuery</b></div></div>');
+        $('#WLMenuQueryExe').button();
+        $('#UIMenu').append('<div style="top:3px; position:relative; margin-left:10px;" class="WLMenuButton shadow"; id="WLMenuDialog1"><div style="color:#7ABCFF; font-size:10px;"><b>dialog1</b></div></div>');
+        $('#WLMenuDialog1').button();
+        $('#UIMenu').append('<div style="top:3px; position:relative; margin-left:10px;" class="WLMenuButton shadow"; id="WLMenuDialog2"><div style="color:#7ABCFF; font-size:10px;"><b>dialog2</b></div></div>');
+        $('#WLMenuDialog2').button();
+        $('#UIMenu').append('<div style="top:3px; position:relative; margin-left:10px;" class="WLMenuButton shadow"; id="WLMenuBtBroccoli"><div style="color:#6bba70; font-size:10px;"><b>BrocoliFrame</b></div> </div>');
+        $('#WLMenuBtBroccoli').button();
+        //$('#UIMenu').append('<div class="WLMenuEditor shadow"; id="WLMenuEditor">Editor</div>'); 
         wl.UIMenu.loadDialogs();
+        
+        // Event handlers for the buttons above
         $('#WLMenuDialog1').click(function() 
         { 
             if (wl.UIMenu.statusDialog1 == 'close')
@@ -200,6 +257,26 @@ $(document).ready(function(){
                 wl.UIMenu.BroccoliDialog.dialog("close");
                 wl.UIMenu.statusDialog2 = 'close';    
             }
+            return false;
+        }); 
+        
+        $('#WLMenuBtBroccoli').click(function() 
+        { 
+            if (wl.UIMenu.statusBroccoliDialog == 'close')
+            {
+                wl.UIMenu.BroccoliFrameDialog.dialog("open");
+                wl.UIMenu.statusBroccoliDialog= 'open';    
+            } else if (wl.UIMenu.statusBroccoliDialog == 'open') {
+                wl.UIMenu.BroccoliFrameDialog.dialog("close");
+                wl.UIMenu.statusBroccoliDialog = 'close';    
+            }
+            console.log("logging messages");
+            window.addEventListener('message',function(event) {
+                console.log('received in topdocument:  ',event.data);
+            },false);
+            if ($('#UIMenuBroccoliFrame').html() == null) 
+                $('#UIMenuFrameDialog').append('<iframe style="position:relative; height:95%; width:99%;"  id="UIMenuBroccoliFrame" />');
+            wl.UIMenu.loadBroccoliFrame("http://stromboli.informatik.uni-freiburg.de:6222/BroccoliWikiLists/#tuples=1~CLASS::e:person:person%7C1;RELATION::r:created:::CLASS::e:entity:Entity:::CLASS::e:entity:Entity;2~CLASS::e:station:station&active=2");
             return false;
         }); 
         
