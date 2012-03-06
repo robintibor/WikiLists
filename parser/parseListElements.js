@@ -8,10 +8,11 @@ wl.parser = new function() {
         callbackForElementsAndBroccoliQueryString = callback;
         this.getListElementsAndQueryStringFromServer();
     };
-    this.getListElementsAndQueryStringFromServer = function() {       
+    this.getListElementsAndQueryStringFromServer = function() {
+        var stromboliRequestURL = 'http://stromboli.informatik.uni-freiburg.de:' + wl.STROMBOLIPORT +
+          '/' + document.location.href;
         jQuery.ajax({
-          url: 'http://stromboli.informatik.uni-freiburg.de:' + wl.parser.STROMBOLIPORT +
-          '/' + document.location.href,
+          url: stromboliRequestURL,
           dataType: 'jsonp',
           data: {
               format: 'json'
@@ -43,4 +44,5 @@ wl.parser = new function() {
         return linkElements;
     };
 };
+console.log('in parsing');
 wl.parser.computeListElementsAndQueryString(function (listElements, queryString) { $(listElements).css('background-color', 'green'); console.log('querystring: ' + queryString); });
