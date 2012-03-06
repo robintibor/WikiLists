@@ -10,7 +10,8 @@ wl.parser = new function() {
     };
     this.getListElementsAndQueryStringFromServer = function() {       
         jQuery.ajax({
-          url: 'http://stromboli.informatik.uni-freiburg.de:29385/' + document.location.href,
+          url: 'http://stromboli.informatik.uni-freiburg.de:' + wl.parser.STROMBOLIPORT +
+          '/' + document.location.href,
           dataType: 'jsonp',
           data: {
               format: 'json'
