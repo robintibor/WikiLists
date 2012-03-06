@@ -9,8 +9,8 @@ wl.parser = new function() {
         this.getListElementsAndQueryStringFromServer();
     };
     this.getListElementsAndQueryStringFromServer = function() {
-        var stromboliRequestURL = 'http://stromboli.informatik.uni-freiburg.de:' + wl.STROMBOLIPORT +
-          '/' + document.location.href;
+        var stromboliRequestURL = 'http://stromboli.informatik.uni-freiburg.de:'
+        + wl.STROMBOLIPORT + '/' + document.location.href;
         jQuery.ajax({
           url: stromboliRequestURL,
           dataType: 'jsonp',
@@ -44,5 +44,4 @@ wl.parser = new function() {
         return linkElements;
     };
 };
-console.log('in parsing');
 wl.parser.computeListElementsAndQueryString(function (listElements, queryString) { $(listElements).css('background-color', 'green'); console.log('querystring: ' + queryString); });
