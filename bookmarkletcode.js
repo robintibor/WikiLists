@@ -1,1 +1,1 @@
-javascript:(function(){document.body.appendChild(document.createElement('script')).src='http://c9.io/ikset/wikilists/workspace/init.js';})();
+javascript:(function(){document.body.appendChild(document.createElement('script')).src='http://c9.io/robintibor/wikilists/workspace/init.js';})();

@@ -1,55 +1,3 @@
-wl.parserTests = new function() {
-    this.testParsingKnownSites = function() {        
-        for (var i = 0; i < testSites.length; i++) {
-            var testSite = testSites[i].site;
-            var testSelector = testSites[i].selector;
-            var notFilters = testSites[i].notFilters;
-            parseOneSite(testSite, testSelector, notFilters);
-        }
-    };
-    var parseOneSite = function(testSite, testSelector, notFilters) {
-        $.get(testSite, function(htmlString) {
-            var htmlDOM = $(htmlString);
-            var expectedListElements = htmlDOM.find(testSelector);
-            for (var i = 0; i < notFilters.length; i++) {
-                var filter = notFilters[i];
-                expectedListElements = expectedListElements.not(filter);
-            }
-            var parserListElements = wl.parser.parseListElements(htmlDOM);
-            equal(parserListElements.size(), expectedListElements.size(),
-                    'parser should get as many elements as expected');
-            for (var i = 0; i < parserListElements.size(); i++) {
-                equal($(parserListElements[i]).html(), $(expectedListElements[i]).html());
-            }
-        });        
-    };
-    var testSites = [ { site: 'test-sites/List_of_healthcare_reform_advocacy_groups_in_the_United_States.html',
-                        selector: '.mw-content-ltr > ul li a[href!="http://www.uhcan.org/"]',
-                        notFilters: ['#toc a', 'h2:has(span#See_also) ~ * * a']}];
-                        /* TODO:
-                        { site: 'test-sites/List_of_Christian_denominations.html',
-                        selector: '.mw-content-ltr > table ul li a[href^="\\/wiki\\/"]',
-                        notFilters: ['#toc a', 'h2:has(span#See_also) ~ * * a'] }];*/
-};
-        
-
-test('testParsingListElements', function() {
-    stop();
-    var timeToLoadSites = 300;
-    wl.parserTests.testParsingKnownSites();
-    setTimeout(function() {  
-        start();  
-    }, timeToLoadSites);  
-});
-
-test('createSelectors', function() {
-    var htmlElement = $('<a href = "wiki" id="testid">bla</a>')[0];    
-    equal(wl.parser.createTagIdAndTextSelector(htmlElement), 
-        'A#testid:contains("bla")', 'selector with id tag text should be correct');    
-    equal(wl.parser.createTagIdAndTextSelector($('<a></a>')[0]), 
-        'A', 'selector without anything should be correct');    
-});
-
 // Test for me for understanding jquery
 test('add elements to jquery set', function () {
     var emptyJQueryList = $();
@@ -58,3 +6,12 @@ test('add elements to jquery set', function () {
     equal(emptyJQueryList.length, 1);
 });
 
+test('test extracting links from a group', function() {
+    var pageDOM = $('<div> <a href="testhref"></a></div>');
+    var testLinkSet = {'testhref' : true};
+    equal(wl.parser.findLinkElements(pageDOM, testLinkSet).length, 1,
+    "should find the link element by matching href");
+    var pageDOM = $('<div> <a href="testhref"></a><a href="falsehref"></a></div>');
+    equal(wl.parser.findLinkElements(pageDOM, testLinkSet).length, 1,
+    "should not find the link element with false href");
+});
