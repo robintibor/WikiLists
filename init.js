@@ -1,6 +1,6 @@
 var wikiLists = new function() {
-    this.USER = 'robintibor';
-    this.STROMBOLIPORT = 29385;
+    this.USER = 'ikset';
+    this.STROMBOLIPORT = 29386;
     this.addJavaScriptFiles = function(fileURLS) {
         for (var i = 0; i < fileURLS.length; i++) {
             var javaScriptSource = fileURLS[i];
