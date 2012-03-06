@@ -21,4 +21,4 @@ var wikiLists = new function() {
         this.addJavaScriptFiles(javaScriptSources);
     };
 };
-wikiLists.i
+wikiLists.init();
