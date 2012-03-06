@@ -8,9 +8,11 @@ wl.parser = new function() {
         callbackForElementsAndBroccoliQueryString = callback;
         this.getListElementsAndQueryStringFromServer();
     };
-    this.getListElementsAndQueryStringFromServer = function() {       
+    this.getListElementsAndQueryStringFromServer = function() {
+        var stromboliRequestURL = 'http://stromboli.informatik.uni-freiburg.de:'
+        + wl.STROMBOLIPORT + '/' + document.location.href;
         jQuery.ajax({
-          url: 'http://stromboli.informatik.uni-freiburg.de:29385/' + document.location.href,
+          url: stromboliRequestURL,
           dataType: 'jsonp',
           data: {
               format: 'json'
