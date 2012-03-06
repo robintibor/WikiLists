@@ -4,6 +4,8 @@ wl.UIMenu = new function() {
     this.statusDialog1 = 'close';
     this.statusDialog2 = 'close';
     this.statusBroccoliDialog = 'close';
+    this.wikiListsElements;
+    
     //__________________________________________________________________________
     // Add close functionality for geven object
     var addCloseImages = function(obj, imgID)
@@ -53,6 +55,14 @@ wl.UIMenu = new function() {
     }
     //__________________________________________________________________________
     // Set source for Broccoli-Farme
+    this.refreshUI  = function(listElements, broccoliQueryStr)
+    {
+        alert(broccoliQueryStr);
+        wl.UIMenu.wikiListsElements = listElements;
+        wl.UIMenu.loadWikiDialog();
+    }
+    //__________________________________________________________________________
+    // Set source for Broccoli-Farme
     this.loadBroccoliFrame  = function(source)
     {
         $('#UIMenuBroccoliFrame').attr({
@@ -65,7 +75,7 @@ wl.UIMenu = new function() {
         var htmlStr = '';
         var divClass = 'class="shadow wikiDialogEntrys"; ';
         var divStyle = 'style="border-radius:4px;font-size:18px; font-family:solid; background-color:#9C9C9C; margin-bottom:10px;"';
-        $(wl.parser.parseListElements($(document))).each(function (i){
+        $(wl.UIMenu.wikiListsElements).each(function (i){
             i++;
             var divID = 'id="wikiDialogEntry_' + i + '" ';
             htmlStr+= '<div ' + divID + divClass + divStyle + ' >' + $(this).html() + '</div>';
@@ -97,7 +107,7 @@ wl.UIMenu = new function() {
     //__________________________________________________________________________
     this.postQuery = function()
     {
-        wl.UIMenu.loadWikiDialog();
+        wl.parser.computeListElementsAndQueryString(wl.UIMenu.refreshUI);
     }
     //__________________________________________________________________________
     this.loadDialogs = function(){ 
