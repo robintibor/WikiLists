@@ -8,10 +8,10 @@ test('add elements to jquery set', function () {
 
 test('test extracting links from a group', function() {
     var pageDOM = $('<div> <a href="testhref"></a></div>');
-    var testLinkSet = {'testhref' : true};
-    equal(wl.parser.findLinkElements(pageDOM, testLinkSet).length, 1,
+    var testListItemArray = [{'href' : 'testhref' , 'linkNumbers' : [0]}];
+    equal(wl.parser.findListElements(pageDOM, testListItemArray).length, 1,
     "should find the link element by matching href");
     var pageDOM = $('<div> <a href="testhref"></a><a href="falsehref"></a></div>');
-    equal(wl.parser.findLinkElements(pageDOM, testLinkSet).length, 1,
+    equal(wl.parser.findListElements(pageDOM, testListItemArray).length, 1,
     "should not find the link element with false href");
 });

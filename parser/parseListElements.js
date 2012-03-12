@@ -29,33 +29,30 @@ wl.parser = new function() {
 
     var extractFirstGroupElements = function(listItemsJSON) {
         var firstGroup = listItemsJSON.listItemGroups[0];
-        var firstGroupHrefSet = firstGroup.listItemsByHref;
-        var linkElements = wl.parser.findListElements($(document), firstGroupHrefSet);
+        var linkElements = wl.parser.findListElements($(document), firstGroup);
         return linkElements;
         
     };
     // public for testing purposes ...
-    this.findListElements = function(jqueryDOM, hrefToListItem) {
+    this.findListElements = function(jqueryDOM, listItemArray) {
         var listItemElements = $();
         var linkElements = jqueryDOM.find('a');
-        for (var hrefOfElement in hrefToListItem) {
-            var listItem = hrefToListItem[hrefOfElement];
-            var listItemIndices = listItem.linkNumbersForHref;
-            var listItemElementsForHref = findListItemElementsForHref(
-                linkElements,
-                hrefOfElement, listItemIndices);
-            listItemElements = listItemElements.add(listItemElementsForHref);
+        for (var i = 0; i < listItemArray.length; i++) {
+            var listItem = listItemArray[i];
+            var DOMElementsForThisItem = findListItemElements(listItem,
+                linkElements);
+            listItemElements = listItemElements.add(DOMElementsForThisItem);
         }
         return listItemElements;
     };
     
-    var findListItemElementsForHref= function(linkElements, hrefOfElement,
-    listItemIndices) {
+    var findListItemElements= function(listItem, linkElements) {
         var listItemElements = $();
         var linkElementsForHref = linkElements.filter('a[href="' +
-        hrefOfElement + '"]');
-        for (var i = 0; i < listItemIndices.length; i++) {
-            var listItemIndex = listItemIndices[i];
+        listItem.href + '"]');
+        var listItemLinkNumbers = listItem.linkNumbers;
+        for (var i = 0; i < listItemLinkNumbers.length; i++) {
+            var listItemIndex = listItemLinkNumbers[i];
             var listItemElement = linkElementsForHref.get(listItemIndex);
             listItemElements = listItemElements.add(listItemElement);
         }
