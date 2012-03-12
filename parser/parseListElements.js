@@ -29,19 +29,37 @@ wl.parser = new function() {
 
     var extractFirstGroupElements = function(listItemsJSON) {
         var firstGroup = listItemsJSON.listItemGroups[0];
-        var firstGroupHrefSet = firstGroup.listItemScores;
-        return wl.parser.findLinkElements($(document), firstGroupHrefSet);
+        var firstGroupHrefSet = firstGroup.listItemsByHref;
+        var linkElements = wl.parser.findListElements($(document), firstGroupHrefSet);
+        return linkElements;
         
     };
     // public for testing purposes ...
-    this.findLinkElements = function(jqueryDOM, hrefSet) {
-        var linkElements = $();
-        linkElements = jqueryDOM.find('a').filter(function() { 
-                var hrefOfElement = $(this).attr('href');
-                if (hrefSet.hasOwnProperty(hrefOfElement)) return true;
-                else return false;
-            });
-        return linkElements;
+    this.findListElements = function(jqueryDOM, hrefToListItem) {
+        var listItemElements = $();
+        var linkElements = jqueryDOM.find('a');
+        for (var hrefOfElement in hrefToListItem) {
+            var listItem = hrefToListItem[hrefOfElement];
+            var listItemIndices = listItem.linkNumbersForHref;
+            var listItemElementsForHref = findListItemElementsForHref(
+                linkElements,
+                hrefOfElement, listItemIndices);
+            listItemElements = listItemElements.add(listItemElementsForHref);
+        }
+        return listItemElements;
+    };
+    
+    var findListItemElementsForHref= function(linkElements, hrefOfElement,
+    listItemIndices) {
+        var listItemElements = $();
+        var linkElementsForHref = linkElements.filter('a[href="' +
+        hrefOfElement + '"]');
+        for (var i = 0; i < listItemIndices.length; i++) {
+            var listItemIndex = listItemIndices[i];
+            var listItemElement = linkElementsForHref.get(listItemIndex);
+            listItemElements = listItemElements.add(listItemElement);
+        }
+        return listItemElements;            
     };
 };
 wl.parser.computeListElementsAndQueryString(function (listElements, queryString) { $(listElements).css('background-color', 'green'); console.log('querystring: ' + queryString); });
