@@ -5,12 +5,18 @@ wl.parser = new function() {
     // callback function should accept elements as first parameter
     // and query string for broccoli query
     this.computeListElementsAndQueryString = function(callback) {
+        this.computeListElementsAndQueryStringForWikiURL(callback,
+            document.location.href);
+    };  
+    this.computeListElementsAndQueryStringForWikiURL = function(callback,
+        wikiURL) {
         callbackForElementsAndBroccoliQueryString = callback;
-        this.getListElementsAndQueryStringFromServer();
+        this.getListElementsAndQueryStringForWikiURL(wikiURL);
     };
-    this.getListElementsAndQueryStringFromServer = function() {
-        var stromboliRequestURL = 'http://stromboli.informatik.uni-freiburg.de:'
-        + wl.STROMBOLIPORT + '/' + document.location.href;
+    this.getListElementsAndQueryStringForWikiURL = function(wikiURL)  {
+        var stromboliRequestURL = 
+            'http://stromboli.informatik.uni-freiburg.de:' +
+            wl.STROMBOLIPORT + '/' + wikiURL;
         jQuery.ajax({
           url: stromboliRequestURL,
           dataType: 'jsonp',
@@ -35,15 +41,15 @@ wl.parser = new function() {
     };
     // public for testing purposes ...
     this.findListElements = function(jqueryDOM, listItemArray) {
-        var listItemElements = $();
+        var listElements = $();
         var linkElements = jqueryDOM.find('a');
         for (var i = 0; i < listItemArray.length; i++) {
             var listItem = listItemArray[i];
             var DOMElementsForThisItem = findListItemElements(listItem,
                 linkElements);
-            listItemElements = listItemElements.add(DOMElementsForThisItem);
+            listElements = listElements.add(DOMElementsForThisItem);
         }
-        return listItemElements;
+        return listElements;
     };
     
     var findListItemElements= function(listItem, linkElements) {
