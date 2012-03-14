@@ -43,36 +43,26 @@ wl.parser = new function() {
     };
     // public for testing purposes ...
     this.findListElements = function(jqueryDOM, listItemArray) {
-        var listElements = $();
+        var listElements = [];
         for (var i = 0; i < listItemArray.length; i++) {
             var listItem = listItemArray[i];
-            var DOMElementsForThisItem = findListItemElements(listItem,
-                jqueryDOM);
-            listElements = listElements.add(DOMElementsForThisItem);
+            var DOMElementsForThisItem = findListItemElementsAndStoreData(
+                listItem, jqueryDOM);
+            listElements = listElements.concat(DOMElementsForThisItem);
         }
-        console.log("inside find item elements: " + timeInsideThisFunction);
-        console.log("outside find item elements: " + timeOutsideThisFunction);
-        console.log("total: " + (timeInsideThisFunction + timeOutsideThisFunction));
-        return listElements;
+        return $(listElements);
     };
-    var lastTime = null;
-    var timeOutsideThisFunction = 0;
-    var timeInsideThisFunction = 0;
-    var findListItemElements= function(listItem, jqueryDOM) {
-        var listItemElements = $();
-        var newTime = Date.now();
-        if (lastTime!= null)
-            timeOutsideThisFunction += (newTime - lastTime);        
+    var findListItemElementsAndStoreData= function(listItem, jqueryDOM) {
+        var listItemElements = [];     
         var linkElementsForHref = jqueryDOM.find('a[href="' +
             listItem.href + '"]');
-        lastTime = Date.now();
-        timeInsideThisFunction += (lastTime - newTime);
-        return linkElementsForHref;
         var listItemLinkNumbers = listItem.linkNumbers;
         for (var i = 0; i < listItemLinkNumbers.length; i++) {
             var listItemIndex = listItemLinkNumbers[i];
             var listItemElement = linkElementsForHref.get(listItemIndex);
-            listItemElements = listItemElements.add(listItemElement);
+            $.data(listItemElement, 'score', listItem.score);
+            $.data(listItemElement, 'classes', listItem.classes);
+            listItemElements.push(listItemElement);
         }
         return listItemElements;            
     };
