@@ -15,6 +15,7 @@ var wikiLists = new function() {
     this.init = function() {
         var javaScriptSources = [ 'http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js',
                                   'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js',
+                                  'http://fgnass.github.com/spin.js/dist/spin.min.js',
                                   'http://c9.io/' + wikiLists.USER + '/wikilists/workspace/jquery.qtip-1.0.0-rc3.min.js',
                                   'http://c9.io/' + wikiLists.USER + '/wikilists/workspace/parser/parseListElements.js',
                                   'http://c9.io/' + wikiLists.USER + '/wikilists/workspace/UIMenu.js'];

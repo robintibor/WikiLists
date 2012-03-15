@@ -1,10 +1,12 @@
 var wl = wikiLists ||  {};
 wl.UIMenu = new function() {
     this.statusMenu = 'close';
+    this.spinner;
     this.statusDialog1 = 'close';
     this.statusDialog2 = 'close';
     this.statusBroccoliDialog = 'close';
     this.wikiListsElements;
+    this.broccoliQuery = 'http://stromboli.informatik.uni-freiburg.de:6222/BroccoliWikiLists/'
     
     //__________________________________________________________________________
     // Add close functionality for geven object
@@ -38,35 +40,71 @@ wl.UIMenu = new function() {
     var addToolTip = function(obj, str)
     {
          $(obj).qtip({
-            content: str,
+             content: {
+                text: str,
+                title: { text: 'Information' }
+            },
             position: {
                 corner: {
                     target: 'topMiddle',
-                    tooltip: 'bottomMiddle'
+                    tooltip: 'bottomLeft'
                 }
             },
             style: { 
+                width: { max: 1500 },
                 name: 'red',
-                tip: 'bottomMiddle' // Notice the corner value is identical to the previously mentioned positioning corners
+                tip: 'bottomLeft' // Notice the corner value is identical to the previously mentioned positioning corners
             },
             show: 'mouseover',
             hide: 'mouseout'
         });
     }
     //__________________________________________________________________________
-    // Set source for Broccoli-Farme
-    this.refreshUI  = function(listElements, broccoliQueryStr)
+    // Initialize Spiner
+    this.closeSpinner  = function()
     {
-        alert(broccoliQueryStr);
-        wl.UIMenu.wikiListsElements = listElements;
-        wl.UIMenu.loadWikiDialog();
+        $('#UIMenuLoader').remove();
+    }
+    
+    //__________________________________________________________________________
+    // Initialize Spiner
+    this.loadSpinner  = function()
+    {
+        var opts = {
+            lines: 14, // The number of lines to draw
+            length: 19, // The length of each line
+            width: 6, // The line thickness
+            radius: 19, // The radius of the inner circle
+            color: '#000', // #rgb or #rrggbb
+            speed: 1, // Rounds per second
+            trail: 60, // Afterglow percentage
+            shadow: true, // Whether to render a shadow
+            hwaccel: true, // Whether to use hardware acceleration
+            className: 'spinner', // The CSS class to assign to the spinner
+            zIndex: 10001, // The z-index (defaults to 2000000000)
+            top: 'auto', // Top position relative to parent in px
+            left: 'auto' // Left position relative to parent in px
+        };
+        $('body').prepend('<div style="background-color:#3D3D3D; opacity:0.9; position:fixed; z-index:10000; width:100%; height:100%; top:0px; left:0px;" id="UIMenuLoader"></div>');
+        var target = document.getElementById('UIMenuLoader');
+        wl.UIMenu.spinner = new Spinner(opts).spin(target);
     }
     //__________________________________________________________________________
     // Set source for Broccoli-Farme
-    this.loadBroccoliFrame  = function(source)
+    this.refreshUI  = function(listElements, broccoliQueryStr)
+    {
+        wl.UIMenu.wikiListsElements = listElements;
+        wl.UIMenu.loadWikiDialog();
+        wl.UIMenu.broccoliQuery = broccoliQueryStr;
+        wl.UIMenu.loadBroccoliFrame();
+        wl.UIMenu.closeSpinner();
+    }
+    //__________________________________________________________________________
+    // Set source for Broccoli-Farme
+    this.loadBroccoliFrame  = function()
     {
         $('#UIMenuBroccoliFrame').attr({
-                 src: source
+                 src: wl.UIMenu.broccoliQuery
         });
     }
     //__________________________________________________________________________
@@ -81,7 +119,10 @@ wl.UIMenu = new function() {
             htmlStr+= '<div ' + divID + divClass + divStyle + ' >' + $(this).html() + '</div>';
             // add Tooltip to the keyElements at source (Wiki) Site
             var imgID = 'EntryCloseImg_' + i;
-            addToolTip(this, '<div style="color:#0000FF" >'+$(this).html())+'</div>';
+            var toolTipStr = "<b>Classes:</b>"+$.data(this,"classes") + "<br/>"
+                           + "<b>Score:</b>"+$.data(this,"score");
+            //alert($.data(this,"classes"));
+            addToolTip(this, '<div style="color:#3366FF" >'+toolTipStr+'</div>');
             //alert("str" + $(this).mouseover);
             
             //HACK FOR SELECTING ELEMENTS BEGIN 
@@ -107,6 +148,7 @@ wl.UIMenu = new function() {
     //__________________________________________________________________________
     this.postQuery = function()
     {
+        wl.UIMenu.loadSpinner();
         wl.parser.computeListElementsAndQueryString(wl.UIMenu.refreshUI);
     }
     //__________________________________________________________________________
@@ -138,7 +180,7 @@ wl.UIMenu = new function() {
 			height: 300,
             zIndex: 4000,
 			width: 400,
-			title: 'Brocolli-Einträge'
+			title: 'Broccoli-Einträge'
 		});
         //wl.UIMenu.BroccoliDialog.parent().addClass('shadow');
         wl.UIMenu.BroccoliDialog.parent().css({ position: "fixed" });
@@ -159,7 +201,7 @@ wl.UIMenu = new function() {
 			height: 300,
             zIndex: 4000,
 			width: '50%',
-			title: 'Brocolli-Instance'
+			title: 'Broccoli-Instance'
 		});
         //wl.UIMenu.BroccoliDialog.parent().addClass('shadow');
         wl.UIMenu.BroccoliFrameDialog.parent().css({ position: "fixed" });
@@ -286,7 +328,7 @@ $(document).ready(function()
             },false);
             if ($('#UIMenuBroccoliFrame').html() == null) 
                 $('#UIMenuFrameDialog').append('<iframe style="position:relative; height:95%; width:99%;"  id="UIMenuBroccoliFrame" />');
-            wl.UIMenu.loadBroccoliFrame("http://stromboli.informatik.uni-freiburg.de:6222/BroccoliWikiLists/#tuples=1~CLASS::e:person:person%7C1;RELATION::r:created:::CLASS::e:entity:Entity:::CLASS::e:entity:Entity;2~CLASS::e:station:station&active=2");
+            wl.UIMenu.loadBroccoliFrame();
             return false;
         }); 
         
@@ -295,4 +337,4 @@ $(document).ready(function()
             wl.UIMenu.postQuery();
         }); 
     }
-} );
+});
