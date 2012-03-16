@@ -74,7 +74,7 @@ wl.UIMenu = new function() {
             lines: 14, // The number of lines to draw
             length: 19, // The length of each line
             width: 6, // The line thickness
-            radius: 19, // The radius of the inner circle
+            radius: 190, // The radius of the inner circle
             color: '#000', // #rgb or #rrggbb
             speed: 1, // Rounds per second
             trail: 60, // Afterglow percentage
@@ -85,7 +85,7 @@ wl.UIMenu = new function() {
             top: 'auto', // Top position relative to parent in px
             left: 'auto' // Left position relative to parent in px
         };
-        $('body').prepend('<div style="background-color:#3D3D3D; opacity:0.9; position:fixed; z-index:10000; width:100%; height:100%; top:0px; left:0px;" id="UIMenuLoader"></div>');
+        $('body').prepend('<div style="background-color:#3D3D3D; opacity:0.55; position:fixed; z-index:10000; width:100%; height:100%; top:0px; left:0px;" id="UIMenuLoader"></div>');
         var target = document.getElementById('UIMenuLoader');
         wl.UIMenu.spinner = new Spinner(opts).spin(target);
     }

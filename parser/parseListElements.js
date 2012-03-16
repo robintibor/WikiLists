@@ -72,7 +72,7 @@ var hackElementsAndStringCallback = function(listElements, queryString) {
  console.log("list size " + listElements.length);
  console.log('querystring: ' + queryString);
 }
-if (document.location.href.substring(0, "http://en.wikipedia.org".length) ==
-    "http://en.wikipedia.org") {
-    wl.parser.computeListElementsAndQueryString(hackElementsAndStringCallback);
-}
+//if (document.location.href.substring(0, "http://en.wikipedia.org".length) ==
+//    "http://en.wikipedia.org") {
+//    wl.parser.computeListElementsAndQueryString(hackElementsAndStringCallback);
+//}
