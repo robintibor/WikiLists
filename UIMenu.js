@@ -98,6 +98,7 @@ wl.UIMenu = new function() {
         wl.UIMenu.broccoliQuery = broccoliQueryStr;
         wl.UIMenu.loadBroccoliFrame();
         wl.UIMenu.closeSpinner();
+        wl.UIMenu.loadStatisticDialog();
     }
     //__________________________________________________________________________
     // Set source for Broccoli-Farme
@@ -106,6 +107,78 @@ wl.UIMenu = new function() {
         $('#UIMenuBroccoliFrame').attr({
                  src: wl.UIMenu.broccoliQuery
         });
+    }
+    //__________________________________________________________________________
+    this.loadStatisticDialog = function()
+    {
+        var htmlStr='<div style="font-size:14px; padding:2px; border-radius:2px; border-width: 1px; border-style:solid; border-color: #666666; background-color:#EBED8E; width:100%">';
+        htmlStr+='<div style="width=100%;border-radius:2px; text-align: center; font-sytle:solid; font-size:18px; border-width: 1px; border-style:solid; border-color: #666666; font-family:solid; background-color:#D3CC4C; margin-bottom:10px;"><b>Query Information</b></div>'
+        // Add Query Statistic
+        // Add classes statistic
+        var listMap = new Object();
+        var listElementsNumber=0;
+        var foundedInOntology=0;
+        // map all elements for avoiding of double entrys
+        $(wl.UIMenu.wikiListsElements).each(function (i){
+        if (listMap[this]==undefined) {
+                listMap[this]=$.data(this,"classes");
+                if (listMap[this]!='')
+                    foundedInOntology++;
+                listElementsNumber++;
+            }
+        });
+        htmlStr+='<table style="width:100%">'
+        htmlStr+='<tr>'
+                   +'<td><b>Number of parsed ellements from Wiki-Site: </b></td> '
+                   +'<td style="text-align: center;">'+ listElementsNumber +'</td> '
+                + '</tr>';
+        htmlStr+='<tr>'
+                   +'<td><b>Number of founded ellements in Ontology: </b></td> '
+                   +'<td style="text-align: center;">'+ foundedInOntology +'</td> '
+                + '</tr>';                
+        htmlStr+='</table></div></br>';
+        var classToFreqMap =new Object();
+        for (var elem in listMap){
+            var listItemClasses = listMap[elem];
+            for (var listItemId in listItemClasses){
+                if (classToFreqMap[listItemClasses[listItemId]] == undefined){
+                    classToFreqMap[listItemClasses[listItemId]] = 1;
+                }
+                else
+                    classToFreqMap[listItemClasses[listItemId]]+=1;
+            }
+        }
+        var keys = [];
+        // check function for testing, if elem occurs in list; if yes then return false
+        var check = function(list, elem){for (var i=0; i<list.length; i++) if (list[i]==elem) return false; return true;}
+            
+        for (var clStr in classToFreqMap){
+            if (clStr.length>0 && (keys.length ==0 || check(keys, Number(classToFreqMap[clStr]))))
+            {
+                keys.push(Number(classToFreqMap[clStr]));
+            }
+        }
+        var numOrd  = function(a, b){ return (a-b); }
+        keys.sort(numOrd);
+        var divClass = 'class=""; ';
+        var divStyle = 'style="border-radius:2px; font-size:18px; border-width: 1px; border-style:solid; border-color: #666666; font-family:solid; background-color:#CC6666; margin-bottom:10px;"';
+        htmlStr += '<table style="font-size:14px; border-radius:2px; border-width: 1px; border-style:solid; border-color: #666666; background-color:#F77F6A; width:100%">';
+        htmlStr += '<thead><th '+divStyle+'>Class</th><th '+divStyle+'>Frequency</th><th '+divStyle+'>Score</th></thead>';
+        for (var i=keys.length-1; i >=0; i--){
+            for (var item in classToFreqMap){
+                if (keys[i] == classToFreqMap[item]){
+                    var scoreStr = item.substring(item.indexOf('['), item.indexOf(']')+1);
+                    var classStr = item.substring(0, item.indexOf('['));
+                    htmlStr+= '<tr>' 
+                        +'<td>' + classStr +'</td> '
+                        +'<td style="text-align: center;">'+ keys[i] +'</td> '
+                        +'<td style="text-align: center;">'+ scoreStr +'</td> '
+                    + '</tr>';
+                }
+            }
+        }
+        htmlStr += '</table>';
+        $('#UIMenuStatisticDialog').append(htmlStr);
     }
     //__________________________________________________________________________
     this.loadWikiDialog = function()
@@ -170,7 +243,7 @@ wl.UIMenu = new function() {
         //wl.UIMenu.WikiDialog.parent().addClass('shadow');
         wl.UIMenu.WikiDialog.parent().css({ position: "fixed" });
         wl.UIMenu.WikiDialog.parent().css({ opacity: 0.9});
-        wl.UIMenu.StatisticDialog = $('<div style="font-family: arial;"> </div>')
+        wl.UIMenu.StatisticDialog = $('<div style="font-family: arial;" id="UIMenuStatisticDialog"> </div>')
         .html('')
 		.dialog({
 			autoOpen: false,
