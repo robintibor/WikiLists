@@ -396,10 +396,7 @@ $(document).ready(function()
                 wl.UIMenu.BroccoliFrameDialog.dialog("close");
                 wl.UIMenu.statusBroccoliDialog = 'close';    
             }
-            console.log("logging messages");
-            window.addEventListener('message',function(event) {
-                console.log('received in topdocument:  ',event.data);
-            },false);
+            
             if ($('#UIMenuBroccoliFrame').html() == null) 
                 $('#UIMenuFrameDialog').append('<iframe style="position:relative; height:95%; width:99%;"  id="UIMenuBroccoliFrame" />');
             wl.UIMenu.loadBroccoliFrame();

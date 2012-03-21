@@ -52,8 +52,8 @@ wl.parser = new function() {
         }
         return $(listElements);
     };
-    var findListItemElementsAndStoreData= function(listItem, jqueryDOM) {
-        var listItemElements = [];     
+    var findListItemElementsAndStoreData = function(listItem, jqueryDOM) {
+        var listItemElements = [];
         var linkElementsForHref = jqueryDOM.find('a[href="' +
             listItem.href + '"]');
         var listItemLinkNumbers = listItem.linkNumbers;
@@ -67,12 +67,3 @@ wl.parser = new function() {
         return listItemElements;            
     };
 };
-var hackElementsAndStringCallback = function(listElements, queryString) {
- $(listElements).css('background-color', 'green');
- console.log("list size " + listElements.length);
- console.log('querystring: ' + queryString);
-}
-//if (document.location.href.substring(0, "http://en.wikipedia.org".length) ==
-//    "http://en.wikipedia.org") {
-//    wl.parser.computeListElementsAndQueryString(hackElementsAndStringCallback);
-//}
