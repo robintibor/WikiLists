@@ -10,32 +10,22 @@ wl.parser = new function() {
     };  
     this.computeListElementsAndQueryStringForWikiURL = function(
         wikiURL, jqueryDOM, callback) {
-        this.getListElementsAndQueryStringForWikiURL(wikiURL, jqueryDOM, callback);
-    };
-    this.getListElementsAndQueryStringForWikiURL = function(wikiURL,
-        jqueryDOM, callback) {
-        var stromboliRequestURL = 
-            'http://stromboli.informatik.uni-freiburg.de:' +
-            wl.parser.stromboliPort + '/' + wikiURL;
-        jQuery.ajax({
-          url: stromboliRequestURL,
-          dataType: 'jsonp',
-          data: {
-              format: 'json'
-              },
-          success: receiveListElementsAndQueryString.bind(this, jqueryDOM,
-            callback)
-        });
+        var callbackForJSON = function(jqueryDOM, callback, responseJSON) {
+                receiveListElementsAndQueryString(jqueryDOM, callback,
+                    responseJSON);
+            }.bind(this, jqueryDOM, callback);
+        wl.client.getListElementsAndQueryStringForWikiURL(wikiURL,
+            callbackForJSON);
     };
     var receiveListElementsAndQueryString = function(jqueryDOM, callback,
         responseJSON) {
-        var listElements =  extractFirstGroupElements(responseJSON.listItems,
-        jqueryDOM);
+        var listElements =  extractFirstGroupElements(jqueryDOM,
+            responseJSON.listItems);
         var queryString = responseJSON.broccoliQueryString;
         callback(listElements, queryString);
     };
 
-    var extractFirstGroupElements = function(listItemsJSON, jqueryDOM) {
+    var extractFirstGroupElements = function(jqueryDOM, listItemsJSON) {
         var firstGroup = listItemsJSON.listItemGroups[0];
         var linkElements = wl.parser.findListElements(jqueryDOM,
             firstGroup);
