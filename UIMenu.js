@@ -223,7 +223,8 @@ wl.UIMenu = new function() {
     this.postQuery = function()
     {
         wl.UIMenu.loadSpinner();
-        wl.parser.computeListElementsAndQueryString(wl.UIMenu.refreshUI);
+        wl.facade.computeListElementsAndQueryStringAndStoreList(
+            wl.UIMenu.refreshUI);
     }
     //__________________________________________________________________________
     this.loadDialogs = function(){ 

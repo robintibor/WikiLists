@@ -17,8 +17,10 @@ var wikiLists = new function() {
                                   'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js',
                                   'http://fgnass.github.com/spin.js/dist/spin.min.js',
                                   'http://c9.io/' + wikiLists.USER + '/wikilists/workspace/jquery.qtip-1.0.0-rc3.min.js',
-                                  'http://c9.io/' + wikiLists.USER + '/wikilists/workspace/parser/parseListElements.js',
-                                  'http://c9.io/' + wikiLists.USER + '/wikilists/workspace/client.js',
+                                  'http://c9.io/' + wikiLists.USER + '/wikilists/workspace/logic/parser/parse-list-elements.js',
+                                  'http://c9.io/' + wikiLists.USER + '/wikilists/workspace/logic/facade.js',
+                                  'http://c9.io/' + wikiLists.USER + '/wikilists/workspace/logic/lists.js',
+                                  'http://c9.io/' + wikiLists.USER + '/wikilists/workspace/logic/client.js',
                                   'http://c9.io/' + wikiLists.USER + '/wikilists/workspace/UIMenu.js'];
         this.addJavaScriptFiles(javaScriptSources);
     };

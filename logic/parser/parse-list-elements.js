@@ -1,31 +1,7 @@
 var wikiLists = wikiLists || {};
 var wl = wikiLists;
-wl.parser = new function() {    
-    this.stromboliPort = wl.STROMBOLIPORT;
-    // callback function should accept elements as first parameter
-    // and query string for broccoli query
-    this.computeListElementsAndQueryString = function(callback) {
-        this.computeListElementsAndQueryStringForWikiURL(
-            document.location.href, $(document), callback);
-    };  
-    this.computeListElementsAndQueryStringForWikiURL = function(
-        wikiURL, jqueryDOM, callback) {
-        var callbackForJSON = function(jqueryDOM, callback, responseJSON) {
-                receiveListElementsAndQueryString(jqueryDOM, callback,
-                    responseJSON);
-            }.bind(this, jqueryDOM, callback);
-        wl.client.getListElementsAndQueryStringForWikiURL(wikiURL,
-            callbackForJSON);
-    };
-    var receiveListElementsAndQueryString = function(jqueryDOM, callback,
-        responseJSON) {
-        var listElements =  extractFirstGroupElements(jqueryDOM,
-            responseJSON.listItems);
-        var queryString = responseJSON.broccoliQueryString;
-        callback(listElements, queryString);
-    };
-
-    var extractFirstGroupElements = function(jqueryDOM, listItemsJSON) {
+wl.parser = new function() {
+    this.extractFirstGroupElements = function(jqueryDOM, listItemsJSON) {
         var firstGroup = listItemsJSON.listItemGroups[0];
         var linkElements = wl.parser.findListElements(jqueryDOM,
             firstGroup);
