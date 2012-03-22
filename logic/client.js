@@ -17,7 +17,6 @@ wl.client = new function() {
 
     this.getBroccoliInstances = function (queryString, numberOfInstances,
     callback) {
-        console.log('using querystring: ' + queryString);
         wl.client.getURL(
             'http://stromboli.informatik.uni-freiburg.de:5839/?s=' + queryString + 
             '&nofinstances=' + numberOfInstances + '&nofhitgroups=0',
@@ -55,7 +54,6 @@ wl.broccoliClient = new function() {
     };
     var receiveBroccoliJSON = function (broccoliJSON) {
         if (broccoliJSON.type == 'queryString') {
-            console.log('Got querystring: ' + broccoliJSON.queryString);
             var nrOfInstances = 10000;
             wl.client.getBroccoliInstances(broccoliJSON.queryString,
             nrOfInstances, receiveBroccoliInstances);

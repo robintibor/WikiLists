@@ -14,9 +14,7 @@ wl.UIMenu = new function() {
     // Add close functionality for geven object
     var addCloseImages = function(obj, imgID)
     {
-        var closeImgSource = 'http://c9.io/' 
-                           + wl.USER 
-                           + '/wikilists/workspace/closeEntry.png';
+        var closeImgSource = wl.FRONTENDADRESS + 'closeEntry.png';
         
         $(obj).after('<img id="' + imgID 
                         + '" src="' + closeImgSource 
@@ -349,11 +347,11 @@ $(document).ready(function()
     if ($('#UIMenu').html() == null){    
         
         // Load additional files
-        wl.UIMenu.loadjscssfile('http://c9.io/' +  wl.USER + '/wikilists/workspace/UIMenu.css', "css"); 
+        wl.UIMenu.loadjscssfile(wl.FRONTENDADRESS + 'UIMenu.css', "css"); 
         wl.UIMenu.loadjscssfile('http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css', "css"); 
         
         // Add UIMenu-Button
-        $('body').prepend('<div style=" position:fixed; z-index:3; top:0px; left:0px;" id="sidebar1"; onclick=wl.UIMenu.toggle_sidebar();> <a href="#"> <img src="http://c9.io/' + wl.USER + '/wikilists/workspace/broccoliLogoLittle.png"></a> </div>');
+        $('body').prepend('<div style=" position:fixed; z-index:3; top:0px; left:0px;" id="sidebar1"; onclick=wl.UIMenu.toggle_sidebar();> <a href="#"> <img src="' + wl.FRONTENDADRESS + 'broccoliLogoLittle.png"></a> </div>');
         // Add Menu
         $('body').prepend('<div class="WLMenu gradient" style="padding-left:110px" id="UIMenu"></div>');
         
