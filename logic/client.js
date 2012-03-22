@@ -17,8 +17,9 @@ wl.client = new function() {
 
     this.getBroccoliInstances = function (queryString, numberOfInstances,
     callback) {
+        console.log('using querystring: ' + queryString);
         wl.client.getURL(
-            'http://stromboli.informatik.uni-freiburg.de:5839/?' + queryString + 
+            'http://stromboli.informatik.uni-freiburg.de:5839/?s=' + queryString + 
             '&nofinstances=' + numberOfInstances + '&nofhitgroups=0',
              callback);             
     };

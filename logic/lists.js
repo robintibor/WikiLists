@@ -16,7 +16,6 @@ wl.lists = new function(){
         if (isNewElement) {
             var newLinkElement = $(document.createElement('a')).
                 attr('href', wikiHref);
-            console.log("new element " + newLinkElement.get());
             newBroccoliListElements.push(newLinkElement);
         }
     };
