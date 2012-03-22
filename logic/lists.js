@@ -20,8 +20,8 @@ wl.lists = new function(){
         var isNewElement = !wikiListElementsContainHref(wikiHref);
         var linkElement = $(document.createElement('a')).
                 attr('href', wikiHref);
-                
-        $(linkElement).html(wikiHref.replace('_', ''));
+        
+        $(linkElement).html(wikiHref.replace('_', ' '));
         if (isNewElement) {
             newBroccoliListElements.push(linkElement);
         } else {
