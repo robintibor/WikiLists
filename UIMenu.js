@@ -6,6 +6,8 @@ wl.UIMenu = new function() {
     this.statusStatistic = 'close';
     this.statusBroccoliDialog = 'close';
     this.wikiListsElements;
+    this.BroccoliMatchedListsElement;
+    this.BroccoliNewListsElement;
     this.broccoliQuery = 'http://stromboli.informatik.uni-freiburg.de:6222/BroccoliWikiLists/'
     
     //__________________________________________________________________________
@@ -58,6 +60,13 @@ wl.UIMenu = new function() {
             show: 'mouseover',
             hide: 'mouseout'
         });
+    }
+    //__________________________________________________________________________
+    // load Broccoli result lists
+    this.loadBroccoliLists  = function(matchedElements, newElements)
+    {
+        wl.UIMenu.BroccoliMatchedListsElement = matchedElements;
+        wl.UIMenu.BroccoliNewListsElement = newElements; 
     }
     //__________________________________________________________________________
     // Initialize Spiner
