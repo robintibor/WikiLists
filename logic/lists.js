@@ -15,13 +15,13 @@ wl.lists = new function(){
     };
     var addBroccoliInstance = function(broccoliInstance,
         newBroccoliListElements, broccoliListElementsMatchedByWikiList) {
-        var wikiHref = '/wiki/' + 
+        var wikiTitleLink = 
             wl.lists.extractHrefOfBroccoliInstanceText($(broccoliInstance).text());
+        var wikiHref = '/wiki/' + wikiTitleLink;
         var isNewElement = !wikiListElementsContainHref(wikiHref);
         var linkElement = $(document.createElement('a')).
-                attr('href', wikiHref);
-        
-        $(linkElement).html(wikiHref.replace('_', ' '));
+                attr('href', wikiHref).get();        
+        $(linkElement).html(wikiTitleLink.replace('_', ' '));
         if (isNewElement) {
             newBroccoliListElements.push(linkElement);
         } else {
