@@ -37,7 +37,8 @@ wl.lists = new function(){
         return instanceText.slice(instanceText.lastIndexOf(':') + 1);
     };
     var wikiListElementsContainHref = function (wikiHref) {
-        return wl.lists.lastListElements.is('a[href="' + wikiHref +'"]');
+        return wl.lists.lastListElements.is(function() {
+            return $(this).attr('href') == wikiHref;});
     };
 };
 
