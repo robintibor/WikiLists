@@ -21,7 +21,7 @@ wl.lists = new function(){
         var isNewElement = !wikiListElementsContainHref(wikiHref);
         var linkElement = $(document.createElement('a')).
                 attr('href', wikiHref).get();        
-        $(linkElement).html(wikiTitleLink.replace('_', ' '));
+        $(linkElement).html(wikiTitleLink.replace(/_/g, ' '));
         if (isNewElement) {
             newBroccoliListElements.push(linkElement);
         } else {
