@@ -9,16 +9,39 @@ wl.UIMenu = new function() {
     this.BroccoliMatchedListsElement;
     this.BroccoliNewListsElement;
     this.broccoliQuery = 'http://stromboli.informatik.uni-freiburg.de:6222/BroccoliWikiLists/'
+    this.loadedElements = new Object();
     
     //__________________________________________________________________________
     // Add close functionality for geven object
     var addCloseImages = function(obj, imgID)
     {
+        var oldMouseOverEvent=$(obj).mouseover;
+        var oldMouseOutEvent=$(obj).mouseout;
+        var linkElement = $(obj).find("a").first();
+        var elementName = $(obj).find("a").first().html();
+         $(obj).mouseover(function(){
+            if (wl.UIMenu.loadedElements[elementName] == undefined){
+                wl.UIMenu.loadedElements[elementName]=1;
+                wl.broccoliClient.getHitGroupForElement(linkElement, 
+                    function(hitXML){
+                    //$(obj).qtip("destroy");                    
+                    addToolTip(obj, hitXML);
+                    $(obj).qtip("show");
+                });
+            }
+            
+        });
+        $(linkElement).mouseover(function(){
+            document.getElementById(imgID).style.visibility = "visible";
+        });
+        $(linkElement).mouseout(function(){
+            document.getElementById(imgID).style.visibility = "hidden";
+        });
         var closeImgSource = wl.FRONTENDADRESS + 'closeEntry.png';
         
-        $(obj).after('<img id="' + imgID 
+        $(linkElement).after('<img id="' + imgID 
                         + '" src="' + closeImgSource 
-                        + '" style="visibility:hidden"/>');
+                        + '" style="align:right; visibility: hidden; "/>');
         var imjObj = document.getElementById(imgID);
         $(imjObj).mouseover(function(){
                 document.getElementById(imgID).style.visibility = "visible";
@@ -29,8 +52,11 @@ wl.UIMenu = new function() {
         // Hack 
         $(imjObj).click(function(){
                 $(imjObj).remove();
-                obj.style.background = "#FFFFFF";
-                $(obj).off();
+                $(obj).qtip("destroy");
+                //obj.style.background = "#FFFFFF";
+                //$(obj).off();
+                $(obj).remove();
+                document.getElementById('nofMissingEllements').innerHTML = $(".newBroccoliElements").length;
         });
         
     }
@@ -46,7 +72,7 @@ wl.UIMenu = new function() {
             },
             position: {
                 corner: {
-                    target: 'topMiddle',
+                    target: 'topLeft',
                     tooltip: 'bottomLeft'
                 }
             },
@@ -63,8 +89,36 @@ wl.UIMenu = new function() {
     // load Broccoli result lists
     this.loadBroccoliLists  = function(matchedElements, newElements)
     {
+        document.getElementById('nofMissingEllements').innerHTML = newElements.length;
+        document.getElementById('nofMatchingEllements').innerHTML = matchedElements.length;
         wl.UIMenu.BroccoliMatchedListsElement = matchedElements;
         wl.UIMenu.BroccoliNewListsElement = newElements; 
+        var htmlStr="<ul>";
+        var newElementClasses = 'class="newBroccoliElements"';
+        var newElementStyle = 'style="width:50%"';
+        for (var i=0; i < newElements.length; i++){
+            htmlStr+='<li id="broccoliNewElement'+i+'" '+newElementClasses+' '+newElementStyle+'>';
+            //htmlStr+=elem.innerHTML;
+            htmlStr+="</li>";
+        }
+        htmlStr+="</ul>";
+        $('#UIMenuWikiDialog').append(htmlStr);
+        for (var i=0; i < newElements.length; i++){
+            var id= '#broccoliNewElement'+i;
+            $(id).append(newElements[i]);
+        }
+        // add loading-tolltips and close functionality
+        $(".newBroccoliElements").each(function(k){
+            //addToolTip(this, '<div style="width:300px;" id="toolTip' + k +'"><img style="margin-left:100px; margin-bottom:20px; margin-top:20px; opacity:0.1" src="'+ wl.FRONTENDADRESS +'/loading3.gif"></img></div>');
+            var imgID = 'EntryCloseImg_' + k;
+            addCloseImages(this, imgID);
+            k++;
+        });
+        // add close functionality
+        //for (var i=0; i < newElements.length; i++){
+        //    var imgID = 'EntryCloseImg_' + i;
+        //    addCloseImages(newElements[i], imgID);
+        //}
     }
     //__________________________________________________________________________
     // Initialize Spiner
@@ -142,7 +196,15 @@ wl.UIMenu = new function() {
         htmlStr+='<tr>'
                    +'<td><b>Number of founded ellements in Ontology: </b></td> '
                    +'<td style="text-align: center;">'+ foundedInOntology +'</td> '
-                + '</tr>';                
+                + '</tr>';             
+        htmlStr+='<tr>'
+                   +'<td><b>Number of possible missing ellements: </b></td> '
+                   +'<td  id="nofMissingEllements" style="text-align: center;"></td> '
+                + '</tr>';
+        htmlStr+='<tr>'
+                   +'<td><b>Number of matching ellements: </b></td> '
+                   +'<td  id="nofMatchingEllements" style="text-align: center;"></td> '
+                + '</tr>';        
         htmlStr+='</table></div></br>';
         var classToFreqMap =new Object();
         for (var elem in listMap){
@@ -191,14 +253,14 @@ wl.UIMenu = new function() {
     this.loadWikiDialog = function()
     {
         var htmlStr = '';
-        var divClass = 'class="shadow wikiDialogEntrys"; ';
+        var divClass = 'class=""; ';
         var divStyle = 'style="border-radius:4px;font-size:18px; font-family:solid; background-color:#9C9C9C; margin-bottom:10px;"';
         $(wl.UIMenu.wikiListsElements).each(function (i){
             i++;
             var divID = 'id="wikiDialogEntry_' + i + '" ';
             htmlStr+= '<div ' + divID + divClass + divStyle + ' >' + $(this).html() + '</div>';
             // add Tooltip to the keyElements at source (Wiki) Site
-            var imgID = 'EntryCloseImg_' + i;
+            //var imgID = 'EntryCloseImg_' + i;
             var toolTipStr = "<b>Classes:</b>"+$.data(this,"classes") + "<br/>"
                            + "<b>Score:</b>"+$.data(this,"score");
             //alert($.data(this,"classes"));
@@ -208,22 +270,18 @@ wl.UIMenu = new function() {
             //HACK FOR SELECTING ELEMENTS BEGIN 
             this.style.background = "#A0F78A";
             $(this).addClass("roundCorners");
-            var oldMouseOverEvent=$(this).mouseover;
-            var oldMouseOutEvent=$(this).mouseout;        
-            $(this).mouseover(function(){
-                oldMouseOverEvent;
-                document.getElementById(imgID).style.visibility = "visible";
-            });
-            $(this).mouseout(function(){
-                oldMouseOutEvent;
-                document.getElementById(imgID).style.visibility = "hidden";
-            });
+            //var oldMouseOverEvent=$(this).mouseover;
+            //var oldMouseOutEvent=$(this).mouseout;        
+            //$(this).mouseover(function(){
+            //    oldMouseOverEvent;
+            //    document.getElementById(imgID).style.visibility = "visible";
+            //});
+            //$(this).mouseout(function(){
+            //    oldMouseOutEvent;
+            //    document.getElementById(imgID).style.visibility = "hidden";
+            //});
             //HACK FOR SELECTING ELEMENTS END
-            addCloseImages(this, imgID);
-        });
-        $('#UIMenuWikiDialog').append(htmlStr);
-        $(".wikiDialogEntrys").each(function(){
-            addToolTip(this, '<div>'+$(this).html())+'</div>';
+            //addCloseImages(this, imgID);
         });
     }
     //__________________________________________________________________________
