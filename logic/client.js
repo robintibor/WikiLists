@@ -15,12 +15,13 @@ wl.client = new function() {
         });
     };
 
-    this.getBroccoliInstances = function (queryString, numberOfInstances,
-    callback) {
+    this.getBroccoliInstances = function (queryString, broccoliHost,
+    broccoliPort, numberOfInstances, callback) {
         wl.client.getURL(
-            'http://stromboli.informatik.uni-freiburg.de:5839/?s=' + queryString + 
+            'http://' + broccoliHost + '.informatik.uni-freiburg.de:' + 
+             broccoliPort + '/?s=' + queryString + 
             '&nofinstances=' + numberOfInstances + '&nofhitgroups=0',
-             callback);             
+             callback);
     };
 
     this.getURL = function(urlString, callback) {
@@ -44,7 +45,8 @@ wl.client = new function() {
     };
 };
 
-// This "client" just waits for messages from the iframe :)
+// This "client" waits for messages from the broccoli 
+// iframe and acts upon them :)
 wl.broccoliClient = new function() {
     this.listenForQueryStringFromBroccoliFrame = function() {              
         window.addEventListener('message',function(event) {                  
@@ -56,6 +58,7 @@ wl.broccoliClient = new function() {
         if (broccoliJSON.type == 'queryString') {
             var nrOfInstances = 10000;
             wl.client.getBroccoliInstances(broccoliJSON.queryString,
+            broccoliJSON.broccoliHost, broccoliJSON.broccoliPort,
             nrOfInstances, receiveBroccoliInstances);
         }
     };

@@ -1,7 +1,8 @@
 var wikiLists = wikiLists || {};
 var wl = wikiLists;
 wl.lists = new function(){
-    this.lastListElements = {};
+    this.lastListElements = [];
+    this.hrefToBroccoliHitNumber = {};
     this.addBroccoliInstances = function (broccoliInstances) {
         var newBroccoliListElements = [];
         var broccoliListElementsMatchedByWikiList = [];
@@ -10,6 +11,8 @@ wl.lists = new function(){
             addBroccoliInstance(broccoliInstance, newBroccoliListElements,
                 broccoliListElementsMatchedByWikiList);
         }
+        $(newBroccoliListElements).each(function() {
+            $('.mw-content-ltr').prepend(this); });
         wl.UIMenu.loadBroccoliLists(broccoliListElementsMatchedByWikiList,
             newBroccoliListElements);
     };
