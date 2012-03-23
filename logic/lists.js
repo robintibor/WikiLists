@@ -5,7 +5,7 @@ wl.lists = new function(){
     this.hrefToBroccoliHitNumber = {};
 
     var BroccoliInstance = function(broccoliInstanceXML, hitGroupIndex) {
-        var xmlInstanceText = $(broccoliInstanceXML).text()
+        var xmlInstanceText = $(broccoliInstanceXML).text();
         var wikiTitleLink = 
             wl.lists.extractHrefOfBroccoliInstanceText(xmlInstanceText);
         this.wikiHref = '/wiki/' + wikiTitleLink;
@@ -19,22 +19,11 @@ wl.lists = new function(){
         var newBroccoliListElements = [];
         var broccoliListElementsMatchedByWikiList = [];
         for (var i = 0; i < broccoliInstancesXML.length; i++) {
-            var instanceXML = broccoliInstancesXML[i]
+            var instanceXML = broccoliInstancesXML[i];
             var broccoliInstance = new BroccoliInstance(instanceXML, i);
             addBroccoliInstance(broccoliInstance, newBroccoliListElements,
                 broccoliListElementsMatchedByWikiList);
         }
-        $(newBroccoliListElements).each(function() {
-            $('.mw-content-ltr').prepend(' ');
-            $('.mw-content-ltr').prepend(this); 
-            $(this).mouseover(function() {
-                wl.broccoliClient.getHitGroupForElement(this, 
-                    function(hitgroup) {
-                        console.log("inside, response:\n" + $(hitgroup).text());
-                        });
-                });
-            });
-        $('.mw-content-ltr').prepend('<h2>New Elements</h2>')
         wl.UIMenu.loadBroccoliLists(broccoliListElementsMatchedByWikiList,
             newBroccoliListElements);
     };
