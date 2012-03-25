@@ -15,24 +15,20 @@ wl.UIMenu = new function() {
     // Add close functionality for geven object
     var addCloseImages = function(obj, imgID)
     {
-        var oldMouseOverEvent=$(obj).mouseover;
-        var oldMouseOutEvent=$(obj).mouseout;
         var linkElement = $(obj).find("a").first();
-        var elementName = $(obj).find("a").first().html();
-         $(obj).mouseover(function(){
-            if (wl.UIMenu.loadedElements[elementName] == undefined){
-                wl.UIMenu.loadedElements[elementName]=1;
-                wl.broccoliClient.getHitGroupForElement(linkElement, 
-                    function(hitXML){
-                    //$(obj).qtip("destroy");                    
-                    addToolTip(obj, hitXML);
-                    $(obj).qtip("show");
-                });
-            }
-            
-        });
-        $(linkElement).mouseover(function(){
+        //$(obj).mouseover(function(){
+        //});
+        $(linkElement).bind( "mouseenter",  function(){
             document.getElementById(imgID).style.visibility = "visible";
+            $(linkElement).unbind("mouseenter");
+            $(linkElement).bind("mouseenter", function(){
+                document.getElementById(imgID).style.visibility = "visible";
+            });
+            wl.broccoliClient.getHitGroupForElement(linkElement, function(hitXML){
+                addToolTip(obj, hitXML);
+                //addToolTip(obj, "guheriughreugheiugherpiuhreiureuvherpiuvgreiuvgreipuvgeigeriuvgiurg");
+                $(obj).qtip("show");
+            });
         });
         $(linkElement).mouseout(function(){
             document.getElementById(imgID).style.visibility = "hidden";
@@ -95,7 +91,7 @@ wl.UIMenu = new function() {
         wl.UIMenu.BroccoliNewListsElement = newElements; 
         var htmlStr="<ul>";
         var newElementClasses = 'class="newBroccoliElements"';
-        var newElementStyle = 'style="width:50%"';
+        var newElementStyle = 'style="font-size:14px; width:90%"';
         for (var i=0; i < newElements.length; i++){
             htmlStr+='<li id="broccoliNewElement'+i+'" '+newElementClasses+' '+newElementStyle+'>';
             //htmlStr+=elem.innerHTML;
