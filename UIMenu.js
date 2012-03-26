@@ -44,9 +44,9 @@ wl.UIMenu = new function() {
         });
         var closeImgSource = wl.FRONTENDADRESS + 'closeEntry.png';
         
-        $(linkElement).after('<img id="' + imgID 
+        $(linkElement).prepend('<img id="' + imgID 
                         + '" src="' + closeImgSource 
-                        + '" style="align:right; visibility: hidden; "/>');
+                        + '" style="align:right; visibility: hidden; "/> ');
         var imjObj = document.getElementById(imgID);
         $(imjObj).mouseover(function(){
                 document.getElementById(imgID).style.visibility = "visible";
