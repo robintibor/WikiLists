@@ -25,9 +25,10 @@ wl.UIMenu = new function() {
                 document.getElementById(imgID).style.visibility = "visible";
             });
             wl.broccoliClient.getHitGroupForElement(linkElement, function(hitXML){
-                addToolTip(obj, hitXML);
-                //addToolTip(obj, "guheriughreugheiugherpiuhreiureuvherpiuvgreiuvgreipuvgeigeriuvgiurg");
-                $(obj).qtip("show");
+                //addToolTip(obj, hitXML);
+                var outStr =$(hitXML).text();
+                addToolTip(obj, outStr);
+                    $(obj).qtip("show");
             });
         });
         $(linkElement).mouseout(function(){
