@@ -417,7 +417,7 @@ $(document).ready(function()
         
         // Load additional files
         wl.UIMenu.loadjscssfile(wl.FRONTENDADRESS + 'UIMenu.css', "css"); 
-        wl.UIMenu.loadjscssfile('http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css', "css"); 
+        wl.UIMenu.loadjscssfile('http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.8/themes/flick/jquery-ui.css', "css"); 
         wl.UIMenu.loadjscssfile(wl.FRONTENDADRESS + 'libs/jquery.qtip.min.css', "css"); 
         
         // Add UIMenu-Button
@@ -428,9 +428,9 @@ $(document).ready(function()
         // Add necessary buttons
         $('#UIMenu').append('<div style="top:0px; position:relative; margin-left:0px;" class="WLMenuButton shadow"; id="WLMenuQueryExe"><div style="color:#FF474A; font-size:10px;"><b>START</b></div></div>');
         $('#WLMenuQueryExe').button();
-        $('#UIMenu').append('<div style="top:0px; position:relative; margin-left:10px;" class="WLMenuButton shadow"; id="WLMenuBtStatistic"><div style="color:#7ABCFF; font-size:10px;"><b>Statistics</b></div> </div>');
+        $('#UIMenu').append('<div style="top:0px; position:relative; margin-left:10px;" class="WLMenuButton shadow"; id="WLMenuBtStatistic"><div style="color:#2c539e; font-size:10px;"><b>Statistics</b></div> </div>');
         $('#WLMenuBtStatistic').button();
-        $('#UIMenu').append('<div style="top:0px; position:relative; margin-left:10px;" class="WLMenuButton shadow"; id="WLMenuDialog1"><div style="color:#7ABCFF; font-size:10px;"><b>List of additional elements</b></div></div>');
+        $('#UIMenu').append('<div style="top:0px; position:relative; margin-left:10px;" class="WLMenuButton shadow"; id="WLMenuDialog1"><div style="color:#2c539e; font-size:10px;"><b>List of additional elements</b></div></div>');
         $('#WLMenuDialog1').button();
         $('#UIMenu').append('<div style="top:0px; position:relative; margin-left:10px;" class="WLMenuButton shadow"; id="WLMenuBtBroccoli"><div style="color:#6bba70; font-size:10px;"><b>Broccoli</b></div> </div>');
         $('#WLMenuBtBroccoli').button();

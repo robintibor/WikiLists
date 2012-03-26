@@ -17,7 +17,7 @@ var wikiLists = new function() {
         // TODO(Robin):try leaving out jquery and jquery ui on init? 
         // it shouldnt be needed cause wikipedia loads it?
         var javaScriptSources = [ 'http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js',
-                                  'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js',
+                                  'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.8/jquery-ui.min.js',
                                   'http://fgnass.github.com/spin.js/dist/spin.min.js',
                                   wikiLists.FRONTENDADRESS + 'libs/jquery.qtip.min.js',
                                   wikiLists.FRONTENDADRESS + 'logic/parser/parse-list-elements.js',
