@@ -11,6 +11,7 @@ var wikiLists = new function() {
             body.appendChild(newScript);
         }
     };
+
     // Load Javascript files
     this.init = function() {
         // TODO(Robin):try leaving out jquery and jquery ui on init? 
@@ -30,7 +31,7 @@ var wikiLists = new function() {
 
 function scriptAlreadyLoaded() {
 // wl is defined in the scripts that are loaded...
-   return typeof wl != 'undefined'; 
+   return typeof wl != 'undefined';
 }
 
 if (!scriptAlreadyLoaded())
