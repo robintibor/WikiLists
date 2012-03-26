@@ -18,7 +18,7 @@ wl.UIMenu = new function() {
         var linkElement = $(obj).find("a").first();
         //$(obj).mouseover(function(){
         //});
-        $(linkElement).bind( "mouseenter",  function() {
+         $(linkElement).bind( "mouseenter",  function(){
             document.getElementById(imgID).style.visibility = "visible";
             $(linkElement).unbind("mouseenter");
             $(linkElement).bind("mouseenter", function(){
@@ -26,8 +26,16 @@ wl.UIMenu = new function() {
             });
             wl.broccoliClient.getHitGroupForElement(linkElement, function(hitXML){
                 //addToolTip(obj, hitXML);
-                var outStr =$(hitXML).text();
-                addToolTip(obj, outStr);
+                var htmlStr = '<div style="font-size:12px;">';
+                $(hitXML).find('hit').each(function(){
+                    var title = $(this).find('title').first().text();
+                    var text = $(this).find('excerpt').first().text();
+                    htmlStr+='<b>'+title+'</b></br>';
+                    htmlStr+=text+'</br>';
+                });
+                htmlStr+="</div>";
+                //alert(htmlStr);
+                addToolTip(obj, htmlStr);
                     $(obj).qtip("show");
             });
         });
