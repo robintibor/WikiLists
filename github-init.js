@@ -25,4 +25,11 @@ var wikiLists = new function() {
         this.addJavaScriptFiles(javaScriptSources);
     };
 };
-wikiLists.init();
+
+function scriptAlreadyLoaded() {
+    // wl is defined in the scripts that are loaded...
+   return typeof wl != 'undefined'; 
+}
+
+if (!scriptAlreadyLoaded())
+    wikiLists.init();
