@@ -2,7 +2,7 @@ var wikiLists = wikiLists || {};
 var wl = wikiLists;
 // TODO(Robin): split up client into broccoli client and other client
 // split broccoli client below into iframe client and broccoli client
-// i.e. cleint broccoliclient -> wikilistclient broccoliclient iframelistener
+// i.e. client broccoliclient -> wikilistclient broccoliclient iframelistener
 wl.client = new function() {
 
     this.getListElementsAndQueryStringForWikiURL = function(wikiURL,

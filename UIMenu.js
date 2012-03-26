@@ -18,7 +18,7 @@ wl.UIMenu = new function() {
         var linkElement = $(obj).find("a").first();
         //$(obj).mouseover(function(){
         //});
-        $(linkElement).bind( "mouseenter",  function(){
+        $(linkElement).bind( "mouseenter",  function() {
             document.getElementById(imgID).style.visibility = "visible";
             $(linkElement).unbind("mouseenter");
             $(linkElement).bind("mouseenter", function(){
@@ -62,25 +62,29 @@ wl.UIMenu = new function() {
     var addToolTip = function(obj, str)
     {
          $(obj).qtip({
-             content: {
+            content: {
                 text: str,
-                title: { text: 'Information' }
+                title: {
+                    text: "Information"
+                    }
             },
             position: {
-                corner: {
-                    target: 'topLeft',
-                    tooltip: 'bottomLeft'
-                }
+                at: "top left",
+                my: "bottom left"
             },
-            style: { 
-                width: { max: 1500 },
-                name: 'red',
-                tip: 'bottomLeft' // Notice the corner value is identical to the previously mentioned positioning corners
+            style: {
+                    tip: "bottomLeft",
+                    classes: "ui-tooltip-red"
             },
-            show: 'mouseover',
-            hide: 'mouseout'
-        });
-    }
+            show: {
+                event: "mouseover"
+            },
+            hide: {
+                event: "mouseout"
+            }
+        }
+    );
+};
     //__________________________________________________________________________
     // load Broccoli result lists
     this.loadBroccoliLists  = function(matchedElements, newElements)
@@ -403,6 +407,7 @@ $(document).ready(function()
         // Load additional files
         wl.UIMenu.loadjscssfile(wl.FRONTENDADRESS + 'UIMenu.css', "css"); 
         wl.UIMenu.loadjscssfile('http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css', "css"); 
+        wl.UIMenu.loadjscssfile(wl.FRONTENDADRESS + 'libs/jquery.qtip.min.css', "css"); 
         
         // Add UIMenu-Button
         $('body').prepend('<div style=" position:fixed; z-index:3; top:0px; left:0px;" id="sidebar1"; onclick=wl.UIMenu.toggle_sidebar();> <a href="#"> <img src="' + wl.FRONTENDADRESS + 'broccoliLogoLittle.png"></a> </div>');

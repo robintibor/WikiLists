@@ -18,7 +18,7 @@ var wikiLists = new function() {
         var javaScriptSources = [ 'http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js',
                                   'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js',
                                   'http://fgnass.github.com/spin.js/dist/spin.min.js',
-                                  wikiLists.FRONTENDADRESS + 'jquery.qtip-1.0.0-rc3.min.js',
+                                  wikiLists.FRONTENDADRESS + 'libs/jquery.qtip.min.js',
                                   wikiLists.FRONTENDADRESS + 'logic/parser/parse-list-elements.js',
                                   wikiLists.FRONTENDADRESS + 'logic/facade.js',
                                   wikiLists.FRONTENDADRESS + 'logic/lists.js',
