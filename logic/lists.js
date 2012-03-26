@@ -12,9 +12,11 @@ wl.lists = new function(){
         this.title = wikiTitleLink.replace(/_/g, ' ');
         this.hitGroupIndex = hitGroupIndex;
     };
+
     this.getHitGroupNr = function(wikiHref) {
         return wl.lists.hrefToBroccoliHitNumber[wikiHref];
     };
+
     this.addBroccoliInstances = function (broccoliInstancesXML) {        
         wl.lists.hrefToBroccoliHitNumber = {};
         var newBroccoliListElements = [];
@@ -28,12 +30,15 @@ wl.lists = new function(){
         wl.UIMenu.loadBroccoliLists(broccoliListElementsMatchedByWikiList,
             newBroccoliListElements);
     };
+
     var addBroccoliInstance = function(broccoliInstance,
         newBroccoliListElements, broccoliListElementsMatchedByWikiList) {
         var wikiHref = broccoliInstance.wikiHref;
         var isNewElement = !wikiListElementsContainHref(wikiHref);
         var linkElement = $(document.createElement('a')).
-                attr('href', wikiHref).get();        
+                attr('href', wikiHref).get(); 
+        // open link in new window
+        $(linkElement).attr('target', '_blank');
         $(linkElement).html(broccoliInstance.title);
         if (isNewElement) {
             newBroccoliListElements.push(linkElement);
@@ -64,5 +69,4 @@ wl.lists = new function(){
     var elementHasHref = function (actualElement, expectedHref) {
         return $(actualElement).attr('href') == expectedHref;
     };
-    
 };
