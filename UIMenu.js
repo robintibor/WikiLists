@@ -93,7 +93,7 @@ wl.UIMenu = new function() {
         document.getElementById('nofMatchingEllements').innerHTML = matchedElements.length;
         wl.UIMenu.BroccoliMatchedListsElement = matchedElements;
         wl.UIMenu.BroccoliNewListsElement = newElements; 
-        var htmlStr="<ul>";
+        var htmlStr="<ul>"; 
         var newElementClasses = 'class="newBroccoliElements"';
         var newElementStyle = 'style="font-size:14px; width:90%"';
         for (var i=0; i < newElements.length; i++){
