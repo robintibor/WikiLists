@@ -26,27 +26,28 @@ wl.UIMenu = new function() {
             });
             wl.broccoliClient.getHitGroupForElement(linkElement, function(hitXML){
                 //addToolTip(obj, hitXML);
-                var htmlStr = '<div style="font-size:12px;">';
+                var htmlStr = '<div style="color:#D15E5E; font-size:12px;">';
                 $(hitXML).find('hit').each(function(){
-                    var title = $(this).find('title').first().text();
-                    var text = $(this).find('excerpt').first().text();
-                    htmlStr+='<b>'+title+'</b></br>';
-                    htmlStr+=text+'</br>';
+                    var title = $(this).find('title').first().text().replace(/_/g," ");
+                    var text = $(this).find('excerpt').first().text().replace(/<hl>/g, '<b style="color:black">').replace(/<\/hl>/g, "</b>")
+                                                                     .replace(/\$hlct\$/g, '<l style="color:#5B4646">').replace(/\$\/hlct\$/g, "</l>");
+                    htmlStr+='<b style="font-size:13px; color:D15E5E;">'+title+'</b></br>';
+                    htmlStr+='<div>'+text+'</div></br>';
                 });
                 htmlStr+="</div>";
                 //alert(htmlStr);
                 addToolTip(obj, htmlStr);
-                    $(obj).qtip("show");
+                $(obj).qtip("show");
             });
         });
         $(linkElement).mouseout(function(){
             document.getElementById(imgID).style.visibility = "hidden";
         });
-        var closeImgSource = wl.FRONTENDADRESS + 'closeEntry.png';
+        var closeImgSource = wl.FRONTENDADRESS + 'delete1.png';
         
-        $(linkElement).prepend('<img id="' + imgID 
-                        + '" src="' + closeImgSource 
-                        + '" style="align:right; visibility: hidden; "/> ');
+        $(linkElement).before('<l style="visibility: hidden; " id="' + imgID +'"><img'
+                        + ' src="' + closeImgSource 
+                        + '" /> </l>');
         var imjObj = document.getElementById(imgID);
         $(imjObj).mouseover(function(){
                 document.getElementById(imgID).style.visibility = "visible";
@@ -111,6 +112,7 @@ wl.UIMenu = new function() {
             htmlStr+="</li>";
         }
         htmlStr+="</ul>";
+        $('#UIMenuWikiDialog').html("");
         $('#UIMenuWikiDialog').append(htmlStr);
         for (var i=0; i < newElements.length; i++){
             var id= '#broccoliNewElement'+i;
@@ -270,10 +272,10 @@ wl.UIMenu = new function() {
             htmlStr+= '<div ' + divID + divClass + divStyle + ' >' + $(this).html() + '</div>';
             // add Tooltip to the keyElements at source (Wiki) Site
             //var imgID = 'EntryCloseImg_' + i;
-            var toolTipStr = "<b>Classes:</b>"+$.data(this,"classes") + "<br/>"
-                           + "<b>Score:</b>"+$.data(this,"score");
+            var toolTipStr = '<b style="color:black;">Classes:</b>'+$.data(this,"classes") + "<br/><br/>"
+                           + '<b style="color:black;">Score:</b>'+$.data(this,"score");
             //alert($.data(this,"classes"));
-            addToolTip(this, '<div style="color:#3366FF" >'+toolTipStr+'</div>');
+            addToolTip(this, '<div style="color:#5B4646" >'+toolTipStr+'</div>');
             //alert("str" + $(this).mouseover);
             
             //HACK FOR SELECTING ELEMENTS BEGIN 
@@ -426,7 +428,7 @@ $(document).ready(function()
         // Add necessary buttons
         $('#UIMenu').append('<div style="top:0px; position:relative; margin-left:0px;" class="WLMenuButton shadow"; id="WLMenuQueryExe"><div style="color:#FF474A; font-size:10px;"><b>START</b></div></div>');
         $('#WLMenuQueryExe').button();
-        $('#UIMenu').append('<div style="top:0px; position:relative; margin-left:10px;" class="WLMenuButton shadow"; id="WLMenuBtStatistic"><div style="color:#FFE923; font-size:10px;"><b>Statistics</b></div> </div>');
+        $('#UIMenu').append('<div style="top:0px; position:relative; margin-left:10px;" class="WLMenuButton shadow"; id="WLMenuBtStatistic"><div style="color:#7ABCFF; font-size:10px;"><b>Statistics</b></div> </div>');
         $('#WLMenuBtStatistic').button();
         $('#UIMenu').append('<div style="top:0px; position:relative; margin-left:10px;" class="WLMenuButton shadow"; id="WLMenuDialog1"><div style="color:#7ABCFF; font-size:10px;"><b>List of additional elements</b></div></div>');
         $('#WLMenuDialog1').button();
