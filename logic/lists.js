@@ -15,7 +15,8 @@ wl.lists = new function(){
     this.getHitGroupNr = function(wikiHref) {
         return wl.lists.hrefToBroccoliHitNumber[wikiHref];
     };
-    this.addBroccoliInstances = function (broccoliInstancesXML) {
+    this.addBroccoliInstances = function (broccoliInstancesXML) {        
+        wl.lists.hrefToBroccoliHitNumber = {};
         var newBroccoliListElements = [];
         var broccoliListElementsMatchedByWikiList = [];
         for (var i = 0; i < broccoliInstancesXML.length; i++) {
