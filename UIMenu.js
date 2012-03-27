@@ -318,11 +318,11 @@ wl.UIMenu = new function() {
         .html('')
 		.dialog({
 			autoOpen: false,
-            //show: 'slow',
+            show: 'fade',
 			position: ['center','bottom'],
             beforeClose: function(event, ui) {wl.UIMenu.statusDialog1='close';},
             resize: function(event, ui) { wl.UIMenu.WikiDialog.parent().css({ position: "fixed" }); },
-			height: 300,
+			height:  $(window).height() *0.35,
 			width: 400,
             zIndex: 3999,
 			title: 'Additional elements'
@@ -334,11 +334,11 @@ wl.UIMenu = new function() {
         .html('')
 		.dialog({
 			autoOpen: false,
-            //show: 'slow',            
+            show: 'fade',            
 			position: ['right','bottom'],
             beforeClose: function(event, ui) {wl.UIMenu.statusStatistic='close';},
             resize: function(event, ui) { wl.UIMenu.StatisticDialog.parent().css({ position: "fixed" }); },
-			height: 300,
+			height:  $(window).height() *0.35,
             zIndex: 4000,
 			width: 450,
 			title: 'Statistics'
@@ -353,13 +353,13 @@ wl.UIMenu = new function() {
         .html('')
     	.dialog({
 			autoOpen: false,
-            //show: 'slow',            
+            show: 'fade',            
 			position: ['right','top'],
             beforeClose: function(event, ui) { wl.UIMenu.BroccoliFrameDialog.parent().css({ position: "fixed" });  wl.UIMenu.statusBroccoliDialog='close';},
             dragStop:function(event, ui) { wl.UIMenu.BroccoliFrameDialog.parent().css({ position: "fixed" }); },
             beforeOpen: function(event, ui) {wl.UIMenu.BroccoliFrameDialog.parent().css({ position: "fixed" }); },
             resizeStop: function(event, ui) { wl.UIMenu.BroccoliFrameDialog.parent().css({ position: "fixed" }); },
-			height: 330,
+			height:  $(window).height() *0.6,
             zIndex: 4000,
 			width: '60%',
 			title: 'Broccoli-Instance'
