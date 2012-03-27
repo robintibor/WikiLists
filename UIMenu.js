@@ -18,13 +18,20 @@ wl.UIMenu = new function() {
         var linkElement = $(obj).find("a").first();
         //$(obj).mouseover(function(){
         //});
-         $(linkElement).bind( "mouseenter",  function(){
+         $(obj).bind( "mouseenter",  function(){
             document.getElementById(imgID).style.visibility = "visible";
-            $(linkElement).unbind("mouseenter");
-            $(linkElement).bind("mouseenter", function(){
+            $(obj).unbind("mouseenter");
+            $(obj).bind("mouseenter", function(){
+               // $('.qtip').qtip("hide");
+                //$(linkElement).qtip("show");
                 document.getElementById(imgID).style.visibility = "visible";
             });
-            wl.broccoliClient.getHitGroupForElement(linkElement, function(hitXML){
+           $(linkElement).mouseover(function(){
+                $('.qtip').qtip("hide");
+                //$(linkElement).qtip("show");
+                document.getElementById(imgID).style.visibility = "visible";
+            });
+            wl.broccoliClient.getHitGroupForElement(obj, function(hitXML){
                 //addToolTip(obj, hitXML);
                 var htmlStr = '<div style="color:#D15E5E; font-size:12px;">';
                 $(hitXML).find('hit').each(function(){
@@ -36,17 +43,17 @@ wl.UIMenu = new function() {
                 });
                 htmlStr+="</div>";
                 //alert(htmlStr);
-                addToolTip(obj, htmlStr);
+                addToolTip(linkElement, htmlStr);
                 $('.qtip').qtip("hide");
-                $(obj).qtip("show");
+                $(linkElement).qtip("show");
             });
         });
-        $(linkElement).mouseout(function(){
+        $(obj).mouseout(function(){
             document.getElementById(imgID).style.visibility = "hidden";
         });
         var closeImgSource = wl.FRONTENDADRESS + 'delete1.png';
         
-        $(linkElement).before('<l style="visibility: hidden; " id="' + imgID +'"><img'
+        $(obj).prepend('<l style="visibility: hidden; " id="' + imgID +'"><img'
                         + ' src="' + closeImgSource 
                         + '" /> </l>');
         var imjObj = document.getElementById(imgID);
@@ -59,7 +66,7 @@ wl.UIMenu = new function() {
         // Hack 
         $(imjObj).click(function(){
                 $(imjObj).remove();
-                $(obj).qtip("destroy");
+                $(linkElement).qtip("destroy");
                 //obj.style.background = "#FFFFFF";
                 //$(obj).off();
                 $(obj).remove();
