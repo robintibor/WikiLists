@@ -22,6 +22,7 @@ wl.UIMenu = new function() {
             document.getElementById(imgID).style.visibility = "visible";
             $(linkElement).unbind("mouseenter");
             $(linkElement).bind("mouseenter", function(){
+                //$('.qtip').qtip('hide');
                 document.getElementById(imgID).style.visibility = "visible";
             });
             wl.broccoliClient.getHitGroupForElement(linkElement, function(hitXML){
@@ -37,10 +38,12 @@ wl.UIMenu = new function() {
                 htmlStr+="</div>";
                 //alert(htmlStr);
                 addToolTip(obj, htmlStr);
+                $('.qtip').qtip('hide');
                 $(obj).qtip("show");
             });
         });
         $(linkElement).mouseout(function(){
+             $(obj).qtip('hide');
             document.getElementById(imgID).style.visibility = "hidden";
         });
         var closeImgSource = wl.FRONTENDADRESS + 'delete1.png';
