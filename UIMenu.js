@@ -192,7 +192,7 @@ wl.UIMenu = new function() {
     //__________________________________________________________________________
     this.loadStatisticDialog = function()
     {
-        var htmlStr='<div style="font-size:14px; padding:2px; border-radius:2px; border-width: 1px; border-style:solid; border-color: #666666; background-color:#EBED8E; width:100%">';
+        var htmlStr='<div style="font-size:14px; padding:2px; border-radius:2px; border-width: 1px; border-style:solid; border-color: #666666; background-color:#EBED8E; width:98.5%">';
         htmlStr+='<div style="width=100%;border-radius:2px; text-align: center; font-sytle:solid; font-size:18px; border-width: 1px; border-style:solid; border-color: #666666; font-family:solid; background-color:#D3CC4C; margin-bottom:10px;"><b>Query Information</b></div>'
         // Add Query Statistic
         // Add classes statistic
@@ -208,7 +208,7 @@ wl.UIMenu = new function() {
                 listElementsNumber++;
             }
         });
-        htmlStr+='<table style="width:100%">'
+        htmlStr+='<table style="width:100%;">'
         htmlStr+='<tr>'
                    +'<td><b>Number of elements found on wiki-site: </b></td> '
                    +'<td style="text-align: center;">'+ listElementsNumber +'</td> '
