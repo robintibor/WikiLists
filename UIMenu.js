@@ -31,7 +31,7 @@ wl.UIMenu = new function() {
                 $(linkElement).qtip("show");
                 document.getElementById(imgID).style.visibility = "visible";
             });
-            wl.broccoliClient.getHitGroupForElement(obj, function(hitXML){
+            wl.broccoliClient.getHitGroupForElement(linkElement, function(hitXML){
                 //addToolTip(obj, hitXML);
                 var htmlStr = '<div style="color:#D15E5E; font-size:12px;">';
                 $(hitXML).find('hit').each(function(){
@@ -42,7 +42,8 @@ wl.UIMenu = new function() {
                     htmlStr+='<div>'+text+'</div></br>';
                 });
                 htmlStr+="</div>";
-                //alert(htmlStr);
+                //alert($(obj).text()+"||||||||||||"+htmlStr);
+                
                 addToolTip(linkElement, htmlStr);
                 //$('.qtip').qtip("hide");
                 $(linkElement).qtip("show");
@@ -318,7 +319,7 @@ wl.UIMenu = new function() {
 		.dialog({
 			autoOpen: false,
             //show: 'slow',
-			position: ['left','bottom'],
+			position: ['center','bottom'],
             beforeClose: function(event, ui) {wl.UIMenu.statusDialog1='close';},
             resize: function(event, ui) { wl.UIMenu.WikiDialog.parent().css({ position: "fixed" }); },
 			height: 300,
@@ -339,7 +340,7 @@ wl.UIMenu = new function() {
             resize: function(event, ui) { wl.UIMenu.StatisticDialog.parent().css({ position: "fixed" }); },
 			height: 300,
             zIndex: 4000,
-			width: 400,
+			width: 450,
 			title: 'Statistics'
 		});
         //wl.UIMenu.BroccoliDialog.parent().addClass('shadow');
@@ -353,14 +354,14 @@ wl.UIMenu = new function() {
     	.dialog({
 			autoOpen: false,
             //show: 'slow',            
-			position: [700,35],
+			position: ['right','top'],
             beforeClose: function(event, ui) { wl.UIMenu.BroccoliFrameDialog.parent().css({ position: "fixed" });  wl.UIMenu.statusBroccoliDialog='close';},
             dragStop:function(event, ui) { wl.UIMenu.BroccoliFrameDialog.parent().css({ position: "fixed" }); },
             beforeOpen: function(event, ui) {wl.UIMenu.BroccoliFrameDialog.parent().css({ position: "fixed" }); },
             resizeStop: function(event, ui) { wl.UIMenu.BroccoliFrameDialog.parent().css({ position: "fixed" }); },
-			height: 300,
+			height: 330,
             zIndex: 4000,
-			width: '50%',
+			width: '60%',
 			title: 'Broccoli-Instance'
 		});
         //wl.UIMenu.BroccoliDialog.parent().addClass('shadow');
