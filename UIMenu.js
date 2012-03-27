@@ -22,7 +22,6 @@ wl.UIMenu = new function() {
             document.getElementById(imgID).style.visibility = "visible";
             $(linkElement).unbind("mouseenter");
             $(linkElement).bind("mouseenter", function(){
-                //$('.qtip').qtip('hide');
                 document.getElementById(imgID).style.visibility = "visible";
             });
             wl.broccoliClient.getHitGroupForElement(linkElement, function(hitXML){
@@ -38,12 +37,10 @@ wl.UIMenu = new function() {
                 htmlStr+="</div>";
                 //alert(htmlStr);
                 addToolTip(obj, htmlStr);
-                $('.qtip').qtip('hide');
                 $(obj).qtip("show");
             });
         });
         $(linkElement).mouseout(function(){
-             $(obj).qtip('hide');
             document.getElementById(imgID).style.visibility = "hidden";
         });
         var closeImgSource = wl.FRONTENDADRESS + 'delete1.png';
@@ -208,7 +205,7 @@ wl.UIMenu = new function() {
                    +'<td style="text-align: center;">'+ listElementsNumber +'</td> '
                 + '</tr>';
         htmlStr+='<tr>'
-                   +'<td><b>Number of elements also found in ontology: </b></td> '
+                   +'<td><b>Number of elements <i>also</i> found in ontology: </b></td> '
                    +'<td style="text-align: center;">'+ foundedInOntology +'</td> '
                 + '</tr>';             
         htmlStr+='<tr>'
