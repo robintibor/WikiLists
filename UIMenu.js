@@ -37,6 +37,7 @@ wl.UIMenu = new function() {
                 htmlStr+="</div>";
                 //alert(htmlStr);
                 addToolTip(obj, htmlStr);
+                $('.qtip').qtip("hide");
                 $(obj).qtip("show");
             });
         });
