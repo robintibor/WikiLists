@@ -28,7 +28,7 @@ wl.UIMenu = new function() {
             });
            $(linkElement).mouseover(function(){
                 //$('.qtip').qtip("hide");
-                $(linkElement).qtip("show");
+                //$(linkElement).qtip("show");
                 document.getElementById(imgID).style.visibility = "visible";
             });
             wl.broccoliClient.getHitGroupForElement(linkElement, function(hitXML){
