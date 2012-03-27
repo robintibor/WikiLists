@@ -83,7 +83,7 @@ wl.broccoliClient = new function() {
 
     var receiveBroccoliJSON = function (broccoliJSON) {
         if (broccoliJSON.type == 'queryString') {
-            var nrOfInstances = 10000;
+            var nrOfInstances = 3000;
             wl.broccoliClient.lastQueryString = broccoliJSON.queryString;
             wl.broccoliClient.broccoliHost = broccoliJSON.broccoliHost;
             wl.broccoliClient.broccoliPort = broccoliJSON.broccoliPort;
