@@ -201,19 +201,19 @@ wl.UIMenu = new function() {
         });
         htmlStr+='<table style="width:100%">'
         htmlStr+='<tr>'
-                   +'<td><b>Number of parsed ellements from Wiki-Site: </b></td> '
+                   +'<td><b>Number of elements found on wiki-site: </b></td> '
                    +'<td style="text-align: center;">'+ listElementsNumber +'</td> '
                 + '</tr>';
         htmlStr+='<tr>'
-                   +'<td><b>Number of founded ellements in Ontology: </b></td> '
+                   +'<td><b>Number of elements also found in ontology: </b></td> '
                    +'<td style="text-align: center;">'+ foundedInOntology +'</td> '
                 + '</tr>';             
         htmlStr+='<tr>'
-                   +'<td><b>Number of possible missing ellements: </b></td> '
+                   +'<td><b>Number of additional elements from Broccoli: </b></td> '
                    +'<td  id="nofMissingEllements" style="text-align: center;"></td> '
                 + '</tr>';
         htmlStr+='<tr>'
-                   +'<td><b>Number of matching ellements: </b></td> '
+                   +'<td><b>Number of matching elements: </b></td> '
                    +'<td  id="nofMatchingEllements" style="text-align: center;"></td> '
                 + '</tr>';        
         htmlStr+='</table></div></br>';
