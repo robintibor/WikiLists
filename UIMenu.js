@@ -106,6 +106,12 @@ wl.UIMenu = new function() {
     );
 };
     //__________________________________________________________________________
+    // public tooltip funktion
+    this.createToolTip  = function(obj, str)
+    {
+        addToolTip(obj, str);
+    }
+    //__________________________________________________________________________
     // load Broccoli result lists
     this.loadBroccoliLists  = function(matchedElements, newElements)
     {
