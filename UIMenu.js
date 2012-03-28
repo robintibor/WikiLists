@@ -181,11 +181,18 @@ wl.UIMenu = new function() {
         wl.UIMenu.loadBroccoliFrame();
         wl.UIMenu.closeSpinner();
         wl.UIMenu.loadStatisticDialog();
+        // open broccoli 
+        if (wl.UIMenu.statusBroccoliDialog == 'close') {
+            wl.UIMenu.BroccoliFrameDialog.dialog("open");
+            wl.UIMenu.statusBroccoliDialog = 'open';
+        } 
     }
     //__________________________________________________________________________
     // Set source for Broccoli-Farme
     this.loadBroccoliFrame  = function()
     {
+        if ($('#UIMenuBroccoliFrame').html() == null) 
+                $('#UIMenuFrameDialog').append('<iframe style="position:relative; height:95%; width:99%;"  id="UIMenuBroccoliFrame" />');
         $('#UIMenuBroccoliFrame').attr({
                  src: wl.UIMenu.broccoliQuery
         });
@@ -317,34 +324,50 @@ wl.UIMenu = new function() {
         wl.UIMenu.WikiDialog = $('<div style="font-family: arial;" id="UIMenuWikiDialog"> </div>')
         .html('')
 		.dialog({
+            create: function(event, ui) {
+                 $(event.target).parent().css('position', 'fixed');
+            },
 			autoOpen: false,
             show: 'fade',
-			position: ['center','bottom'],
+			position: ['right','bottom'],
             beforeClose: function(event, ui) {wl.UIMenu.statusDialog1='close';},
-            resize: function(event, ui) { wl.UIMenu.WikiDialog.parent().css({ position: "fixed" }); },
-			height:  $(window).height() *0.35,
-			width: 400,
+            resizeStop: function(event, ui) {
+                var position = [(Math.floor(ui.position.left) - $(window).scrollLeft()),
+                                (Math.floor(ui.position.top) - $(window).scrollTop())];
+                $(event.target).parent().css('position', 'fixed');
+                $(wl.UIMenu.WikiDialog).dialog('option','position',position);
+            },
+			height:  $(window).height() *0.36,
+    		width: '49%',
             zIndex: 3999,
 			title: 'Additional elements'
 		});
         //wl.UIMenu.WikiDialog.parent().addClass('shadow');
-        wl.UIMenu.WikiDialog.parent().css({ position: "fixed" });
+        //wl.UIMenu.WikiDialog.parent().css({ position: "fixed" });
         wl.UIMenu.WikiDialog.parent().css({ opacity: 0.9});
         wl.UIMenu.StatisticDialog = $('<div style="font-family: arial;" id="UIMenuStatisticDialog"> </div>')
         .html('')
 		.dialog({
+            create: function(event, ui) {
+                 $(event.target).parent().css('position', 'fixed');
+            },
 			autoOpen: false,
             show: 'fade',            
-			position: ['right','bottom'],
+			position: ['left','bottom'],
             beforeClose: function(event, ui) {wl.UIMenu.statusStatistic='close';},
-            resize: function(event, ui) { wl.UIMenu.StatisticDialog.parent().css({ position: "fixed" }); },
-			height:  $(window).height() *0.35,
+            resizeStop: function(event, ui) {
+                var position = [(Math.floor(ui.position.left) - $(window).scrollLeft()),
+                                (Math.floor(ui.position.top) - $(window).scrollTop())];
+                $(event.target).parent().css('position', 'fixed');
+                $(wl.UIMenu.StatisticDialog).dialog('option','position',position);
+            },
+			height:  $(window).height() *0.36,
             zIndex: 4000,
-			width: 450,
+    		width: '49%',
 			title: 'Statistics'
 		});
         //wl.UIMenu.BroccoliDialog.parent().addClass('shadow');
-        wl.UIMenu.StatisticDialog.parent().css({ position: "fixed" });
+        //wl.UIMenu.StatisticDialog.parent().css({ position: "fixed" });
         wl.UIMenu.StatisticDialog.parent().css({ opacity: 0.9});
         
         //----
@@ -352,21 +375,31 @@ wl.UIMenu = new function() {
         wl.UIMenu.BroccoliFrameDialog = $('<div style="font-family: arial;" id="UIMenuFrameDialog"> </div>')
         .html('')
     	.dialog({
+            create: function(event, ui) {
+                 $(event.target).parent().css('position', 'fixed');
+            },
 			autoOpen: false,
             show: 'fade',            
 			position: ['right','top'],
-            beforeClose: function(event, ui) { wl.UIMenu.BroccoliFrameDialog.parent().css({ position: "fixed" });  wl.UIMenu.statusBroccoliDialog='close';},
-            dragStop:function(event, ui) { wl.UIMenu.BroccoliFrameDialog.parent().css({ position: "fixed" }); },
-            beforeOpen: function(event, ui) {wl.UIMenu.BroccoliFrameDialog.parent().css({ position: "fixed" }); },
-            resizeStop: function(event, ui) { wl.UIMenu.BroccoliFrameDialog.parent().css({ position: "fixed" }); },
+            beforeClose: function(event, ui) { wl.UIMenu.statusBroccoliDialog='close';},
+            //dragStop:function(event, ui) { wl.UIMenu.BroccoliFrameDialog.parent().css({ position: "fixed" }); },
+           // beforeOpen: function(event, ui) {wl.UIMenu.BroccoliFrameDialog.parent().css({ position: "fixed" }); },
+            resizeStop: function(event, ui) {
+                var position = [(Math.floor(ui.position.left) - $(window).scrollLeft()),
+                                (Math.floor(ui.position.top) - $(window).scrollTop())];
+                $(event.target).parent().css('position', 'fixed');
+                $(wl.UIMenu.BroccoliFrameDialog).dialog('option','position',position);
+            },
 			height:  $(window).height() *0.6,
             zIndex: 4000,
-			width: '60%',
+			width: '49%',
 			title: 'Broccoli-Instance'
 		});
         //wl.UIMenu.BroccoliDialog.parent().addClass('shadow');
-        wl.UIMenu.BroccoliFrameDialog.parent().css({ position: "fixed" });
+        //wl.UIMenu.BroccoliFrameDialog.parent().css({ position: "fixed" });
         wl.UIMenu.BroccoliFrameDialog.parent().css({ opacity: 0.9});
+       // wl.UIMenu.BroccoliFrameDialog.dialog({dialogClass: "flora"});
+    //    $('.flora.ui-dialog').css({position:"fixed"});
         
     }
     //__________________________________________________________________________
@@ -485,8 +518,6 @@ $(document).ready(function()
                 wl.UIMenu.statusBroccoliDialog = 'close';    
             }
             
-            if ($('#UIMenuBroccoliFrame').html() == null) 
-                $('#UIMenuFrameDialog').append('<iframe style="position:relative; height:95%; width:99%;"  id="UIMenuBroccoliFrame" />');
             wl.UIMenu.loadBroccoliFrame();
             return false;
         }); 
