@@ -23,10 +23,11 @@ wl.facade = new function() {
     };
     var receiveListElementsAndQueryStringAndStoreList = function(jqueryDOM,
         callback, responseJSON) {
-        var listElements =  wl.parser.extractFirstGroupElements(jqueryDOM,
-            responseJSON.listItems);
+        var listElements =  wl.parser.extractFirstGroupElementsAndStoreData(
+            jqueryDOM, responseJSON.listItems);
         var queryString = responseJSON.broccoliQueryString;
-        
+        wl.parser.debugParser.addToolTipsForAllGroups(jqueryDOM,
+            responseJSON.listItems);
         callback(listElements, queryString);
     };
 };
