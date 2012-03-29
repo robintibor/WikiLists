@@ -44,9 +44,9 @@ wl.UIMenu = new function() {
                 htmlStr+="</div>";
                 //alert($(obj).text()+"||||||||||||"+htmlStr);
                 
-                addToolTip(linkElement, htmlStr);
+                addToolTip(obj, htmlStr);
                 //$('.qtip').qtip("hide");
-                $(linkElement).qtip("show");
+                $(obj).qtip("show");
             });
         });
         $(obj).mouseout(function(){
@@ -55,15 +55,16 @@ wl.UIMenu = new function() {
         });
         var closeImgSource = wl.FRONTENDADRESS + 'delete1.png';
         
-        $(obj).prepend('<l style="visibility: hidden; " id="' + imgID +'"><img'
+        $(obj).prepend('<span style="visibility: hidden; " id="' + imgID +'"><img'
                         + ' src="' + closeImgSource 
-                        + '" /> </l>');
+                        + '" /> </span>');
         var imjObj = document.getElementById(imgID);
         $(imjObj).mouseover(function(){
-                document.getElementById(imgID).style.visibility = "visible";
+
+            document.getElementById(imgID).style.visibility = "visible";
         });
         $(imjObj).mouseout(function(){
-                document.getElementById(imgID).style.visibility = "hidden";
+            document.getElementById(imgID).style.visibility = "hidden";
         });
         // Hack 
         $(imjObj).click(function(){
