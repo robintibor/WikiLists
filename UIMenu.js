@@ -33,7 +33,7 @@ wl.UIMenu = new function() {
             });
             wl.broccoliClient.getHitGroupForElement(linkElement, function(hitXML){
                 //addToolTip(obj, hitXML);
-                var htmlStr = '<div style="color:#D15E5E; font-size:12px;">';
+                var htmlStr = '<div style="font-size:12px;">';
                 $(hitXML).find('hit').each(function(){
                     var title = $(this).find('title').first().text().replace(/_/g," ");
                     var text = $(this).find('excerpt').first().text().replace(/<hl>/g, '<b style="color:black">').replace(/<\/hl>/g, "</b>")
@@ -44,7 +44,7 @@ wl.UIMenu = new function() {
                 htmlStr+="</div>";
                 //alert($(obj).text()+"||||||||||||"+htmlStr);
                 
-                addToolTip(obj, htmlStr);
+                addSecondToolTip(obj, htmlStr);
                 //$('.qtip').qtip("hide");
                 $(obj).qtip("show");
             });
@@ -69,7 +69,7 @@ wl.UIMenu = new function() {
         // Hack 
         $(imjObj).click(function(){
                 $(imjObj).remove();
-                $(linkElement).qtip("destroy");
+                $(obj).qtip("destroy");
                 //obj.style.background = "#FFFFFF";
                 //$(obj).off();
                 $(obj).remove();
@@ -90,22 +90,103 @@ wl.UIMenu = new function() {
                     }
             },
             position: {
-                at: "top left",
-                my: "bottom left"
+                at: "bottom left",
+                my: "top left"
             },
             style: {
                     tip: "bottomLeft",
-                    classes: "ui-tooltip-red"
+                    classes: "ui-tooltip-plain ui-tooltip-shadow"
             },
             show: {
-                event: "mouseover"
+                event: "mouseover",
+                effect: function(offset) {
+    		        $(this).fadeIn("slow"); // "this" refers to the tooltip
+		        }
             },
             hide: {
                 event: "mouseout"
             }
         }
-    );
-};
+        );
+    };
+    //__________________________________________________________________________
+    // Add str string to obj object as tooltip
+    // str cann be formated HTML
+    var addSecondToolTip = function(obj, str)
+    {
+         $(obj).qtip({
+            content: {
+                text: str,
+                title: {
+                    text: "Match by Broccoli"
+                    }
+            },
+            position: {
+                at: "top left",
+                my: "bottom left"
+            },
+            style: {
+                    tip: "bottomLeft",
+                    classes: "ui-tooltip-blue ui-tooltip-shadow"
+            },
+            show: {
+                event: "mouseover",
+                effect: function(offset) {
+        	        $(this).fadeIn("slow"); // "this" refers to the tooltip
+		        }
+            },
+            hide: {
+                event: "mouseout"
+            }
+        }
+        );
+    };
+    //__________________________________________________________________________
+    // Add str string to obj object as tooltip
+    // str cann be formated HTML
+    var markFoundedElementsOnWikiSite  = function(matchedElements)
+    {
+        var wikiElements = wl.UIMenu.wikiListsElements;
+        $(wikiElements).each(function(j){
+            var flag = false;
+            for (var i=0; i < matchedElements.length; i++){
+                if ($(this).attr("href") == $(matchedElements[i]).attr("href")){
+                    flag=true;
+                }
+                //console.log($(this).attr("href")+" "+ $(matchedElements[i]).attr("href"));
+            }
+            if (flag){
+                //$(this).addClass("matchedElement");
+                this.style.background="#A0F78A";
+                var obj = $(this).parent();
+                wl.broccoliClient.getHitGroupForElement(this, function(hitXML){
+                    //addToolTip(obj, hitXML);
+                    var htmlStr = '<div style="font-size:12px;">';
+                    $(hitXML).find('hit').each(function(){
+                        var title = $(this).find('title').first().text().replace(/_/g," ");
+                        var text = $(this).find('excerpt').first().text().replace(/<hl>/g, '<b style="color:black">').replace(/<\/hl>/g, "</b>")
+                                                                     .replace(/\$hlct\$/g, '<l style="color:#5B4646">').replace(/\$\/hlct\$/g, "</l>");
+                        htmlStr+='<b style="font-size:13px; color:D15E5E;">'+title+'</b></br>';
+                        htmlStr+='<div>'+text+'</div></br>';
+                    });
+                    htmlStr+="</div>";
+                    //alert($(obj).text()+"||||||||||||"+htmlStr);
+                
+                    addSecondToolTip(obj, htmlStr);
+                    //$('.qtip').qtip("hide");
+                   // $(obj).qtip("show");
+                });
+                
+            } else{
+                var obj = $(this).parent();
+                if ($(obj) != undefined)
+                {
+                    $(obj).qtip("destroy");            
+                }
+                this.style.background="#EFA8A2";
+            }
+        });
+    }
     //__________________________________________________________________________
     // public tooltip funktion
     this.createToolTip  = function(obj, str)
@@ -147,6 +228,7 @@ wl.UIMenu = new function() {
         //    var imgID = 'EntryCloseImg_' + i;
         //    addCloseImages(newElements[i], imgID);
         //}
+        markFoundedElementsOnWikiSite(matchedElements); 
     }
     //__________________________________________________________________________
     // Initialize Spiner
@@ -303,7 +385,7 @@ wl.UIMenu = new function() {
             //alert("str" + $(this).mouseover);
             
             //HACK FOR SELECTING ELEMENTS BEGIN 
-            this.style.background = "#A0F78A";
+            this.style.background = "#EFA8A2";
             $(this).addClass("roundCorners");
             //var oldMouseOverEvent=$(this).mouseover;
             //var oldMouseOutEvent=$(this).mouseout;        
