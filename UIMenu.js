@@ -348,6 +348,30 @@ wl.UIMenu = new function() {
             zIndex: 3999,
 			title: 'Additional elements'
 		});
+        // full screen resizer
+        var wikiDialogOptions = new Object();
+        wikiDialogOptions["status"]=0;
+        $('#ui-dialog-title-UIMenuWikiDialog').css('float', 'right');
+        $('#ui-dialog-title-UIMenuWikiDialog').parent().dblclick(function() {
+            var width = wl.UIMenu.WikiDialog.dialog("option","width");
+            var height = wl.UIMenu.WikiDialog.dialog("option","height");
+            var position = wl.UIMenu.WikiDialog.dialog("option","position");
+            if (wikiDialogOptions["status"]==0)
+            {
+                wikiDialogOptions["status"]=1;
+                wikiDialogOptions["position"]=position;
+                wikiDialogOptions["width"]=width;
+                wikiDialogOptions["height"]=height;
+                wl.UIMenu.WikiDialog.dialog("option","width",$(window).width());
+                wl.UIMenu.WikiDialog.dialog("option","height",$(window).height());
+                wl.UIMenu.WikiDialog.dialog("option", "position",  ['left','top']);
+            } else{
+                wikiDialogOptions["status"]=0;
+                wl.UIMenu.WikiDialog.dialog("option","width", wikiDialogOptions["width"]);
+                wl.UIMenu.WikiDialog.dialog("option","height", wikiDialogOptions["height"]);
+                wl.UIMenu.WikiDialog.dialog("option", "position",  wikiDialogOptions["position"]);
+            }
+        });
         //wl.UIMenu.WikiDialog.parent().addClass('shadow');
         //wl.UIMenu.WikiDialog.parent().css({ position: "fixed" });
         wl.UIMenu.WikiDialog.parent().css({ opacity: 0.9});
@@ -372,6 +396,30 @@ wl.UIMenu = new function() {
     		width: '49%',
 			title: 'Statistics'
 		});
+        // full screen resizer
+        var statisticDialogOptions = new Object();
+        statisticDialogOptions["status"]=0;
+        $('#ui-dialog-title-UIMenuStatisticDialog').css('float', 'right');
+        $('#ui-dialog-title-UIMenuStatisticDialog').parent().dblclick(function() {
+            var width = wl.UIMenu.StatisticDialog.dialog("option","width");
+            var height = wl.UIMenu.StatisticDialog.dialog("option","height");
+            var position = wl.UIMenu.StatisticDialog.dialog("option","position");
+            if (statisticDialogOptions["status"]==0)
+            {
+                statisticDialogOptions["status"]=1;
+                statisticDialogOptions["position"]=position;
+                statisticDialogOptions["width"]=width;
+                statisticDialogOptions["height"]=height;
+                wl.UIMenu.StatisticDialog.dialog("option","width",$(window).width());
+                wl.UIMenu.StatisticDialog.dialog("option","height",$(window).height());
+                wl.UIMenu.StatisticDialog.dialog("option", "position",  ['left','top']);
+            } else{
+                statisticDialogOptions["status"]=0;
+                wl.UIMenu.StatisticDialog.dialog("option","width", statisticDialogOptions["width"]);
+                wl.UIMenu.StatisticDialog.dialog("option","height", statisticDialogOptions["height"]);
+                wl.UIMenu.StatisticDialog.dialog("option", "position",  statisticDialogOptions["position"]);
+            }
+        });
         //wl.UIMenu.BroccoliDialog.parent().addClass('shadow');
         //wl.UIMenu.StatisticDialog.parent().css({ position: "fixed" });
         wl.UIMenu.StatisticDialog.parent().css({ opacity: 0.9});
@@ -401,6 +449,30 @@ wl.UIMenu = new function() {
 			width: '49%',
 			title: 'Broccoli-Instance'
 		});
+        // full screen resizer
+        var BroccoliFrameDialogOptions = new Object();
+        BroccoliFrameDialogOptions["status"]=0;
+        $('#ui-dialog-title-UIMenuFrameDialog').css('float', 'right');
+        $('#ui-dialog-title-UIMenuFrameDialog').parent().dblclick(function() {
+            var width = wl.UIMenu.BroccoliFrameDialog.dialog("option","width");
+            var height = wl.UIMenu.BroccoliFrameDialog.dialog("option","height");
+            var position = wl.UIMenu.BroccoliFrameDialog.dialog("option","position");
+            if (BroccoliFrameDialogOptions["status"]==0)
+            {
+                BroccoliFrameDialogOptions["status"]=1;
+                BroccoliFrameDialogOptions["position"]=position;
+                BroccoliFrameDialogOptions["width"]=width;
+                BroccoliFrameDialogOptions["height"]=height;
+                wl.UIMenu.BroccoliFrameDialog.dialog("option","width",$(window).width());
+                wl.UIMenu.BroccoliFrameDialog.dialog("option","height",$(window).height());
+                wl.UIMenu.BroccoliFrameDialog.dialog("option", "position",  ['left','top']);
+            } else{
+                BroccoliFrameDialogOptions["status"]=0;
+                wl.UIMenu.BroccoliFrameDialog.dialog("option","width", BroccoliFrameDialogOptions["width"]);
+                wl.UIMenu.BroccoliFrameDialog.dialog("option","height", BroccoliFrameDialogOptions["height"]);
+                wl.UIMenu.BroccoliFrameDialog.dialog("option", "position",  BroccoliFrameDialogOptions["position"]);
+            }
+        });
         //wl.UIMenu.BroccoliDialog.parent().addClass('shadow');
         //wl.UIMenu.BroccoliFrameDialog.parent().css({ position: "fixed" });
         wl.UIMenu.BroccoliFrameDialog.parent().css({ opacity: 0.9});
@@ -470,7 +542,7 @@ $(document).ready(function()
         wl.UIMenu.loadjscssfile(wl.FRONTENDADRESS + 'libs/jquery.qtip.min.css', "css"); 
         
         // Add UIMenu-Button
-        $('body').prepend('<div style=" position:fixed; z-index:3; top:0px; left:0px;" id="sidebar1"; onclick=wl.UIMenu.toggle_sidebar();> <a href="#"> <img src="' + wl.FRONTENDADRESS + 'broccoliLogoLittle.png"></a> </div>');
+        $('body').prepend('<div style=" position:fixed; z-index:30000; top:0px; left:0px;" id="sidebar1"; onclick=wl.UIMenu.toggle_sidebar();> <a href="#"> <img src="' + wl.FRONTENDADRESS + 'broccoliLogoLittle.png"></a> </div>');
         // Add Menu
         $('body').prepend('<div class="WLMenu gradient" style="padding-left:110px" id="UIMenu"></div>');
         

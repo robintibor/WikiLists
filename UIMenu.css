@@ -17,7 +17,6 @@
     position:fixed;
     background-color:#708090; 
     opacity: 0.9; 
-    z-index:2; 
     width:100px;
     border-radius:10px;
     -moz-border-radius: 10px;
