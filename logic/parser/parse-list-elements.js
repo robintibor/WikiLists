@@ -43,7 +43,6 @@ wl.parser.debugParser = new function() {
                 $(linkElements).each(function() { 
                     addScoreAndClassesToolTipForLinkElement(this);
                 });
-            console.log("linkelements: " + linkElements);
         }
     };
     var addScoreAndClassesToolTipForLinkElement = function(linkElement) {
