@@ -435,6 +435,7 @@ wl.UIMenu = new function() {
         var wikiDialogOptions = new Object();
         wikiDialogOptions["status"]=0;
         $('#ui-dialog-title-UIMenuWikiDialog').css('float', 'right');
+        $('#ui-dialog-title-UIMenuWikiDialog').css("font-family", "'Averia Gruesa Libre', cursive");
         $('#ui-dialog-title-UIMenuWikiDialog').parent().dblclick(function() {
             var width = wl.UIMenu.WikiDialog.dialog("option","width");
             var height = wl.UIMenu.WikiDialog.dialog("option","height");
@@ -483,6 +484,7 @@ wl.UIMenu = new function() {
         var statisticDialogOptions = new Object();
         statisticDialogOptions["status"]=0;
         $('#ui-dialog-title-UIMenuStatisticDialog').css('float', 'right');
+        $('#ui-dialog-title-UIMenuStatisticDialog').css("font-family", "'Averia Gruesa Libre', cursive");
         $('#ui-dialog-title-UIMenuStatisticDialog').parent().dblclick(function() {
             var width = wl.UIMenu.StatisticDialog.dialog("option","width");
             var height = wl.UIMenu.StatisticDialog.dialog("option","height");
@@ -530,12 +532,13 @@ wl.UIMenu = new function() {
 			height:  $(window).height() *0.6,
             zIndex: 4000,
 			width: '49%',
-			title: 'Broccoli-Instance'
+			title: 'Broccoli'
 		});
         // full screen resizer
         var BroccoliFrameDialogOptions = new Object();
         BroccoliFrameDialogOptions["status"]=0;
         $('#ui-dialog-title-UIMenuFrameDialog').css('float', 'right');
+        $('#ui-dialog-title-UIMenuFrameDialog').css("font-family", "'Averia Gruesa Libre', cursive");
         $('#ui-dialog-title-UIMenuFrameDialog').parent().dblclick(function() {
             var width = wl.UIMenu.BroccoliFrameDialog.dialog("option","width");
             var height = wl.UIMenu.BroccoliFrameDialog.dialog("option","height");
@@ -622,6 +625,7 @@ $(document).ready(function()
         // Load additional files
         wl.UIMenu.loadjscssfile(wl.FRONTENDADRESS + 'UIMenu.css', "css"); 
         wl.UIMenu.loadjscssfile('http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.8/themes/flick/jquery-ui.css', "css"); 
+        wl.UIMenu.loadjscssfile('http://fonts.googleapis.com/css?family=Averia+Gruesa+Libre','css');
         wl.UIMenu.loadjscssfile(wl.FRONTENDADRESS + 'libs/jquery.qtip.min.css', "css"); 
         
         // Add UIMenu-Button
@@ -641,6 +645,11 @@ $(document).ready(function()
         $('#UIMenu').append('<div style="top:0px; position:relative; margin-left:10px;" class="WLMenuButton shadow"; id="WLMenuBtBroccoli"><div style="color:#6bba70; font-size:10px;"><b>Broccoli</b></div> </div>');
         $('#WLMenuBtBroccoli').button();
         //$('#UIMenu').append('<div class="WLMenuEditor shadow"; id="WLMenuEditor">Editor</div>'); 
+        // set google-fonts
+        $('#WLMenuQueryExe').css("font-family", "'Averia Gruesa Libre', cursive");
+        $('#WLMenuBtStatistic').css("font-family", "'Averia Gruesa Libre', cursive");
+        $('#WLMenuDialog1').css("font-family", "'Averia Gruesa Libre', cursive");
+        $('#WLMenuBtBroccoli').css("font-family", "'Averia Gruesa Libre', cursive");
         wl.UIMenu.loadDialogs();
         
         // Event handlers for the buttons above
