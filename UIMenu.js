@@ -118,7 +118,7 @@ wl.UIMenu = new function() {
             content: {
                 text: str,
                 title: {
-                    text: "Match by Broccoli"
+                    text: "Hit by Broccoli"
                     }
             },
             position: {
@@ -625,9 +625,11 @@ $(document).ready(function()
         wl.UIMenu.loadjscssfile(wl.FRONTENDADRESS + 'libs/jquery.qtip.min.css', "css"); 
         
         // Add UIMenu-Button
-        $('body').prepend('<div style=" position:fixed; z-index:30000; top:0px; left:0px;" id="sidebar1"; onclick=wl.UIMenu.toggle_sidebar();> <a href="#"> <img src="' + wl.FRONTENDADRESS + 'broccoliLogoLittle.png"></a> </div>');
+        $('body').prepend('<div style=" position:fixed; z-index:30000; top:0px; left:0px;" id="sidebar1"; onclick=wl.UIMenu.toggle_sidebar();> <a href="#"> <img id="logo"; class="shadow roundCorners logo gradient"; src="' + wl.FRONTENDADRESS + 'logo1.png"></a> </div>');
+        $('#logo').mouseover(function(){this.style.opacity='1';});
+        $('#logo').mouseout(function(){this.style.opacity='0.9';});
         // Add Menu
-        $('body').prepend('<div class="WLMenu gradient" style="padding-left:110px" id="UIMenu"></div>');
+        $('body').prepend('<div class="WLMenu gradient" style="padding-left:163px" id="UIMenu"></div>');
         
         // Add necessary buttons
         $('#UIMenu').append('<div style="top:0px; position:relative; margin-left:0px;" class="WLMenuButton shadow"; id="WLMenuQueryExe"><div style="color:#FF474A; font-size:10px;"><b>START</b></div></div>');
