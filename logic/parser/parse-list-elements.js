@@ -35,19 +35,16 @@ wl.parser = new function() {
 };
 
 wl.parser.debugParser = new function() {
-    this.addToolTipsForAllGroups = function(jqueryDOM, listItemsJSON) {
-        var listItemGroups = listItemsJSON.listItemGroups;
-        for (var i = 0; i < listItemGroups.length; i++) {
-            var linkElements = wl.parser.findListElementsAndStoreData(
-                jqueryDOM, listItemGroups[i]);
-                $(linkElements).each(function() { 
+    this.addToolTipsForAllGroups = function(jqueryDOM, allItemsJSON) {
+        var linkElements = wl.parser.findListElementsAndStoreData(
+                jqueryDOM, allItemsJSON);
+        $(linkElements).each(function() { 
                     addScoreAndClassesToolTipForLinkElement(this);
-                });
-        }
+        });
     };
     var addScoreAndClassesToolTipForLinkElement = function(linkElement) {
-       var toolTipStr = '<b>Classes:</b>'+$(linkElement).data("classes") + "<br/><br/>"
-                       + '<b>Score:</b>'+$(linkElement).data("score");
+       var toolTipStr = '<b>Classes:</b>' + $(linkElement).data("classes") + "<br/><br/>"
+                       + '<b>Score:</b>' + $(linkElement).data("score");
         wl.UIMenu.createToolTip(linkElement, toolTipStr);
     };
 };
