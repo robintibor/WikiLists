@@ -13,6 +13,15 @@ wl.lists = new function(){
         this.hitGroupIndex = hitGroupIndex;
     };
 
+    this.extractHrefOfBroccoliInstanceText = function(instanceText) {
+        // format  of instancetext:
+        // :e:<entityname>:<wikipedia-href-link>
+        // we are trying to extract the href, therefore take string
+        // after last ':'
+        // assumption: there should be no ':' inside the wikipedia link!
+        return instanceText.slice(instanceText.lastIndexOf(':') + 1);
+    };
+
     this.getHitGroupNr = function(wikiHref) {
         return wl.lists.hrefToBroccoliHitNumber[wikiHref];
     };
@@ -35,11 +44,7 @@ wl.lists = new function(){
         newBroccoliListElements, broccoliListElementsMatchedByWikiList) {
         var wikiHref = broccoliInstance.wikiHref;
         var isNewElement = !wikiListElementsContainHref(wikiHref);
-        var linkElement = $(document.createElement('a')).
-                attr('href', wikiHref).get(); 
-        // open link in new window
-        $(linkElement).attr('target', '_blank');
-        $(linkElement).html(broccoliInstance.title);
+        var linkElement = createLinkElement(wikiHref, broccoliInstance.title);
         if (isNewElement) {
             newBroccoliListElements.push(linkElement);
         } else {
@@ -48,18 +53,18 @@ wl.lists = new function(){
         rememberHitGroupIndexInMap(wikiHref, broccoliInstance.hitGroupIndex);
     };
 
+    var createLinkElement = function(href, text) {
+        var linkElement = $(document.createElement('a')).attr('href', href); 
+        // open link in new window
+        linkElement.attr('target', '_blank');
+        linkElement.html(text);
+        return linkElement.get();
+    };
+
     var rememberHitGroupIndexInMap = function(wikiHrefOfInstance, hitGroupIndex) {
         wl.lists.hrefToBroccoliHitNumber[wikiHrefOfInstance] = hitGroupIndex;
     };
 
-    this.extractHrefOfBroccoliInstanceText = function(instanceText) {
-        // format  of instancetext:
-        // :e:<entityname>:<wikipedia-href-link>
-        // we are trying to extract the href, therefore take string
-        // after last ':'
-        // assumption: there should be no ':' inside the wikipedia link!
-        return instanceText.slice(instanceText.lastIndexOf(':') + 1);
-    };
 
     var wikiListElementsContainHref = function (wikiHref) {
         return wl.lists.lastListElements.is(function() {
