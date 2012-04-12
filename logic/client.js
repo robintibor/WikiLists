@@ -67,30 +67,16 @@ wl.client = new function() {
     };
 };
 
-// This "client" waits for messages from the broccoli 
-// iframe and acts upon them :)
-wl.broccoliClient = new function() {
+wl.broccoliClient = new function() {    
     this.lastQueryString = '';
     this.broccoliHost = '';
     this.broccoliPort = '';
 
-    this.listenForQueryStringFromBroccoliFrame = function() {              
-        window.addEventListener('message',function(event) {                  
-                        var broccoliJSON = $.parseJSON(event.data);
-                        receiveBroccoliJSON(broccoliJSON);
-        }, false);
-    };
-
-    var receiveBroccoliJSON = function (broccoliJSON) {
-        if (broccoliJSON.type == 'queryString') {
-            var nrOfInstances = 3000;
-            wl.broccoliClient.lastQueryString = broccoliJSON.queryString;
-            wl.broccoliClient.broccoliHost = broccoliJSON.broccoliHost;
-            wl.broccoliClient.broccoliPort = broccoliJSON.broccoliPort;
-            wl.client.getBroccoliInstances(broccoliJSON.queryString,
-            broccoliJSON.broccoliHost, broccoliJSON.broccoliPort,
+    this.getBroccoliInstances = function() {
+        var nrOfInstances = 3000;
+        wl.client.getBroccoliInstances(wl.broccoliClient.lastQueryString,
+            wl.broccoliClient.broccoliHost, wl.broccoliClient.broccoliPort,
             nrOfInstances, receiveBroccoliInstances);
-        }
     };
 
     var receiveBroccoliInstances = function(broccoliResultJSON) {
@@ -118,14 +104,17 @@ wl.broccoliClient = new function() {
         removeAddInfoTextFromExcerpts(hitGroup);
         callbackForHitGroup(hitGroup);        
     };
+
     var removeAddInfoTextFromExcerpts = function(xmlHitGroup) {
         var excerpts = xmlHitGroup.find("excerpt");
         excerpts.each(removeAddInfoFromExcerpt);        
     };
+
     var removeAddInfoFromExcerpt = function (index, excerptElement) {
         var cleanedText = wl.broccoliClient.removeAddInfoText($(excerptElement).text());
         $(excerptElement).text(cleanedText);
     };
+
     // public for testing
     this.removeAddInfoText = function (text) {
         var cleanedText = text.replace(/\$addinfo\$.*\$\/addinfo\$/, '');
@@ -133,4 +122,37 @@ wl.broccoliClient = new function() {
     };
 };
 
-wl.broccoliClient.listenForQueryStringFromBroccoliFrame();
+// This "client" waits for messages from the broccoli 
+// iframe and acts upon them :)
+wl.broccoliIFrameClient = new function() {
+    this.lastQueryString = '';
+    this.broccoliHost = '';
+    this.broccoliPort = '';
+
+    this.sendListSetToBroccoliFrame = function(listSet) {
+        var listString = JSON.stringify(listSet);
+        var broccoliContentWindow = 
+            document.getElementById('UIMenuBroccoliFrame').contentWindow;
+        broccoliContentWindow.postMessage(listString, '*');
+    };
+
+    this.listenForQueryStringFromBroccoliFrame = function() {              
+        window.addEventListener('message',function(event) {                  
+            var broccoliJSON = $.parseJSON(event.data);
+            receiveBroccoliJSON(broccoliJSON);
+            wl.broccoliIFrameClient.
+                sendListSetToBroccoliFrame(wl.lists.wikiListLinkSet);
+        }, false);
+    };
+
+    var receiveBroccoliJSON = function (broccoliJSON) {
+        if (broccoliJSON.type == 'queryString') {
+            wl.broccoliClient.lastQueryString = broccoliJSON.queryString;
+            wl.broccoliClient.broccoliHost = broccoliJSON.broccoliHost;
+            wl.broccoliClient.broccoliPort = broccoliJSON.broccoliPort;
+            wl.broccoliClient.getBroccoliInstances();
+        }
+    };
+};
+
+wl.broccoliIFrameClient.listenForQueryStringFromBroccoliFrame();

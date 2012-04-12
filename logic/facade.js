@@ -3,7 +3,7 @@ var wl = wikiLists;
 wl.facade = new function() {
     this.computeListElementsAndQueryStringAndStoreList = function (callback) {
         var callbackAndStoreList = function(callback, listElements, queryString) {            
-            wl.lists.lastListElements = listElements;
+            wl.lists.setListElements(listElements);
             callback(listElements, queryString);
         }.bind(this, callback);
         wl.facade.computeListElementsAndQueryString(callbackAndStoreList);

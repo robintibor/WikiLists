@@ -3,7 +3,15 @@ var wl = wikiLists;
 wl.lists = new function(){
     this.lastListElements = [];
     this.hrefToBroccoliHitNumber = {};
-
+    this.wikiListLinkSet = {}
+    this.setListElements = function(listElements) {
+        wl.lists.lastListElements = listElements;
+        wl.lists.wikiListLinkSet = {};
+        $(listElements).each(function(){
+            var hrefOfListElement = $(this).attr('href');
+            wl.lists.wikiListLinkSet[hrefOfListElement] = true;
+        });
+    };
     var BroccoliInstance = function(broccoliInstanceXML, hitGroupIndex) {
         var xmlInstanceText = $(broccoliInstanceXML).text();
         var wikiTitleLink = 
