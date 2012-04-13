@@ -25,6 +25,9 @@ wl.facade = new function() {
         callback, responseJSON) {
         var listElements =  wl.parser.findListElementsAndStoreData(
             jqueryDOM, responseJSON.listItems.finalItems);
+        var linkAndRedirectSet = responseJSON.listItems.
+            finalItemsLinkAndRedirectSet;
+        wl.lists.setWikiListLinkSet(linkAndRedirectSet);
         var queryString = responseJSON.broccoliQueryString;
         wl.parser.debugParser.addToolTipsForAllGroups(jqueryDOM,
             responseJSON.listItems.allItems);

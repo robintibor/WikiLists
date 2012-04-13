@@ -3,15 +3,16 @@ var wl = wikiLists;
 wl.lists = new function(){
     this.lastListElements = [];
     this.hrefToBroccoliHitNumber = {};
-    this.wikiListLinkSet = {}
+    this.wikiListLinkSet = {};
+
     this.setListElements = function(listElements) {
         wl.lists.lastListElements = listElements;
-        wl.lists.wikiListLinkSet = {};
-        $(listElements).each(function(){
-            var hrefOfListElement = $(this).attr('href');
-            wl.lists.wikiListLinkSet[hrefOfListElement] = true;
-        });
     };
+    
+    this.setWikiListLinkSet = function (wikiListLinkSet) {
+        wl.lists.wikiListLinkSet = wikiListLinkSet;
+    };
+    
     var BroccoliInstance = function(broccoliInstanceXML, hitGroupIndex) {
         var xmlInstanceText = $(broccoliInstanceXML).text();
         var wikiTitleLink = 
@@ -51,7 +52,7 @@ wl.lists = new function(){
     var addBroccoliInstance = function(broccoliInstance,
         newBroccoliListElements, broccoliListElementsMatchedByWikiList) {
         var wikiHref = broccoliInstance.wikiHref;
-        var isNewElement = !wikiListElementsContainHref(wikiHref);
+        var isNewElement = !wl.lists.wikiListLinkSet.hasOwnProperty(wikiHref);
         var linkElement = createLinkElement(wikiHref, broccoliInstance.title);
         if (isNewElement) {
             newBroccoliListElements.push(linkElement);
@@ -61,6 +62,7 @@ wl.lists = new function(){
         rememberHitGroupIndexInMap(wikiHref, broccoliInstance.hitGroupIndex);
     };
 
+    // create link element opening in new window
     var createLinkElement = function(href, text) {
         var linkElement = $(document.createElement('a')).attr('href', href); 
         // open link in new window
@@ -71,15 +73,5 @@ wl.lists = new function(){
 
     var rememberHitGroupIndexInMap = function(wikiHrefOfInstance, hitGroupIndex) {
         wl.lists.hrefToBroccoliHitNumber[wikiHrefOfInstance] = hitGroupIndex;
-    };
-
-
-    var wikiListElementsContainHref = function (wikiHref) {
-        return wl.lists.lastListElements.is(function() {
-            return elementHasHref(this, wikiHref);});
-    };
-
-    var elementHasHref = function (actualElement, expectedHref) {
-        return $(actualElement).attr('href') == expectedHref;
     };
 };
