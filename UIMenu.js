@@ -28,7 +28,7 @@ wl.UIMenu = new function() {
             });
            $(linkElement).mouseover(function(){
                 //$('.qtip').qtip("hide");
-                //$(linkElement).qtip("show");
+                $(linkElement).qtip("show");
                 document.getElementById(imgID).style.visibility = "visible";
             });
             wl.broccoliClient.getHitGroupForElement(linkElement, function(hitXML){
@@ -60,7 +60,7 @@ wl.UIMenu = new function() {
                         + '" /> </span>');
         var imjObj = document.getElementById(imgID);
         $(imjObj).mouseover(function(){
-
+            $(obj).qtip("show");
             document.getElementById(imgID).style.visibility = "visible";
         });
         $(imjObj).mouseout(function(){
@@ -142,8 +142,6 @@ wl.UIMenu = new function() {
         );
     };
     //__________________________________________________________________________
-    // Add str string to obj object as tooltip
-    // str cann be formated HTML
     var markFoundedElementsOnWikiSite  = function(matchedElements)
     {
         var wikiElements = wl.UIMenu.wikiListsElements;
@@ -159,6 +157,9 @@ wl.UIMenu = new function() {
                 //$(this).addClass("matchedElement");
                 this.style.background="#A0F78A";
                 var obj = $(this).parent();
+                //if (document.getElementById("listItems"+j)==null)
+                //$(obj).html('<sp>'+$(obj).html()+'</sp>');
+                //var obj = document.getElementById("listItems"+j);
                 wl.broccoliClient.getHitGroupForElement(this, function(hitXML){
                     //addToolTip(obj, hitXML);
                     var htmlStr = '<div style="font-size:12px;">';
@@ -203,7 +204,7 @@ wl.UIMenu = new function() {
         wl.UIMenu.BroccoliNewListsElement = newElements; 
         var htmlStr="<ul>";
         var newElementClasses = 'class="newBroccoliElements"';
-        var newElementStyle = 'style="font-size:14px; width:90%"';
+        var newElementStyle = 'style="font-size:14px; width:90%; background-color:#white;"';
         for (var i=0; i < newElements.length; i++){
             htmlStr+='<li id="broccoliNewElement'+i+'" '+newElementClasses+' '+newElementStyle+'>';
             //htmlStr+=elem.innerHTML;
@@ -280,11 +281,13 @@ wl.UIMenu = new function() {
     // Set source for Broccoli-Farme
     this.loadBroccoliFrame  = function()
     {
-        if ($('#UIMenuBroccoliFrame').html() == null) 
+        if ($('#UIMenuBroccoliFrame').html() == null)
+        {
                 $('#UIMenuFrameDialog').append('<iframe style="position:relative; height:95%; width:99%;"  id="UIMenuBroccoliFrame" />');
-        $('#UIMenuBroccoliFrame').attr({
-                 src: wl.UIMenu.broccoliQuery
-        });
+                $('#UIMenuBroccoliFrame').attr({
+                    src: wl.UIMenu.broccoliQuery
+                }); 
+        }
     }
     //__________________________________________________________________________
     this.loadStatisticDialog = function()
