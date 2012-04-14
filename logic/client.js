@@ -73,7 +73,7 @@ wl.broccoliClient = new function() {
     this.broccoliPort = '';
 
     this.getBroccoliInstances = function() {
-        var nrOfInstances = 3000;
+        var nrOfInstances = 4000;
         wl.client.getBroccoliInstances(wl.broccoliClient.lastQueryString,
             wl.broccoliClient.broccoliHost, wl.broccoliClient.broccoliPort,
             nrOfInstances, receiveBroccoliInstances);
