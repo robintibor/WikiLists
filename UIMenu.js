@@ -265,6 +265,9 @@ wl.UIMenu = new function() {
     // Set source for Broccoli-Farme
     this.refreshUI  = function(listElements, broccoliQueryStr)
     {
+        $('#WLMenuBtStatistic').show();
+        $('#WLMenuDialog1').show();
+        $('#WLMenuBtBroccoli').show();
         wl.UIMenu.wikiListsElements = listElements;
         wl.UIMenu.loadWikiDialog();
         wl.UIMenu.broccoliQuery = broccoliQueryStr;
@@ -641,14 +644,17 @@ $(document).ready(function()
         // Add necessary buttons
         $('#UIMenu').append('<div style="top:0px; position:relative; margin-left:0px;" class="WLMenuButton shadow"; id="WLMenuQueryExe"><div style="color:#FF474A; font-size:10px;"><b>START</b></div></div>');
         $('#WLMenuQueryExe').button();
-        $('#UIMenu').append('<div style="top:0px; position:relative; margin-left:10px;" class="WLMenuButton shadow"; id="WLMenuBtStatistic"><div style="color:#2c539e; font-size:10px;"><b>Statistics</b></div> </div>');
-        $('#WLMenuBtStatistic').button();
-        $('#UIMenu').append('<div style="top:0px; position:relative; margin-left:10px;" class="WLMenuButton shadow"; id="WLMenuDialog1"><div style="color:#2c539e; font-size:10px;"><b>Additional elements</b></div></div>');
-        $('#WLMenuDialog1').button();
         $('#UIMenu').append('<div style="top:0px; position:relative; margin-left:10px;" class="WLMenuButton shadow"; id="WLMenuBtBroccoli"><div style="color:#6bba70; font-size:10px;"><b>Broccoli</b></div> </div>');
         $('#WLMenuBtBroccoli').button();
+        $('#UIMenu').append('<div style="top:0px; position:relative; margin-left:10px;" class="WLMenuButton shadow"; id="WLMenuDialog1"><div style="color:#2c539e; font-size:10px;"><b>Additional elements</b></div></div>');
+        $('#WLMenuDialog1').button();
+        $('#UIMenu').append('<div style="top:0px; position:relative; margin-left:10px;" class="WLMenuButton shadow"; id="WLMenuBtStatistic"><div style="color:#FF474A; font-size:10px;"><b>Statistics</b></div> </div>');
+        $('#WLMenuBtStatistic').button();
         //$('#UIMenu').append('<div class="WLMenuEditor shadow"; id="WLMenuEditor">Editor</div>'); 
         // set google-fonts
+        $('#WLMenuBtStatistic').hide();
+        $('#WLMenuDialog1').hide();
+        $('#WLMenuBtBroccoli').hide();
         $('#WLMenuQueryExe').css("font-family", "'Averia Gruesa Libre', cursive");
         $('#WLMenuBtStatistic').css("font-family", "'Averia Gruesa Libre', cursive");
         $('#WLMenuDialog1').css("font-family", "'Averia Gruesa Libre', cursive");
@@ -699,7 +705,8 @@ $(document).ready(function()
         
         $('#WLMenuQueryExe').click(function() 
         { 
-            wl.UIMenu.postQuery();
+            $('#WLMenuQueryExe').hide();
+            wl.UIMenu.postQuery();            
         }); 
     }
 });
