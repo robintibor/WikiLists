@@ -8,10 +8,12 @@ wl.facade = new function() {
         }.bind(this, callback);
         wl.facade.computeListElementsAndQueryString(callbackAndStoreList);
     };
+
     this.computeListElementsAndQueryString = function(callback) {
         wl.facade.computeListElementsAndQueryStringForWikiURL(
             document.location.href, $(document), callback);
     };
+
     this.computeListElementsAndQueryStringForWikiURL = function(
         wikiURL, jqueryDOM, callback) {
         var callbackForJSON = function(jqueryDOM, callback, responseJSON) {
@@ -21,6 +23,7 @@ wl.facade = new function() {
         wl.client.getListElementsAndQueryStringForWikiURL(wikiURL,
             callbackForJSON);
     };
+
     var receiveListElementsAndQueryStringAndStoreList = function(jqueryDOM,
         callback, responseJSON) {
         var listElements =  wl.parser.findListElementsAndStoreData(

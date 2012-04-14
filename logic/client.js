@@ -139,9 +139,7 @@ wl.broccoliIFrameClient = new function() {
     this.listenForQueryStringFromBroccoliFrame = function() {              
         window.addEventListener('message',function(event) {                  
             var broccoliJSON = $.parseJSON(event.data);
-            receiveBroccoliJSON(broccoliJSON);
-            wl.broccoliIFrameClient.
-                sendListSetToBroccoliFrame(wl.lists.wikiListLinkSet);
+            receiveBroccoliJSON(broccoliJSON);            
         }, false);
     };
 
@@ -151,6 +149,10 @@ wl.broccoliIFrameClient = new function() {
             wl.broccoliClient.broccoliHost = broccoliJSON.broccoliHost;
             wl.broccoliClient.broccoliPort = broccoliJSON.broccoliPort;
             wl.broccoliClient.getBroccoliInstances();
+        }
+        else if (broccoliJSON.type == 'requestWikiListLinkSet') {
+            wl.broccoliIFrameClient.
+                sendListSetToBroccoliFrame(wl.lists.wikiListLinkSet);
         }
     };
 };
