@@ -12,27 +12,57 @@ var wikiLists = new function() {
         }
     };
 
+    function addJavaScriptFilesAfterExists(fileURLs, objectThatHasToExist) {
+      if (typeof eval(objectThatHasToExist) != 'undefined')
+           wikiLists.addJavaScriptFiles(fileURLs);
+      else
+        setTimeout(addJavaScriptFilesAfterExists.bind(this, fileURLs, 
+          objectThatHasToExist), 150);
+    };
+
+    function loadNewerJQueryAndJQueryUI() {
+      var jQuerySources = [ 'http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js',
+                            'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js']
+      wikiLists.addJavaScriptFiles(jQuerySources);
+    };
+
+    function loadJQueryPlugins() {
+      var jQueryPlugins = ['http://fgnass.github.com/spin.js/dist/spin.min.js',
+                            wikiLists.FRONTENDADRESS + 'libs/jquery.qtip.min.js'];
+        // wait for new jquery versions to load
+        addJavaScriptFilesAfterExists(jQueryPlugins, 'jQuery && jQuery.ui');
+    };
+
+    function loadOurScripts() {
+        var ourScripts = [wikiLists.FRONTENDADRESS + 'logic/parser/parse-list-elements.js',
+                          wikiLists.FRONTENDADRESS + 'logic/facade.js',
+                          wikiLists.FRONTENDADRESS + 'logic/lists.js',
+                          wikiLists.FRONTENDADRESS + 'logic/client.js',
+                          wikiLists.FRONTENDADRESS + 'UIMenu.js'];
+        addJavaScriptFilesAfterExists(ourScripts, 'jQuery && jQuery().qtip');
+    };
+
+    function unloadJQuery() {
+      jQuery = undefined;
+    };    
+
     // Load Javascript files
     this.init = function() {
-        // TODO(Robin):try leaving out jquery and jquery ui on init? 
-        // it shouldnt be needed cause wikipedia loads it?
-        var javaScriptSources = [ 'http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js',
-                                  'https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js',
-                                  'http://fgnass.github.com/spin.js/dist/spin.min.js',
-                                  wikiLists.FRONTENDADRESS + 'libs/jquery.qtip.min.js',
-                                  wikiLists.FRONTENDADRESS + 'logic/parser/parse-list-elements.js',
-                                  wikiLists.FRONTENDADRESS + 'logic/facade.js',
-                                  wikiLists.FRONTENDADRESS + 'logic/lists.js',
-                                  wikiLists.FRONTENDADRESS + 'logic/client.js',
-                                  wikiLists.FRONTENDADRESS + 'UIMenu.js'];
-        this.addJavaScriptFiles(javaScriptSources);
+        unloadJQuery();
+        loadNewerJQueryAndJQueryUI();
+        loadJQueryPlugins();
+        loadOurScripts();
     };
 };
+
 
 function scriptAlreadyLoaded() {
 // wl is defined in the scripts that are loaded...
    return typeof wl != 'undefined';
 }
+
+
+
 
 if (!scriptAlreadyLoaded())
     wikiLists.init();
