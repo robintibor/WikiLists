@@ -37,7 +37,7 @@ wl.client = new function() {
 
     var createBroccoliQueryURL = function(queryString, 
         broccoliHost, broccoliPort) {
-        return createBroccoliURL(broccoliHost, broccoliPort) + '/?s=' + 
+        return createBroccoliURL(broccoliHost, broccoliPort) + '/?' + 
             queryString;
     };
 
