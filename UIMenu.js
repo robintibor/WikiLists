@@ -12,6 +12,7 @@ wl.UIMenu = new function() {
     this.loadedElements = new Object();
     
     var createFormattedExcerpt = function(excerpt) {
+        console.log("excerpt to style", excerpt);
         return excerpt.find("text").text();
     }
     
@@ -40,8 +41,6 @@ wl.UIMenu = new function() {
                 var htmlStr = '<div style="font-size:12px;">';
                 $(hitXML).find('hit').each(function(){
                     var title = $(this).find('title').first().text().replace(/_/g," ");
-                    console.log("excerpt", $(this).find('excerpt'));
-                    console.log("text", $(this).find('excerpt').find('text'));
                     var text = createFormattedExcerpt($(this).find('excerpt').first()); // there is only one anyways, jsut for better function call :)
                     // TOREMOVE(robin): .find('text').text().replace(/<hl>/g, '<b style="color:black">').replace(/<\/hl>/g, "</b>")
                     //                                                 .replace(/\$hlct\$/g, '<l style="color:#5B4646">').replace(/\$\/hlct\$/g, "</l>");

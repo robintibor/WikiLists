@@ -101,24 +101,7 @@ wl.broccoliClient = new function() {
         var xmlResultString = broccoliHitgroupJSON.responseBody;
         var xmlResult = $($.parseXML(xmlResultString));
         var hitGroup = xmlResult.find("group").first(); // there shold be only one anyways :)
-        //removeAddInfoTextFromExcerpts(hitGroup);
         callbackForHitGroup(hitGroup);        
-    };
-
-    var removeAddInfoTextFromExcerpts = function(xmlHitGroup) {
-        var excerpts = xmlHitGroup.find("excerpt");
-        excerpts.each(removeAddInfoFromExcerpt);        
-    };
-
-    var styleExcerptText = function (index, excerptElement) {
-        var cleanedText = wl.broccoliClient.removeAddInfoText($(excerptElement).text());
-        $(excerptElement).text(cleanedText);
-    };
-
-    // public for testing
-    this.removeAddInfoText = function (text) {
-        var cleanedText = text.replace(/\$addinfo\$.*\$\/addinfo\$/, '');
-        return cleanedText;
     };
 };
 
