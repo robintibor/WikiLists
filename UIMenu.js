@@ -11,6 +11,10 @@ wl.UIMenu = new function() {
     this.broccoliQuery = 'http://stromboli.informatik.uni-freiburg.de:6222/BroccoliWikiLists/'
     this.loadedElements = new Object();
     
+    var createFormattedExcerpt = function(excerpt) {
+        return excerpt.find("text").text();
+    }
+    
     //__________________________________________________________________________
     // Add close functionality for geven object
     var addCloseImages = function(obj, imgID)
@@ -36,8 +40,11 @@ wl.UIMenu = new function() {
                 var htmlStr = '<div style="font-size:12px;">';
                 $(hitXML).find('hit').each(function(){
                     var title = $(this).find('title').first().text().replace(/_/g," ");
-                    var text = $(this).find('excerpt').first().text().replace(/<hl>/g, '<b style="color:black">').replace(/<\/hl>/g, "</b>")
-                                                                     .replace(/\$hlct\$/g, '<l style="color:#5B4646">').replace(/\$\/hlct\$/g, "</l>");
+                    console.log("excerpt", $(this).find('excerpt'));
+                    console.log("text", $(this).find('excerpt').find('text'));
+                    var text = createFormattedExcerpt($(this).find('excerpt').first()); // there is only one anyways, jsut for better function call :)
+                    // TOREMOVE(robin): .find('text').text().replace(/<hl>/g, '<b style="color:black">').replace(/<\/hl>/g, "</b>")
+                    //                                                 .replace(/\$hlct\$/g, '<l style="color:#5B4646">').replace(/\$\/hlct\$/g, "</l>");
                     htmlStr+='<b style="font-size:13px; color:D15E5E;">'+title+'</b></br>';
                     htmlStr+='<div>'+text+'</div></br>';
                 });
