@@ -27,6 +27,7 @@ wl.UIMenu = new function() {
     this.createFormattedText = function(termList, contextBoundaries, highlights) {
         return createFormattedText(termList, contextBoundaries, highlights);
     };
+    // TODO(Robin): make this nicer?
     var createFormattedText = function(termList, contextBoundaries, highlights) {
         var formattedText = '';
         if (contextBoundaries[0].contextStart !== 0)
