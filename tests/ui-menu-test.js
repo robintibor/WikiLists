@@ -43,7 +43,8 @@ test( "create formatted text from excerpt properly",
                     "contextStart" : 3,
                     "contextEnd" : 5
                 }
-            ]), '<span class="unimportantExcerptText">I know,</span> it is wrong.',
+            ],
+            $("<hl pos=3></hl>")), '<span class="unimportantExcerptText">I know,</span><b> it is</b> wrong.',
             'should correctly format small text');
         }
     );

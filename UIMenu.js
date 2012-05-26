@@ -11,6 +11,8 @@ wl.UIMenu = new function() {
     this.broccoliQuery = 'http://stromboli.informatik.uni-freiburg.de:6222/BroccoliWikiLists/';
     this.loadedElements = new Object();
 
+    //__________________________________________________________________________
+    // take excerpt from broccoli and transform it into nicely readable html
     var createFormattedExcerpt = function(excerptXML) {
         var excerptText = excerptXML.find("text").text();
         var contextString = excerptXML.attr("context");
