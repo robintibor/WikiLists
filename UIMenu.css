@@ -73,3 +73,7 @@
     background: radial-gradient(center, ellipse cover, rgba(86,249,49,1) 0%,rgba(125,185,232,0) 100%); /* W3C */
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#56f931', endColorstr='#007db9e8',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
 }
+
+.unimportantExcerptText{
+    color: rgba(100,100,200, 0.3);
+}

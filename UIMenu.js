@@ -8,13 +8,92 @@ wl.UIMenu = new function() {
     this.wikiListsElements;
     this.BroccoliMatchedListsElement;
     this.BroccoliNewListsElement;
-    this.broccoliQuery = 'http://stromboli.informatik.uni-freiburg.de:6222/BroccoliWikiLists/'
+    this.broccoliQuery = 'http://stromboli.informatik.uni-freiburg.de:6222/BroccoliWikiLists/';
     this.loadedElements = new Object();
+
+    var createFormattedExcerpt = function(excerptXML) {
+        var excerptText = excerptXML.find("text").text();
+        var contextString = excerptXML.attr("context");
+        var termList = convertTextToTermList(excerptText);
+        var contextBoundaries = extractContextBoundariesFromContextString(contextString);
+        var highlights = excerptXML.find("highlights").find("hl");
+        return createFormattedText(termList, contextBoundaries, highlights);
+    };
     
-    var createFormattedExcerpt = function(excerpt) {
-        console.log("excerpt to style", excerpt);
-        return excerpt.find("text").text();
-    }
+    //__________________________________________________________________________
+    // public for testing
+    this.createFormattedText = function(termList, contextBoundaries, highlights) {
+        return createFormattedText(termList, contextBoundaries, highlights);
+    };
+    var createFormattedText = function(termList, contextBoundaries, highlights) {
+        var formattedText = '';
+        if (contextBoundaries[0].contextStart !== 0)
+          formattedText += '<span class="unimportantExcerptText">';
+        var currentContextIndex = 0;
+        var currentContext = contextBoundaries[currentContextIndex];
+        var currentHighlightIndex = 0;
+        var currentHighlight = highlights[currentHighlightIndex];
+        for (var i = 0; i < termList.length; i++) {
+            
+            if (i > 0 && currentContext.contextStart == i)
+                formattedText += '</span>';
+            else if (i == currentContext.contextEnd + 1) {
+                formattedText += '<span class="unimportantExcerptText">';
+                currentContextIndex++;
+                if (currentContextIndex < contextBoundaries.length)
+                    currentContext = contextBoundaries[currentContextIndex];
+            }
+            if (highlights.length > 0 && i == $(currentHighlight).attr("pos"))
+                formattedText += "<b>";
+            formattedText += termList[i];
+            if (highlights.length > 0 && i == $(currentHighlight).attr("pos")) {
+                formattedText += "</b>";
+                currentHighlightIndex++;
+                if (currentHighlightIndex < highlights.length)
+                    currentHighlight = highlights[currentHighlightIndex];
+            }
+        }
+        if (currentContext.contextEnd != termList.length - 1)
+            formattedText += '</span>';
+        return formattedText;
+    };
+    
+    
+    //__________________________________________________________________________
+    // public for testing
+    this.convertTextToTermList = function(excerptText) {
+        return convertTextToTermList(excerptText);
+    };
+    // example: You@@ are@@ very very@@ smart@@. =>
+    // ["You", " are", " very very", " smart", "."]
+    var convertTextToTermList = function(excerptText) {
+        return excerptText.split("@@");
+    };
+    
+    
+    //__________________________________________________________________________
+    // public for testing
+    this.extractContextBoundariesFromContextString = function(contextBoundariesString) {
+        return extractContextBoundariesFromContextString(contextBoundariesString);
+    };    
+    var extractContextBoundariesFromContextString = function(contextBoundariesString) {
+        var contextBoundaries = [];
+        var contextBlocks = contextBoundariesString.split(",");
+        for (var i = 0; i < contextBlocks.length; i++) {
+            var contextBlock = contextBlocks[i];
+            var contextBlockBoundaries = contextBlock.split("-");
+            var decimalSystem = 10;
+            var contextStart = parseInt(contextBlockBoundaries[0], decimalSystem);
+            var contextEnd = parseInt(contextBlockBoundaries[1], decimalSystem);
+            contextBoundaries.push(
+                {
+                    "contextStart": contextStart,
+                    "contextEnd": contextEnd
+                }
+            );
+        }
+        return contextBoundaries;
+    };
     
     //__________________________________________________________________________
     // Add close functionality for geven object
