@@ -7,9 +7,9 @@ wl.client = new function() {
 
     this.getListElementsAndQueryStringForWikiURL = function(wikiURL,
         callbackForResponse) {
-        var stromboliRequestURL = createStromboliRequestURL(wikiURL);
+        var wikiListRequestURL = createWikiListRequestURL(wikiURL);
         jQuery.ajax({
-          url: stromboliRequestURL,
+          url: wikiListRequestURL,
           dataType: 'jsonp',
           data: {
               requesttype: 'wikilist',
@@ -47,9 +47,9 @@ wl.client = new function() {
     };
 
     this.getURL = function(urlString, callback) {
-        var stromboliRequestURL = createStromboliRequestURL(urlString);
+        var wikiListRequestURL = createWikiListRequestURL(urlString);
         jQuery.ajax({
-          url: stromboliRequestURL,
+          url: wikiListRequestURL,
           dataType: 'jsonp',
           data: {
               requesttype: 'urlrequest',
@@ -59,11 +59,11 @@ wl.client = new function() {
         });
     };
 
-    var createStromboliRequestURL  = function(urlString) {   
-        var stromboliRequestURL = 
-            'http://stromboli.informatik.uni-freiburg.de:' + 
-            wl.STROMBOLIPORT + '/' + encodeURIComponent(urlString);
-        return stromboliRequestURL;
+    var createWikiListRequestURL  = function(urlString) {   
+        var wikiListRequestURL = 
+            wl.WIKILISTHOST + ':' + 
+            wl.WIKILISTPORT + '/' + encodeURIComponent(urlString);
+        return wikiListRequestURL;
     };
 };
 

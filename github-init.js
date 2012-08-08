@@ -1,6 +1,7 @@
 var wikiLists = new function() {
     this.FRONTENDADRESS = 'https://raw.github.com/robintibor/WikiLists/master/';
-    this.STROMBOLIPORT = 29385;
+    this.WIKILISTHOST = 'http://stromboli.informatik.uni-freiburg.de';
+    this.WIKILISTPORT = 29385;
     this.addJavaScriptFiles = function(fileURLS) {
         for (var i = 0; i < fileURLS.length; i++) {
             var javaScriptSource = fileURLS[i];

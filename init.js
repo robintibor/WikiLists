@@ -1,6 +1,7 @@
 var wikiLists = new function() {
     this.FRONTENDADRESS = 'http://c9.io/robintibor/wikilists/workspace/';
-    this.STROMBOLIPORT = 29385;
+    this.WIKILISTHOST = 'http://stromboli.informatik.uni-freiburg.de'
+    this.WIKILISTPORT = 29385;
     this.addJavaScriptFiles = function(fileURLS) {
         for (var i = 0; i < fileURLS.length; i++) {
             var javaScriptSource = fileURLS[i];
