@@ -293,7 +293,7 @@ wl.UIMenu = new function() {
         var htmlStr="<ul>";
         var newElementClasses = 'class="newBroccoliElements"';
         var newElementStyle = 'style="font-size:14px; width:90%; background-color:#white;"';
-        for (var i=0; i < newElements.length; i++){
+        for (var i = 0; i < newElements.length; i++){
             htmlStr+='<li id="broccoliNewElement'+i+'" '+newElementClasses+' '+newElementStyle+'>';
             //htmlStr+=elem.innerHTML;
             htmlStr+="</li>";
